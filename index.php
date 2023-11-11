@@ -23,16 +23,13 @@
 </head>
 
 <body>
-  <div class="container-scroller">
-    <!-- partial:partials/_navbar.html -->
-    <?php
-    include_once("includes/Navbar.php");
-    include_once("includes/sidebar.php");
-    ?>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-     
-      <!-- partial -->
+<div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <div class="container-fluid page-body-wrapper">
+            <?php
+            include_once("includes/Navbar.php");
+            include_once("includes/sidebar.php");
+            ?>
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
@@ -573,7 +570,7 @@
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <?php
-        include '/xampp/htdocs/OMSMS/Admin/template/includes/footer.php';
+        include 'includes/footer.php';
         ?>
         <!-- partial -->
       </div>
