@@ -243,6 +243,7 @@ if (isset($_POST['submit'])) {
                                                                     <?php echo $total = $qty * $ppu; ?>
                                                                 </td>
                                                             </tr>
+                                                            
                                                             <?php
                                                             $grandtotal += $total;
                                                             $cnt = $cnt + 1;
