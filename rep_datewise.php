@@ -1,3 +1,6 @@
+<?php
+include "includes/dbconnection.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +43,7 @@
                                 <div class="ibox-content">
 
                                     <h4 class="header-title m-t-0 m-b-30">Between Dates Reports</h4>
-                                    <form name="bwdatesreport" action="rep_datewise_details.php" method="post">
+                                    <form name="bwdatesreport" action="rep_datewise_details.php" method="POST">
                                         <div class="form-group row">
 
 

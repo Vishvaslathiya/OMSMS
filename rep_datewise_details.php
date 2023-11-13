@@ -1,3 +1,7 @@
+<?php
+include "includes/dbconnection.php";
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +39,14 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Confiremd Orders</h4>
+                                <?php
+                                $fromdate = $_POST['fromdate'];
+                                $todate = $_POST['todate']; ?>
+
+                                <h4 class="card-title">Orders between
+                                    <?php echo "$fromdate"; ?> and
+                                    <?php echo "$todate"; ?>
+                                </h4>
 
                                 <div class="table-responsive pt-3">
                                     <table class="table table-dark">
@@ -47,12 +58,12 @@
                                                 <th>
                                                     Order Number
                                                 </th>
-                                                <th>
+                                                <!-- <th>
                                                     Customer name
-                                                </th>
-                                                <th>
+                                                </th> -->
+                                                <!-- <th>
                                                     Amount
-                                                </th>
+                                                </th> -->
                                                 <th>
                                                     Order Date
                                                 </th>
@@ -62,28 +73,46 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td>
-                                                449227644
-                                                </td>
-                                                <td>
-                                                    Herman Beck
-                                                </td>
-                                                <td>
-                                                    $ 77.99
-                                                </td>
-                                                <td>
-                                                    May 15, 2015
-                                                </td>
-                                                <td>
-                                                    <a href="view_order_details.php"> <input type="submit"
-                                                            name="viewdtls" value="View Details" style="width: 120px; "
-                                                            class="btn btn-info"></a>
-                                                </td>
-                                            </tr>
+                                            <?php
+                                            $fromdate = $_POST['fromdate'];
+                                            $todate = $_POST['todate'];
+                                            $request_type = $_POST['requesttype'];
+                                            // echo $request_type;
+
+                                            if ($request_type == 'all') {
+                                                $ret = mysqli_query($con, "select * from tblorderaddresses where OrderTime between '$fromdate' and '$todate'");
+                                                $cnt = 1;
+                                                while ($row = mysqli_fetch_array($ret)) {
+
+                                                    ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $cnt; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $row['Ordernumber']; ?>
+                                                        </td>
+                                                        <!-- <td>
+                                                        <?php echo $row['FullName']; ?>
+                                                    </td> -->
+                                                        <!-- <td>
+                                                            <?php echo $row['Total']; ?>
+                                                        </td> -->
+                                                        <td>
+                                                            <?php echo $row['OrderTime']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <a
+                                                                href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">
+                                                                <input type="submit" name="viewdtls" value="View Details"
+                                                                    style="width: 120px; " class="btn btn-info"></a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                    $cnt++;
+                                                }
+                                            } ?>
+
 
                                         </tbody>
                                     </table>
