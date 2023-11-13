@@ -51,6 +51,9 @@
                                                     Customer name
                                                 </th>
                                                 <th>
+                                                    Amount
+                                                </th>
+                                                <th>
                                                     Order Date
                                                 </th>
                                                 <th>
@@ -59,41 +62,28 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            <?php
-                                            $con = mysqli_connect("localhost", "root", "", "omsms");
-                                            $ret = mysqli_query($con, "select * from tblorderaddresses");
-                                            $user = mysqli_query($con, "select * from tblcustomer join tblorderaddresses on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.UserId=tblcustomer.ID ");
-                                            // select * from tblorderaddresses join tblcustomer on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.Ordernumber=$oid
-                                            $cnt = 1;
-                                            while ($row = mysqli_fetch_array($ret) and $row1 = mysqli_fetch_array($user)) {
-
-                                                ?>
-                                            <tbody>
-                                                <tr>
-
-                                                    <td>
-                                                        <?php echo $cnt; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['Ordernumber']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row1['name']; ?>
-
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['OrderTime']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <a href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">
-                                                            <input type="submit" name="viewdtls" value="View Details"
-                                                                style="width: 120px; " class="btn btn-info"></a>
-                                                    </td>
-                                                </tr>
-                                                <?php
-                                                $cnt = $cnt + 1;
-                                            } ?>
+                                            <tr>
+                                                <td>
+                                                    1
+                                                </td>
+                                                <td>
+                                                449227644
+                                                </td>
+                                                <td>
+                                                    Herman Beck
+                                                </td>
+                                                <td>
+                                                    $ 77.99
+                                                </td>
+                                                <td>
+                                                    May 15, 2015
+                                                </td>
+                                                <td>
+                                                    <a href="view_order_details.php"> <input type="submit"
+                                                            name="viewdtls" value="View Details" style="width: 120px; "
+                                                            class="btn btn-info"></a>
+                                                </td>
+                                            </tr>
 
                                         </tbody>
                                     </table>

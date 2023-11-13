@@ -30,52 +30,75 @@
             include_once("includes/Navbar.php");
             include_once("includes/sidebar.php");
             ?>
-            <div class="col-lg-10 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Not Confirmed Orders</h4>
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Confiremd Orders</h4>
 
-                        <div class="table-responsive pt-3">
-                            <table class="table table-dark">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            #
-                                        </th>
-                                        <th>
-                                            First name
-                                        </th>
-                                        <th>
-                                            Amount
-                                        </th>
-                                        <th>
-                                            Date
-                                        </th>
-                                        <th>
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Herman Beck
-                                        </td>
-                                        <td>
-                                            $ 77.99
-                                        </td>
-                                        <td>
-                                            May 15, 2015
-                                        </td>
-                                        <td>
-                                            <a href="pages/forms/basic_elements.html"> <input type="submit" name="viewdtls" value="View Details" class="btn btn-info"></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <div class="table-responsive pt-3">
+                                    <table class="table table-dark">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    Order Number
+                                                </th>
+                                                <th>
+                                                    Customer name
+                                                </th>
+                                                <th>
+                                                    Order Date
+                                                </th>
+                                                <th>
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <?php
+                                            $con = mysqli_connect("localhost", "root", "", "omsms");
+                                            $ret = mysqli_query($con, "select * from tblorderaddresses");
+                                            $user = mysqli_query($con, "select * from tblcustomer join tblorderaddresses on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.UserId=tblcustomer.ID ");
+                                            // select * from tblorderaddresses join tblcustomer on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.Ordernumber=$oid
+                                            $cnt = 1;
+                                            while ($row = mysqli_fetch_array($ret) and $row1 = mysqli_fetch_array($user)) {
+
+                                                ?>
+                                            <tbody>
+                                                <tr>
+
+                                                    <td>
+                                                        <?php echo $cnt; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['Ordernumber']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row1['name']; ?>
+
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['OrderTime']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">
+                                                            <input type="submit" name="viewdtls" value="View Details"
+                                                                style="width: 120px; " class="btn btn-info"></a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                                $cnt = $cnt + 1;
+                                            } ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
