@@ -63,8 +63,9 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="ibox">
-
+                                
                                 <div class="ibox-content">
+                                    <div class="row">
 
                                     <?php
                                     $oid = $_GET['orderid'];
@@ -165,8 +166,8 @@ if (isset($_POST['submit'])) {
                                                                 echo "Order Confirmed";
                                                             }
 
-                                                            if ($row['OrderFinalStatus'] == "Product being Prepared") {
-                                                                echo "Product being Prepared";
+                                                            if ($row['OrderFinalStatus'] == "Product not Available") {
+                                                                echo "Product not Available";
                                                             }
                                                             if ($row['OrderFinalStatus'] == "Product Pickup") {
                                                                 echo "Product Pickup";
@@ -186,14 +187,14 @@ if (isset($_POST['submit'])) {
                                                 </table>
                                             </div>
 
-                                            <div class="col-6" style="margin-top:0.73%">
+                                            <div class="col-8" style="margin-top:0.73%">
                                                 <?php
                                                 // $oid = $_GET['orderid'];
                                                 // $con = mysqli_connect('localhost','root','','omsms');
                                                 // $query = mysqli_query($con, "select tblprd.Image,tblprd.prdName,tblprd.prdDes,tblprd.prdPrice,tblprd.prdQty,tblorders.prdId,tblorders.prdQty, tblorders.payment_mode from tblorders join tblprd on tblprd.ID=tblorders.PrdId where tblorders.IsOrderPlaced=1 and tblorders.OrderNumber='$oid'");
                                                 // $num = mysqli_num_rows($query);
                                                 $cnt = 1; ?>
-                                                <!-- <div class="table-responsive"> -->
+                                                <div style="width: 80%;">
 
                                                     <table border="1" class="table table-bordered mg-b-0">
                                                         <tr align="center">
@@ -295,7 +296,7 @@ if (isset($_POST['submit'])) {
                                                                     Confirmed</option>
                                                                 <option name="status" value="Order Cancelled">Order
                                                                     Cancelled</option>
-                                                                <option name="status" value="Product being Prepared">Product
+                                                                <option name="status" value="Product not Available">Product
                                                                     Not
                                                                     Available
                                                                 </option>

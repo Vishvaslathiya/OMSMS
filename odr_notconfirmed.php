@@ -35,7 +35,7 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Confiremd Orders</h4>
+                                <h4 class="card-title">Not Confiremd Orders</h4>
 
                                 <div class="table-responsive pt-3">
                                     <table class="table table-dark">
@@ -62,7 +62,7 @@
 
                                             <?php
                                             $con = mysqli_connect("localhost", "root", "", "omsms");
-                                            $ret = mysqli_query($con, "select * from tblorderaddresses");
+                                            $ret = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus is null");
                                             $user = mysqli_query($con, "select * from tblcustomer join tblorderaddresses on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.UserId=tblcustomer.ID ");
                                             // select * from tblorderaddresses join tblcustomer on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.Ordernumber=$oid
                                             $cnt = 1;
@@ -86,7 +86,8 @@
                                                         <?php echo $row['OrderTime']; ?>
                                                     </td>
                                                     <td>
-                                                        <a href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">
+                                                        <a
+                                                            href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">
                                                             <input type="submit" name="viewdtls" value="View Details"
                                                                 style="width: 120px; " class="btn btn-info"></a>
                                                     </td>

@@ -1,9 +1,5 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
 
-<<<<<<< HEAD
-<nav class="sidebar sidebar-offcanvas "  id="sidebar">
-=======
-<nav class="sidebar sidebar-offcanvas  " style="width:270px;" id="sidebar">
->>>>>>> a2add8178f385c34bce5260f66c1d7d92c3fd638
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="index.php">
@@ -67,6 +63,7 @@
                     <li class="nav-item"> <a class="nav-link" href="odr_pickuup.php">Orders Pickup </a>
                     <li class="nav-item"> <a class="nav-link" href="odr_delivered.php">Orders Delivered </a></li>
                     <li class="nav-item"> <a class="nav-link" href="odr_cancelled.php">View Cancelled Orders</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="odr_view_all.php">View All Orders</a></li>
                     </li>
                 </ul>
             </div>
