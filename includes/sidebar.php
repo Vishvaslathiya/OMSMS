@@ -1,5 +1,9 @@
 
+<<<<<<< HEAD
 <nav class="sidebar sidebar-offcanvas "  id="sidebar">
+=======
+<nav class="sidebar sidebar-offcanvas  " style="width:270px;" id="sidebar">
+>>>>>>> a2add8178f385c34bce5260f66c1d7d92c3fd638
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="index.php">
