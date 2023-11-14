@@ -41,81 +41,293 @@ include "includes/dbconnection.php";
                             <div class="card-body">
                                 <?php
                                 $fromdate = $_POST['fromdate'];
-                                $todate = $_POST['todate']; ?>
+                                $todate = $_POST['todate'];
+                                $request_type = $_POST['requesttype'];
+                                ?>
 
                                 <h4 class="card-title">Orders between
                                     <?php echo "$fromdate"; ?> and
                                     <?php echo "$todate"; ?>
+                                    <?php echo "$request_type"; ?>
                                 </h4>
 
                                 <div class="table-responsive pt-3">
                                     <table class="table table-dark">
                                         <thead>
                                             <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    Order Number
-                                                </th>
-                                                <!-- <th>
-                                                    Customer name
-                                                </th> -->
-                                                <!-- <th>
-                                                    Amount
-                                                </th> -->
-                                                <th>
-                                                    Order Date
-                                                </th>
-                                                <th>
-                                                    Action
-                                                </th>
+                                                <th>S.NO</th>
+                                                <th>Order Number</th>
+                                                <th>Order Date</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
-                                            $fromdate = $_POST['fromdate'];
-                                            $todate = $_POST['todate'];
-                                            $request_type = $_POST['requesttype'];
-                                            // echo $request_type;
 
-                                            if ($request_type == 'all') {
-                                                $ret = mysqli_query($con, "select * from tblorderaddresses where OrderTime between '$fromdate' and '$todate'");
-                                                $cnt = 1;
-                                                while ($row = mysqli_fetch_array($ret)) {
+                                        <!-- Not Confirmed Orders -->
+                                        <?php
 
-                                                    ?>
+                                        if ($request_type == "all") {
+
+                                            $result = mysqli_query($con, "select * from tblorderaddresses where Ordertime between '$fromdate' and '$todate' ");
+                                            $count = 1;
+
+                                            while ($row = mysqli_fetch_array($result)) {
+
+                                                ?>
+                                                <tbody>
                                                     <tr>
                                                         <td>
-                                                            <?php echo $cnt; ?>
+                                                            <?php echo $count;
+                                                            ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo $row['Ordernumber'];
+                                                            ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo $row['Ordernumber']; ?>
+                                                            <?php echo $row['OrderTime'];
+                                                            ?>
                                                         </td>
-                                                        <!-- <td>
-                                                        <?php echo $row['FullName']; ?>
-                                                    </td> -->
-                                                        <!-- <td>
-                                                            <?php echo $row['Total']; ?>
-                                                        </td> -->
-                                                        <td>
-                                                            <?php echo $row['OrderTime']; ?>
-                                                        </td>
-                                                        <td>
-                                                            <a
-                                                                href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">
-                                                                <input type="submit" name="viewdtls" value="View Details"
-                                                                    style="width: 120px; " class="btn btn-info"></a>
-                                                        </td>
+                                                        <td><a
+                                                                href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">View
+                                                                Details</a>
                                                     </tr>
                                                     <?php
-                                                    $cnt++;
+                                                    $count = $count + 1;
+                                            }
+                                            ?>
+                                            </tbody>
+                                        </table>
+                                    <?php } 
+                                    // Not Confirmed
+            
+                                    if ($request_type == '') {
+                                        $result = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus is null  && Ordertime between '$fromdate' and '$todate' ");
+                                            $count = 1;
+
+                                            while ($row = mysqli_fetch_array($result)) {
+
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $count;
+                                                            ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo $row['Ordernumber'];
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $row['OrderTime'];
+                                                            ?>
+                                                        </td>
+                                                        <td><a
+                                                                href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">View
+                                                                Details</a>
+                                                    </tr>
+                                                    <?php
+                                                    $count = $count + 1;
+                                            }
+                                            ?>
+                                            </tbody>
+                                        </table>
+                                        <?php }
+                                        //  Canclled Order
+
+                                        
+                                    if ($request_type == 'Canclled Order') {
+                                       
+                                        $result = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus='Order Cancelled' && Ordertime between '$fromdate' and '$todate' ");
+                                            $count = 1;
+
+                                            while ($row = mysqli_fetch_array($result)) {
+                                                ?>
+                                                <tbody>
+                                                   
+                                                    
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $count;
+                                                            ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo $row['Ordernumber'];
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $row['OrderTime'];
+                                                            ?>
+                                                        </td>
+                                                        <td><a
+                                                                href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">View
+                                                                Details</a>
+                                                    </tr>
+                                                    <?php
+                                                    $count = $count + 1;
+                                            }
+                                            ?>
+                                            </tbody>
+                                        </table>
+                                        <?php }
+                                        
+                                        
+                                    if ($request_type == 'Confirmed Order') {
+                                        $result = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus='Order Confirmed' && Ordertime between '$fromdate' and '$todate' ");
+                                            $count = 1;
+
+                                            while ($row = mysqli_fetch_array($result)) {
+
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $count;
+                                                            ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo $row['Ordernumber'];
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $row['OrderTime'];
+                                                            ?>
+                                                        </td>
+                                                        <td><a
+                                                                href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">View
+                                                                Details</a>
+                                                    </tr>
+                                                    <?php
+                                                    $count = $count + 1;
+                                            }
+                                            ?>
+                                            </tbody>
+                                        </table>
+                                        
+                                        <?php }
+                                        
+                                        
+                                    if ($request_type == 'Pickup') {
+                                        $result = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus='Product Pickup' && Ordertime between '$fromdate' and '$todate' ");
+                                            $count = 1;
+
+                                            while ($row = mysqli_fetch_array($result)) {
+
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <?php echo $count;
+                                                            ?>
+                                                        </td>
+
+                                                        <td>
+                                                            <?php echo $row['Ordernumber'];
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $row['OrderTime'];
+                                                            ?>
+                                                        </td>
+                                                        <td><a
+                                                                href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">View
+                                                                Details</a>
+                                                    </tr>
+                                                    <?php
+                                                    $count = $count + 1;
+                                            }
+                                            ?>
+
+                                            </tbody>
+                                        </table>
+                                        
+                                        <?php } 
+                                        
+                                        
+                                        if ($request_type == 'Delivered') {
+                                            $result = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus='Product Delivered' && Ordertime between '$fromdate' and '$todate' ");
+                                                $count = 1;
+    
+                                                while ($row = mysqli_fetch_array($result)) {
+    
+                                                    ?>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count;
+                                                                ?>
+                                                            </td>
+    
+                                                            <td>
+                                                                <?php echo $row['Ordernumber'];
+                                                                ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $row['OrderTime'];
+                                                                ?>
+                                                            </td>
+                                                            <td><a
+                                                                    href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">View
+                                                                    Details</a>
+                                                        </tr>
+                                                        <?php
+                                                        $count = $count + 1;
                                                 }
-                                            } ?>
-
-
-                                        </tbody>
-                                    </table>
+                                                ?>
+    
+                                                </tbody>
+                                            </table>
+                                            
+                                            <?php } 
+                                        
+                                        
+                                        if ($request_type == 'Product Not Available') {
+                                            $result = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus='Product Not Available' && Ordertime between '$fromdate' and '$todate' ");
+                                                $count = 1;
+    
+                                                while ($row = mysqli_fetch_array($result)) {
+    
+                                                    ?>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <?php echo $count;
+                                                                ?>
+                                                            </td>
+    
+                                                            <td>
+                                                                <?php echo $row['Ordernumber'];
+                                                                ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php echo $row['OrderTime'];
+                                                                ?>
+                                                            </td>
+                                                            <td><a
+                                                                    href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">View
+                                                                    Details</a>
+                                                        </tr>
+                                                        <?php
+                                                        $count = $count + 1;
+                                                }
+                                                ?>
+    
+                                                </tbody>
+                                            </table>
+                                            
+                                            <?php }
+                                            ?>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                 </div>
                             </div>
                         </div>

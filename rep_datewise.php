@@ -64,13 +64,13 @@ include "includes/dbconnection.php";
                                             <label for="example-email-input" class="col-2 col-form-label">Request
                                                 Type</label>
                                             <div class="col-10">
-                                                <input type="radio" name="requesttype" value="all" checked="true">All <br>
-                                                <input type="radio" name="requesttype" value="">Not Confirmed Order <br>
-                                                <input type="radio" name="requesttype" value="cancelled">Canclled Order <br>
-                                                <input type="radio" name="requesttype" value="Order Confirmed">Confirmed Order <br>
-                                                <input type="radio" name="requesttype" value="Food being Prepared">Food Being Prepared Order <br>
-                                                <input type="radio" name="requesttype" value="Food Pickup">Food Pickup Order <br>
-                                                <input type="radio" name="requesttype" value="Food Delivered">Food Delivered order <br>
+                                                <input type="radio" name="requesttype" value="all" checked="true"> All <br>
+                                                <input type="radio" name="requesttype" value=""> Not Confirmed Order <br>
+                                                <input type="radio" name="requesttype" value="Canclled Order"> Canclled Order <br>
+                                                <input type="radio" name="requesttype" value="Confirmed Order"> Confirmed Order <br>
+                                                <input type="radio" name="requesttype" value="Product Not Available"> Product Not Available <br>
+                                                <input type="radio" name="requesttype" value="Pickup"> Pickup Order <br>
+                                                <input type="radio" name="requesttype" value="Delivered"> Delivered order <br>
                                             </div>
                                         </div>
 
