@@ -22,6 +22,10 @@
     <link rel="shortcut icon" href="images/favicon.png" />
 </head>
 
+<?php
+
+try{
+    ?>
 <body>
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
@@ -131,5 +135,7 @@
 
 </html>
 </body>
-
+<?php } catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+} ?>
 </html>

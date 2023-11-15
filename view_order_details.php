@@ -87,8 +87,8 @@ if (isset($_POST['submit'])) {
 
 
 
-                                        <div class="row">
-                                            <div class="col-4">
+                                        <div class="row"  style="left: 3%;">
+                                            <div class="col-5">
 
                                                 <p style="font-size:16px; color:red; text-align: center">
                                                     <?php if ($msg) {
@@ -187,7 +187,7 @@ if (isset($_POST['submit'])) {
                                                 </table>
                                             </div>
 
-                                            <div class="col-8" style="margin-top:0.73%">
+                                            <div class="col-7" style="margin-top:0.73%">
                                                 <?php
                                                 // $oid = $_GET['orderid'];
                                                 // $con = mysqli_connect('localhost','root','','omsms');
