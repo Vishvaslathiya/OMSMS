@@ -1,3 +1,14 @@
+<?php
+include("includes/dbconnection.php");
+$ftotal = 0;
+$ttlny = 0;
+$fntotal = 0;
+$fctotal = 0;
+$fatotl = 0;
+$fintotal = 0;
+$faritotal = 0;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,58 +46,113 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Confiremd Orders</h4>
-
                                 <div class="table-responsive pt-3">
-                                    <table class="table table-dark">
+
+
+                                    <h4 class="header-title m-t-0 m-b-30">Report Counts</h4>
+                                    <?php
+                                    $fdate = $_POST['fromdate'];
+                                    $tdate = $_POST['todate'];
+                                    ?>
+                                    <h5 align="center" style="color:blue">Order Count Report from
+                                        <?php echo $fdate ?> to
+                                        <?php echo $tdate ?>
+                                    </h5>
+                                    <hr />
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    Order Number
-                                                </th>
-                                                <th>
-                                                    Customer name
-                                                </th>
-                                                <th>
-                                                    Amount
-                                                </th>
-                                                <th>
-                                                    Order Date
-                                                </th>
-                                                <th>
-                                                    Action
-                                                </th>
+                                                <th>S.NO</th>
+                                                <th>Total Order</th>
+                                                <th>Total Order not confirmed</th>
+                                                <th>Total Order Confirmed</th>
+                                                <th>Total Order Cancelled</th>
+                                                <th>Total Product not Available Orders</th>
+                                                <th>Total Order Pickup</th>
+                                                <th>Total Delivered</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <?php
+                                        $ret = mysqli_query($con, "select month(OrderTime) as lmonth,year(OrderTime) as lyear,
+                                    count(ID) as totalcount,count(if((OrderFinalStatus='' || OrderFinalStatus is null),0,null)) as uncofirmedorder,
+    count(if(OrderFinalStatus='Order Confirmed',0,null)) as confirmedorder,
+    count(if(OrderFinalStatus='Product not Available',0,null)) as prdnav,
+    count(if(OrderFinalStatus='Product Pickup',0,null)) as Productpickup,
+    count(if(OrderFinalStatus='Product Delivered',0,null)) as Productdel,
+    count(if(OrderFinalStatus='Order Cancelled',0,null)) as odrcancel 
+    from tblorderaddresses where date(OrderTime) between '$fdate' and '$tdate' group by lmonth,lyear");
+                                        while ($row = mysqli_fetch_array($ret)) {
+
+                                            ?>
+
                                             <tr>
                                                 <td>
-                                                    1
+                                                    <?php echo $row['lmonth'] . "/" . $row['lyear']; ?>
                                                 </td>
                                                 <td>
-                                                449227644
+                                                    <?php echo $total = $row['totalcount']; ?>
                                                 </td>
                                                 <td>
-                                                    Herman Beck
+                                                    <?php echo $npytotal = $row['uncofirmedorder']; ?>
                                                 </td>
                                                 <td>
-                                                    $ 77.99
+                                                    <?php echo $ntotal = $row['confirmedorder']; ?>
                                                 </td>
                                                 <td>
-                                                    May 15, 2015
+                                                    <?php echo $tctotal = $row['odrcancel']; ?>
                                                 </td>
                                                 <td>
-                                                    <a href="view_order_details.php"> <input type="submit"
-                                                            name="viewdtls" value="View Details" style="width: 120px; "
-                                                            class="btn btn-info"></a>
+                                                    <?php echo $atotl = $row['prdnav']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $intotal = $row['Productpickup']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $aritotal = $row['Productdel']; ?>
                                                 </td>
                                             </tr>
+                                            <?php
+                                            $ftotal += $total;
+                                            $ttlny += $npytotal;
+                                            $fntotal += $ntotal;
+                                            $fctotal += $tctotal;
+                                            $fatotl += $atotl;
+                                            $fintotal += $intotal;
+                                            $faritotal += $aritotal;
 
-                                        </tbody>
+                                        } ?>
+
+                                        <tr>
+                                            <td>Total </td>
+                                            <td>
+                                                <?php echo $ftotal; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $ttlny; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $fntotal; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $fctotal; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $fatotl; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $fintotal; ?>
+                                            </td>
+                                            <td>
+                                                <?php echo $faritotal; ?>
+                                            </td>
+
+
+                                        </tr>
+
                                     </table>
+
+
                                 </div>
                             </div>
                         </div>

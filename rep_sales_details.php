@@ -1,3 +1,9 @@
+<?php
+
+include('includes/dbconnection.php');
+$ftotal = 0;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,59 +41,154 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Confiremd Orders</h4>
+                                <!-- <h4 class="card-title">Confiremd Orders</h4> -->
+                                <?php
+                                $fdate = $_POST['fromdate'];
+                                $tdate = $_POST['todate'];
+                                $rtype = $_POST['requesttype'];
 
-                                <div class="table-responsive pt-3">
-                                    <table class="table table-dark">
+                                ?>
+
+                                <?php if ($rtype == 'mtwise') {
+                                    $month1 = strtotime($fdate);
+                                    $month2 = strtotime($tdate);
+                                    $m1 = date("F", $month1);
+                                    $m2 = date("F", $month2);
+                                    $y1 = date("Y", $month1);
+                                    $y2 = date("Y", $month2);
+                                    ?>
+                                    <h4 class="header-title m-t-0 m-b-30">Sales Report Month Wise</h4>
+                                    <h4 align="center" style="color:blue">Sales Report from
+                                        <?php echo $m1 . "-" . $y1; ?> to
+                                        <?php echo $m2 . "-" . $y2; ?>
+                                    </h4>
+                                    <hr />
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    Order Number
-                                                </th>
-                                                <th>
-                                                    Customer name
-                                                </th>
-                                                <th>
-                                                    Amount
-                                                </th>
-                                                <th>
-                                                    Order Date
-                                                </th>
-                                                <th>
-                                                    Action
-                                                </th>
+                                                <th>S.NO</th>
+                                                <th>Month / Year </th>
+                                                <th>Sales</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <?php
+                                        $fstatus = 'Product Delivered';
+                                        // $ret = mysqli_query($con, "select month(OrderTime) as lmonth,year(OrderTime) as lyear, sum(100*tblorders.PrdQty) as totalitmprice from tblorders  join tblorderaddresses on tblorderaddresses.Ordernumber=tblorders.OrderNumber  join tblprd  on tblprd.ID=tblorders.PrdId  where date(tblorderaddresses.OrderTime) between '$fdate' and '$tdate'  and tblorderaddresses.OrderFinalStatus='$fstatus'  group by lmonth,lyear");
+                                        $ret = mysqli_query($con, "select month(OrderTime) as lmonth,year(OrderTime) as lyear, sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders  join tblorderaddresses on tblorderaddresses.Ordernumber=tblorders.OrderNumber  join tblprd  on tblprd.ID=tblorders.PrdId  where  date(tblorderaddresses.OrderTime) between '$fdate' and '$tdate'  ");
+                                        $cnt = 1;
+                                        if ($ret) {
+                                            echo "Query cscuceed";
+                                        } else {
+
+                                            echo "Query failed";
+                                        }
+
+                                        while ($row = mysqli_fetch_array($ret)) {
+
+                                            ?>
+
                                             <tr>
                                                 <td>
-                                                    1
+                                                    <?php echo $cnt; ?>
                                                 </td>
                                                 <td>
-                                                449227644
+                                                    <?php echo $row['lmonth'] . "/" . $row['lyear']; ?>
+                                                    <!-- 12/22 -->
                                                 </td>
                                                 <td>
-                                                    Herman Beck
+                                                    <!-- 2200 -->
+                                                    <?php echo $total = $row['totalitmprice']; ?>
                                                 </td>
-                                                <td>
-                                                    $ 77.99
-                                                </td>
-                                                <td>
-                                                    May 15, 2015
-                                                </td>
-                                                <td>
-                                                    <a href="view_order_details.php"> <input type="submit"
-                                                            name="viewdtls" value="View Details" style="width: 120px; "
-                                                            class="btn btn-info"></a>
-                                                </td>
-                                            </tr>
 
-                                        </tbody>
+                                            </tr>
+                                            <?php
+                                            $ftotal += $total;
+                                            $cnt++;
+                                        } ?>
+
+                                        <tr>
+                                            <td colspan="2" align="center">Total </td>
+                                            <td>
+                                                <?php echo $ftotal; ?>
+                                            </td>
+
+
+
+                                        </tr>
+
                                     </table>
-                                </div>
+                                <?php } else {
+                                    $year1 = strtotime($fdate);
+                                    $year2 = strtotime($tdate);
+                                    $y1 = date("Y", $year1);
+                                    $y2 = date("Y", $year2);
+                                    $fstatus = 'Product Delivered';
+                                    ?>
+                                    <h4 class="header-title m-t-0 m-b-30">Sales Report Year Wise</h4>
+                                    <h4 align="center" style="color:blue">Sales Report from
+                                        <?php echo $y1; ?> to
+                                        <?php echo $y2; ?>
+                                    </h4>
+                                    <hr />
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th>S.NO</th>
+                                                <th> Year </th>
+                                                <th>Sales</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                        // $ret = mysqli_query($con, "select year(OrderTime) as lyear,sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders join tblorderaddresses on tblorderaddresses.Ordernumber=tblorders.OrderNumber join tblprd on tblprd.ID=tblorders.PrdId where year(tblorderaddresses.OrderTime) between '$fdate' and '$tdate' and tblorderaddresses.OrderFinalStatus='$fstatus' group by lyear");
+                                        // $ret = mysqli_query($con, "select year(OrderTime) as lyear,sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders join tblorderaddresses on 1=1 join tblprd    on tblprd.ID=tblorders.PrdId where year(tblorderaddresses.OrderTime) between '$fdate' and '$tdate' and tblorderaddresses.OrderFinalStatus='$fstatus' group by lyear");
+                                        $ret = mysqli_query($con, "SELECT YEAR(tblorderaddresses.OrderTime) AS lyear,SUM(100 * tblorders.PrdQty) AS totalitmprice FROM tblorders JOIN tblorderaddresses ON tblorderaddresses.Ordernumber = tblorders.OrderNumber JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE YEAR(tblorderaddresses.OrderTime) BETWEEN '$fdate' AND '$tdate' AND tblorderaddresses.OrderFinalStatus = '$fstatus' GROUP BY lyear");
+
+                                        $cnt = 1;
+                                        if ($ret) {
+                                            echo "Query cscuceed";
+                                        } else {
+
+                                            echo "Query failed";
+                                        }
+
+                                        while ($row = mysqli_fetch_array($ret)) {
+
+                                            ?>
+
+                                            <tr>
+                                                <td>
+                                                    <?php echo $cnt; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['lyear']; ?>
+                                                    <!-- 12/22 -->
+                                                </td>
+                                                <td>
+                                                    <!-- 2200 -->
+                                                    <?php echo $total = $row['totalitmprice']; ?>
+                                                </td>
+
+                                            </tr>
+                                            <?php
+                                            $ftotal += $total;
+                                            $cnt++;
+                                        } ?>
+
+                                        <tr>
+                                            <td colspan="2" align="center">Total </td>
+                                            <td>
+                                                <?php echo $ftotal; ?>
+                                            </td>
+
+
+
+                                        </tr>
+
+                                    </table>
+                                <?php } ?>
+
                             </div>
                         </div>
                     </div>
