@@ -1,4 +1,18 @@
 <?php
+
+// $dataPoints = array(
+//     array("y" => 25, "label" => "Sunday"),
+//     array("y" => 15, "label" => "Monday"),
+//     array("y" => 25, "label" => "Tuesday"),
+//     array("y" => 5, "label" => "Wednesday"),
+//     array("y" => 10, "label" => "Thursday"),
+//     array("y" => 0, "label" => "Friday"),
+//     array("y" => 20, "label" => "Saturday")
+// );
+
+?>
+
+<?php
 $con = mysqli_connect("localhost", "root", "", "omsms");
 
 if (!$con) {
@@ -36,8 +50,6 @@ if ($res) {
 
 mysqli_close($con);
 ?>
-
-
 <!DOCTYPE HTML>
 <html>
 
@@ -56,6 +68,7 @@ mysqli_close($con);
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
+
     <script>
         window.onload = function () {
             var chart = new CanvasJS.Chart("chartContainer", {
@@ -72,7 +85,7 @@ mysqli_close($con);
                     interval: 1
                 },
                 data: [{
-                    type: "column",
+                    type: "line",
                     yValueFormatString: "#,##0.##",
                     dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
                 }]
@@ -81,6 +94,8 @@ mysqli_close($con);
             chart.render();
         }
     </script>
+
+
 </head>
 
 <body>
@@ -96,7 +111,7 @@ mysqli_close($con);
             ?>
             <div class="main-panel">
                 <div class="content-wrapper">
-                    <div id="chartContainer" style="height: 370px; width: 50%; "></div>
+                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
                 </div>
             </div>
