@@ -74,15 +74,15 @@ $ftotal = 0;
                                         </thead>
                                         <?php
                                         $fstatus = 'Product Delivered';
-                                        // $ret = mysqli_query($con, "select month(OrderTime) as lmonth,year(OrderTime) as lyear, sum(100*tblorders.PrdQty) as totalitmprice from tblorders  join tblorderaddresses on tblorderaddresses.Ordernumber=tblorders.OrderNumber  join tblprd  on tblprd.ID=tblorders.PrdId  where date(tblorderaddresses.OrderTime) between '$fdate' and '$tdate'  and tblorderaddresses.OrderFinalStatus='$fstatus'  group by lmonth,lyear");
-                                        $ret = mysqli_query($con, "select month(OrderTime) as lmonth,year(OrderTime) as lyear, sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders  join tblorderaddresses on tblorderaddresses.Ordernumber=tblorders.OrderNumber  join tblprd  on tblprd.ID=tblorders.PrdId  where  date(tblorderaddresses.OrderTime) between '$fdate' and '$tdate'  ");
+                                        $ret = mysqli_query($con, "select month(OrderTime) as lmonth,year(OrderTime) as lyear, sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders  join tblorderaddresses on 1=1  join tblprd  on tblprd.ID=tblorders.PrdId  where date(tblorderaddresses.OrderTime) between '$fdate' and '$tdate'  and tblorderaddresses.OrderFinalStatus='$fstatus'  group by lmonth,lyear");
+                                        // $ret = mysqli_query($con, "select month(OrderTime) as lmonth,year(OrderTime) as lyear, sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders  join tblorderaddresses on tblorderaddresses.Ordernumber=tblorders.OrderNumber  join tblprd  on tblprd.ID=tblorders.PrdId  where  date(tblorderaddresses.OrderTime) between '$fdate' and '$tdate' and tblorderaddresses.OrderFinalStatus='Product Delivered'  group by lmonth,lyear ");
                                         $cnt = 1;
-                                        if ($ret) {
-                                            echo "Query cscuceed";
-                                        } else {
+                                        // if ($ret) {
+                                        //     echo "Query Success";
+                                        // } else {
 
-                                            echo "Query failed";
-                                        }
+                                        //     echo "Query failed";
+                                        // }
 
                                         while ($row = mysqli_fetch_array($ret)) {
 
@@ -142,16 +142,16 @@ $ftotal = 0;
                                         </thead>
                                         <?php
                                         // $ret = mysqli_query($con, "select year(OrderTime) as lyear,sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders join tblorderaddresses on tblorderaddresses.Ordernumber=tblorders.OrderNumber join tblprd on tblprd.ID=tblorders.PrdId where year(tblorderaddresses.OrderTime) between '$fdate' and '$tdate' and tblorderaddresses.OrderFinalStatus='$fstatus' group by lyear");
-                                        // $ret = mysqli_query($con, "select year(OrderTime) as lyear,sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders join tblorderaddresses on 1=1 join tblprd    on tblprd.ID=tblorders.PrdId where year(tblorderaddresses.OrderTime) between '$fdate' and '$tdate' and tblorderaddresses.OrderFinalStatus='$fstatus' group by lyear");
-                                        $ret = mysqli_query($con, "SELECT YEAR(tblorderaddresses.OrderTime) AS lyear,SUM(100 * tblorders.PrdQty) AS totalitmprice FROM tblorders JOIN tblorderaddresses ON tblorderaddresses.Ordernumber = tblorders.OrderNumber JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE YEAR(tblorderaddresses.OrderTime) BETWEEN '$fdate' AND '$tdate' AND tblorderaddresses.OrderFinalStatus = '$fstatus' GROUP BY lyear");
+                                        $ret = mysqli_query($con, "select year(OrderTime) as lyear,sum(PrdPrice*tblorders.PrdQty) as totalitmprice from tblorders join tblorderaddresses on 1=1  join tblprd on tblprd.ID=tblorders.PrdId where year(tblorderaddresses.OrderTime) between '$fdate' and '$tdate' and tblorderaddresses.OrderFinalStatus='$fstatus' group by lyear");
+                                        // $ret = mysqli_query($con, "SELECT YEAR(tblorderaddresses.OrderTime) AS lyear,SUM(100 * tblorders.PrdQty) AS totalitmprice FROM tblorders JOIN tblorderaddresses ON tblorderaddresses.Ordernumber = tblorders.OrderNumber JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE YEAR(tblorderaddresses.OrderTime) BETWEEN '$fdate' AND '$tdate' AND tblorderaddresses.OrderFinalStatus = '$fstatus' GROUP BY lyear");
 
                                         $cnt = 1;
-                                        if ($ret) {
-                                            echo "Query cscuceed";
-                                        } else {
+                                        // if ($ret) {
+                                        //     echo "Query Success";
+                                        // } else {
 
-                                            echo "Query failed";
-                                        }
+                                        //     echo "Query failed";
+                                        // }
 
                                         while ($row = mysqli_fetch_array($ret)) {
 
@@ -162,12 +162,15 @@ $ftotal = 0;
                                                     <?php echo $cnt; ?>
                                                 </td>
                                                 <td>
+
                                                     <?php echo $row['lyear']; ?>
                                                     <!-- 12/22 -->
                                                 </td>
                                                 <td>
                                                     <!-- 2200 -->
-                                                    <?php echo $total = $row['totalitmprice']; ?>
+                                                    <?php echo $total = $row['totalitmprice']; 
+                                                     
+                                                    ?>
                                                 </td>
 
                                             </tr>

@@ -40,7 +40,7 @@
                                 <div class="ibox-content">
 
                                     <h4 class="header-title m-t-0 m-b-30">Between Dates Reports</h4>
-                                    <form name="bwdatesreport" action="rep_sales_details.php?order=1010" method="post">
+                                    <form name="bwdatesreport" action="rep_sales_details.php" method="post">
                                         <div class="form-group row">
 
 
@@ -66,7 +66,7 @@
                                                 Type</label>
                                             <div class="col-10">
 
-                                                <input type="radio" name="requesttype" value="mtwise">Month Wise
+                                                <input type="radio" name="requesttype" value="mtwise" checked="true">Month Wise
                                                 <input type="radio" name="requesttype" value="ywise">Year Wise
                                             </div>
                                         </div>
