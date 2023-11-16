@@ -1,6 +1,6 @@
 <?php
 $current_page = 'ap_product.php';
-require 'ap_header.php';
+// require 'ap_header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,18 +17,18 @@ require 'ap_header.php';
         <form method="POST" id="product_form">
             <!-- brand name -->
             <div>
-                <label for="brand_name">Brand Name</label>
-                <select name="brand_name" id="brand_name">
-                    <option value="">-- Select Brand --</option>
+                <select name='state' class='custom-select d-block w-100' id='state' required='true'>
+                    <option value=''>Select State</option>
                     <?php
-                    $brand = "SELECT * FROM tblbrand";
-                    $brand_result = mysqli_query($conn, $brand);
-                    if (mysqli_num_rows($brand_result) > 0) {
-                        while ($row = mysqli_fetch_assoc($brand_result)) {
-                            echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
-                        }
-                    }
-                    // $brandid = $_POST['bid'];
+                    include("includes/dbconnection.php");
+
+                    $stateQuery = mysqli_query($con, 'SELECT * FROM tblstate');
+                    while ($state = mysqli_fetch_array($stateQuery)) {
+                        ?>
+                        <option value="$state['statename']">
+                            <?php echo $state['statename'] ?>
+                        </option>
+                    <?php }
                     ?>
                 </select> <br> <br>
             </div>
@@ -36,7 +36,8 @@ require 'ap_header.php';
             <!-- product fetch based on brand name -->
             <div>
                 <label for="product_name">Product Name</label>
-                <select class="disabled:cursor-not-allowed disabled:opacity-50" name="product_name" id="product_name" disabled>
+                <select class="disabled:cursor-not-allowed disabled:opacity-50" name="product_name" id="product_name"
+                    disabled>
                     <option value="">-- Select Brand First --</option>
                     <?php
                     // $prodid = $_POST['pid'];
@@ -78,18 +79,21 @@ require 'ap_header.php';
             <!-- description -->
             <div>
                 <label for="description">Description</label>
-                <textarea name="description" id="description" cols="30" rows="10" placeholder="Enter Description"></textarea> <br> <br>
+                <textarea name="description" id="description" cols="30" rows="10"
+                    placeholder="Enter Description"></textarea> <br> <br>
             </div>
 
             <!-- submit -->
             <div>
-                <input type="submit" name="adddetail" id="adddetail" value="Add Detail" class="cursor-pointer bg-black text-base text-white p-2">
-                <a href="ap_product.php"><button type="button" id="back" class="bg-black p-2 text-white text-base">Back</button></a>
+                <input type="submit" name="adddetail" id="adddetail" value="Add Detail"
+                    class="cursor-pointer bg-black text-base text-white p-2">
+                <a href="ap_product.php"><button type="button" id="back"
+                        class="bg-black p-2 text-white text-base">Back</button></a>
             </div>
         </form>
         <script>
             // Product Selection
-            $("#brand_name").change(function() {
+            $("#brand_name").change(function () {
                 var brandid = $(this).val();
                 if (brandid === "") {
                     $("#product_name").html("<option value=''>-- Select Brand First --</option>");
@@ -101,7 +105,7 @@ require 'ap_header.php';
                         data: {
                             bid: brandid
                         },
-                        success: function(response) {
+                        success: function (response) {
                             $("#product_name").prop("disabled", false);
                             $("#product_name").html(response);
                         },
@@ -110,7 +114,7 @@ require 'ap_header.php';
             });
 
             // Color Selection
-            $("#product_name").change(function() {
+            $("#product_name").change(function () {
                 var productid = $(this).val();
                 if (productid === "") {
                     $("#color").html("<option value=''>-- Select Product First --</option>");
@@ -122,7 +126,7 @@ require 'ap_header.php';
                         data: {
                             pid: productid
                         },
-                        success: function(response) {
+                        success: function (response) {
                             $("#color").prop("disabled", false);
                             $("#color").html(response);
                         },
@@ -131,7 +135,7 @@ require 'ap_header.php';
             });
 
             // Storage Selection
-            $("#color").change(function() {
+            $("#color").change(function () {
                 var colorid = $(this).val();
                 if (colorid === "") {
                     $("#storage").html("<option value=''>-- Select Color First --</option>");
@@ -143,7 +147,7 @@ require 'ap_header.php';
                         data: {
                             cid: colorid
                         },
-                        success: function(response) {
+                        success: function (response) {
                             $("#storage").prop("disabled", false);
                             $("#storage").html(response);
                         },
