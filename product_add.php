@@ -24,6 +24,13 @@ $conn = mysqli_connect("localhost", "root", "", "project");
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
+
+    <!-- error -->
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,7 +46,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Add Product Form</h4>
-                            <form class="forms-sample" method="POST" enctype="multipart/form-data">
+                            <form class="forms-sample" id="product_form" method="POST" enctype="multipart/form-data">
                                 <!-- Brand Name -->
                                 <div class="form-group">
                                     <label for="product_brand">Product Brand</label>
@@ -66,7 +73,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                 <!-- description -->
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Product Description"></textarea>
                                 </div>
 
                                 <!-- Image -->
@@ -106,9 +113,91 @@ $conn = mysqli_connect("localhost", "root", "", "project");
     <!-- Custom js for this page-->
     <script src="js/dashboard.js"></script>
     <script src="js/Chart.roundedBarCharts.js"></script>
-</body>
 
-</html>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery Validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        toastr.options = {
+            "positionClass": "toast-top-center",
+            "timeOut": 2000, // 2 seconds
+            "extendedTimeOut": 1000, // 1 second extended time on hover
+            "closeButton": true,
+            "progressBar": true,
+            "debug": false,
+            "showDuration": 300,
+            "hideDuration": 1000,
+        };
+        // toastr.success("Success.....!")
+    </script>
+
+    <script>
+        // Validation
+        $(document).ready(function() {
+            $('#product_form').validate({
+                rules: {
+                    product_brand: {
+                        required: true
+                    },
+                    product_name: {
+                        required: true,
+                        number: false
+                    },
+                    description: {
+                        required: true
+                    },
+                    // price: {
+                    //     required: true
+                    // },
+                    // stock: {
+                    //     required: true
+                    // },
+                    //color: {
+                    //    required: true
+                    //},
+                    storage: {
+                        required: true
+                    },
+                    image: {
+                        required: true
+                    }
+                },
+                messages: {
+                    product_brand: {
+                        required: "Please Select a Brand"
+                    },
+                    product_name: {
+                        required: "Please Enter a Product Name",
+                        number: "Please Enter a Valid Product Name"
+                    },
+                    description: {
+                        required: "Please Enter a Description"
+                    },
+                    // price: {
+                    //     required: "Please Enter a Price"
+                    // },
+                    // stock: {
+                    //     required: "Please Enter a Stock"
+                    // },
+                    // color: {
+                    //     required: "Please Select a Color"
+                    // },
+                    storage: {
+                        required: "Please Select a Storage"
+                    },
+                    image: {
+                        required: "Please Select an Image"
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

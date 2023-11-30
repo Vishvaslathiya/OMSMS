@@ -32,7 +32,7 @@
             <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="product_add.php">Add Product</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Add Product Details</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="product_detail.php">Add Product Details</a></li>
                     <li class="nav-item"> <a class="nav-link" href="product_view.php">View Products</a></li>
                 </ul>
             </div>
