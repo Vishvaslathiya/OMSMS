@@ -17,9 +17,9 @@
             </a>
             <div class="collapse" id="users">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="rep_datewise.php">Add Users </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="rep_orderwise.php">View All Users </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="rep_sales.php">Edit Users</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="user_add.php">Add Users </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="user_view.php">View All Users </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="user_edit.php">Edit Users</a></li>
                 </ul>
             </div>
         </li>
