@@ -114,17 +114,16 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                 </div>
 
                                 <!-- buttons -->
-                                <input type="submit" name="adddetail" id="adddetail" value="Add" class="btn btn-primary mr-2">
-                                <button type="reset" class="btn btn-light">Cancel</button>
+                                <button type="submit" name="adddetail" id="adddetail" class="btn btn-primary mr-2">Add Details</button>
+                                <button type="button" name="cancel" id="cancel" class="btn btn-light">Cancel</button>
                             </form>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 
     <script src="vendors/js/vendor.bundle.base.js"></script>
 
@@ -169,6 +168,11 @@ $conn = mysqli_connect("localhost", "root", "", "project");
     </script>
 
     <script>
+        // cancel button
+        document.getElementById("cancel").onclick = function() {
+            location.href = "product_view.php";
+        };
+
         // Product Selection
         $("#brand_name").change(function() {
             var brandid = $(this).val();
@@ -305,7 +309,7 @@ if (isset($_POST['adddetail'])) {
     $select = "SELECT * FROM tblproductdetail WHERE pid = $product_id AND cid = $color AND sid = $storage";
     $select_result = mysqli_query($conn, $select);
     if (mysqli_num_rows($select_result) > 0) {
-        echo "<script>toastr.error('Product Details Already Added')</script>";
+        echo "<script>toastr.error('Product Details Already Exists')</script>";
     } else {
         $sql = "INSERT INTO tblproductdetail (pid, cid, sid, price, stock, description) VALUES ($product_id, $color, $storage, $price, $stock, '$description')";
         $result = mysqli_query($conn, $sql);
@@ -313,7 +317,7 @@ if (isset($_POST['adddetail'])) {
         if ($result) {
             echo "<script>toastr.success('Product Details Added Successfully')</script>";
         } else {
-            echo "<script>toastr.error('Product Details Not Added')</script>";
+            echo "<script>toastr.error('Error in adding Product Details')</script>";
         }
     }
 }

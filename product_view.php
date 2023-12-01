@@ -96,13 +96,13 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                                             </td>
                                                             <td>
                                                                 <!-- edit -->
-                                                                <a class="px-1 text-dark" href="product_edit.php?pid=<?php echo $row['id']; ?>">Edit</a>
+                                                                <a class="px-1" href="product_edit.php?eid=<?php echo $row['id']; ?>">Edit</a>
 
                                                                 <!-- edit detail -->
-                                                                <a class="px-1 text-dark" href="edit_product.php?esid=<?php echo $row['id']; ?>">Edit Details</a>
+                                                                <a class="px-1 text-primary" href="product_edit.php?esid=<?php echo $row['id']; ?>">Edit Details</a>
 
                                                                 <!-- delete -->
-                                                                <a class="px-1 text-dark" href="product_delete.php?pid=<?php echo $row['id']; ?>">Delete</a>
+                                                                <a class="px-1 text-danger " href="product_edit.php?did=<?php echo $row['id']; ?>">Delete</a>
 
                                                             </td>
                                                         </tr>
