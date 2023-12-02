@@ -1,6 +1,7 @@
 <?php
-// include "includes/dbconnection.php";
-$conn = mysqli_connect("localhost", "root", "", "project");
+require_once('includes/dbconnection.php');
+
+// $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +55,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                         <option value="">Select Brand</option>
                                         <?php
                                         $brand = "SELECT * FROM tblbrand";
-                                        $brand_result = mysqli_query($conn, $brand);
+                                        $brand_result = mysqli_query($con, $brand);
                                         if (mysqli_num_rows($brand_result) > 0) {
                                             while ($row = mysqli_fetch_assoc($brand_result)) {
                                                 echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
@@ -224,26 +225,26 @@ if (isset($_POST['addproduct'])) {
     $targetDirectory = "uploads/";
     $image = $targetDirectory . $imageName;
     $pid = "SELECT id FROM tblproduct WHERE name = '$product_name'";
-    $pid_result = mysqli_query($conn, $pid);
+    $pid_result = mysqli_query($con, $pid);
     if (mysqli_num_rows($pid_result) > 0) {
         echo "<script>toastr.error('Product Already Exists!')</script>";
     } else {
         if (move_uploaded_file($imageTmpName, $image)) {
             $insert_product = "INSERT INTO tblproduct (bid, name, description, imageName, status) VALUES ('$product_brand', '$product_name', '$description', '$image', 1)";
-            $insert_product_result = mysqli_query($conn, $insert_product);
+            $insert_product_result = mysqli_query($con, $insert_product);
 
             if ($insert_product_result) {
                 // fetching product id
                 // $fetch_pid = "SELECT id FROM tblproduct WHERE name = '$product_name'";
-                // $run_pid = mysqli_query($conn, $fetch_pid);
+                // $run_pid = mysqli_query($con, $fetch_pid);
 
-                // $last_id = mysqli_insert_id($conn);
+                // $last_id = mysqli_insert_id($con);
                 // if ($run_pid) {
                 //     $row_pid = mysqli_fetch_assoc($run_pid);
                 //     $pid = $row_pid['id'];
                 //     foreach ($color as $color_id) {
                 //         $insert_color = "INSERT INTO tblproductcolor (pid, colorid) VALUES ($pid, $color_id)";
-                //         $insert_color_result = mysqli_query($conn, $insert_color);
+                //         $insert_color_result = mysqli_query($con, $insert_color);
                 //     }
 
                 echo "<script>toastr.success('Product Added Successfully')</script>";

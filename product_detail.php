@@ -1,6 +1,7 @@
 <?php
-// include "includes/dbconnection.php";
-$conn = mysqli_connect("localhost", "root", "", "project");
+require_once('includes/dbconnection.php');
+
+// $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +55,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                         <option value="">-- Select Brand --</option>
                                         <?php
                                         $brand = "SELECT * FROM tblbrand";
-                                        $brand_result = mysqli_query($conn, $brand);
+                                        $brand_result = mysqli_query($con, $brand);
                                         if (mysqli_num_rows($brand_result) > 0) {
                                             while ($row = mysqli_fetch_assoc($brand_result)) {
                                                 echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
@@ -307,12 +308,12 @@ if (isset($_POST['adddetail'])) {
     $description = $_POST['description'];
 
     $select = "SELECT * FROM tblproductdetail WHERE pid = $product_id AND cid = $color AND sid = $storage";
-    $select_result = mysqli_query($conn, $select);
+    $select_result = mysqli_query($con, $select);
     if (mysqli_num_rows($select_result) > 0) {
         echo "<script>toastr.error('Product Details Already Exists')</script>";
     } else {
         $sql = "INSERT INTO tblproductdetail (pid, cid, sid, price, stock, description) VALUES ($product_id, $color, $storage, $price, $stock, '$description')";
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($con, $sql);
 
         if ($result) {
             echo "<script>toastr.success('Product Details Added Successfully')</script>";

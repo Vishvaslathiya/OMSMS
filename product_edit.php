@@ -1,6 +1,6 @@
 <?php
-// include "includes/dbconnection.php";
-$conn = mysqli_connect("localhost", "root", "", "project");
+require_once('includes/dbconnection.php');
+// $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +50,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                             if (isset($_GET['eid'])) {
                                 $id = $_GET['eid'];
                                 $select = "SELECT * FROM tblproduct WHERE id = '$id'";
-                                $select_result = mysqli_query($conn, $select);
+                                $select_result = mysqli_query($con, $select);
                                 if (mysqli_num_rows($select_result) > 0) {
                             ?>
                                     <h4 class="card-title">Edit Product Form</h4>
@@ -65,7 +65,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                                     <option value="">Select Brand</option>
                                                     <?php
                                                     $brand = "SELECT * FROM tblbrand";
-                                                    $brand_result = mysqli_query($conn, $brand);
+                                                    $brand_result = mysqli_query($con, $brand);
                                                     if (mysqli_num_rows($brand_result) > 0) {
                                                         while ($row1 = mysqli_fetch_assoc($brand_result)) {
                                                             if ($row['bid'] == $row1['id']) {
@@ -121,7 +121,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                             if (isset($_GET['esid'])) {
                                 $id = $_GET['esid'];
                                 $select = "SELECT * FROM tblproductdetail WHERE pid = '$id'";
-                                $select_result = mysqli_query($conn, $select);
+                                $select_result = mysqli_query($con, $select);
                                 if (mysqli_num_rows($select_result) > 0) {
                             ?>
                                     <h4 class="card-title">Edit Product Detail Form</h4>
@@ -137,7 +137,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                             <label for="product_name">Product Name</label>
                                             <?php
                                             $product = "SELECT * FROM tblproduct WHERE id = '$pid'";
-                                            $product_result = mysqli_query($conn, $product);
+                                            $product_result = mysqli_query($con, $product);
                                             if (mysqli_num_rows($product_result) > 0) {
                                                 $row1 = mysqli_fetch_assoc($product_result);
                                             ?>
@@ -152,7 +152,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                                 <option value="">-- Select Color --</option>
                                                 <?php
                                                 $color = "SELECT * FROM tblcolor";
-                                                $color_result = mysqli_query($conn, $color);
+                                                $color_result = mysqli_query($con, $color);
                                                 if (mysqli_num_rows($color_result) > 0) {
                                                     while ($row1 = mysqli_fetch_assoc($color_result)) {
                                                 ?>
@@ -169,7 +169,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                                 <option value="">-- Select Storage --</option>
                                                 <?php
                                                 $storage = "SELECT * FROM tblstorage";
-                                                $storage_result = mysqli_query($conn, $storage);
+                                                $storage_result = mysqli_query($con, $storage);
                                                 if (mysqli_num_rows($storage_result) > 0) {
                                                     while ($row1 = mysqli_fetch_assoc($storage_result)) {
                                                 ?>
@@ -426,7 +426,7 @@ if (isset($_POST['updateprod'])) {
         if (move_uploaded_file($imageTmpName, $image)) {
             // update product
             $update = "UPDATE tblproduct SET bid = '$product_brand', name = '$product_name', description = '$description', imageName = '$image' WHERE id = '$id'";
-            $update_result = mysqli_query($conn, $update);
+            $update_result = mysqli_query($con, $update);
             if ($update_result) {
                 echo "<script>alert('Product Details Updated Successfully'); location.href = 'product_view.php';</script>";
             } else {
@@ -438,7 +438,7 @@ if (isset($_POST['updateprod'])) {
     } else {
         // update product
         $update = "UPDATE tblproduct SET bid = '$product_brand', name = '$product_name', description = '$description' WHERE id = '$id'";
-        $update_result = mysqli_query($conn, $update);
+        $update_result = mysqli_query($con, $update);
         if ($update_result) {
             echo "<script> alert('Product Details Updated Successfully other than Image'); location.href = 'product_view.php';</script>";
         } else {
@@ -457,12 +457,12 @@ if (isset($_POST['updatestock'])) {
     $description = $_POST['description'];
 
     $select = "SELECT * FROM tblproductdetail WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
-    $select_result = mysqli_query($conn, $select);
+    $select_result = mysqli_query($con, $select);
     if (mysqli_num_rows($select_result) > 0) {
 
 
         $update = "UPDATE tblproductdetail SET price = '$price', stock = '$stock', description = '$description' WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
-        $update_result = mysqli_query($conn, $update);
+        $update_result = mysqli_query($con, $update);
         if ($update_result) {
             // echo "<script>toastr.success('Product Stock Updated Successfully'); location.href = 'product_view.php';</script>";
             echo "<script>alert('Product Stock Updated Successfully'); location.href = 'product_edit.php?esid=$id';</script>";
@@ -480,12 +480,12 @@ if (isset($_POST['deletecolor'])) {
     $storage = $_POST['storage'];
 
     $select = "SELECT * FROM tblproductdetail WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
-    $select_result = mysqli_query($conn, $select);
+    $select_result = mysqli_query($con, $select);
     if (mysqli_num_rows($select_result) > 0) {
 
 
         $delete = "DELETE FROM tblproductdetail WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
-        $delete_result = mysqli_query($conn, $delete);
+        $delete_result = mysqli_query($con, $delete);
         if ($delete_result) {
             echo "<script>alert('Product of Color Deleted Successfully'); location.href = 'product_edit.php?esid=$id';</script>";
         } else {
@@ -501,14 +501,14 @@ if (isset($_POST['deletecolor'])) {
 if (isset($_GET['did'])) {
     $id = $_GET['did'];
     $select = "SELECT * FROM tblproductdetail WHERE pid = '$id'";
-    $select_result = mysqli_query($conn, $select);
+    $select_result = mysqli_query($con, $select);
     if (mysqli_num_rows($select_result) > 0) {
         // echo "<script> toastr.error('Product cannot be deleted, Product Details is in Use');</script>";
         echo "<script> alert('Product cannot be deleted, Product Details is in Use');</script>";
         echo "<script> window.location.href = 'product_view.php'</script>";
     } else {
         $delete = "DELETE FROM tblproduct WHERE id = '$id'";
-        $delete_result = mysqli_query($conn, $delete);
+        $delete_result = mysqli_query($con, $delete);
         if ($delete_result) {
             echo "<script>alert('Product Deleted Successfully'); location.href = 'product_view.php';</script>";
         } else {

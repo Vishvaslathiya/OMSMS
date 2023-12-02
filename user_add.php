@@ -1,6 +1,8 @@
 <?php
-// include "includes/dbconnection.php";
-$conn = mysqli_connect("localhost", "root", "", "project");
+// session_start();
+require_once('includes/dbconnection.php');
+include_once("mail_config.php");
+// $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,7 +123,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                             <option value="">Select State</option>
                                             <?php
                                             $state = "SELECT * FROM tblstate";
-                                            $state_result = mysqli_query($conn, $state);
+                                            $state_result = mysqli_query($con, $state);
                                             if (mysqli_num_rows($state_result) > 0) {
                                                 while ($row_state = mysqli_fetch_assoc($state_result)) {
                                             ?>
@@ -311,7 +313,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
 if (isset($_POST['sid'])) {
     $stateId = $_POST['sid'];
     $sql = "SELECT * FROM tblcity WHERE sid = $stateId";
-    $result = $conn->query($sql);
+    $result = $con->query($sql);
 
     if ($result->num_rows > 0) {
         echo "<option value=''>-- Select a City --</option>";
@@ -320,6 +322,57 @@ if (isset($_POST['sid'])) {
         }
     } else {
         echo "<option value=''>-- No Cities Found --</option>";
+    }
+}
+?>
+
+<?php
+// Admin side Registration
+if (isset($_POST['add_user'])) {
+    $email = $_POST['email'];
+    $check_email = "SELECT * FROM tbluser WHERE email = '$email'";
+    $result_email = mysqli_query($con, $check_email);
+    if (mysqli_num_rows($result_email) > 0) {
+        echo "<script>toastr.error('Email already Exist..!')</script>";
+        return false;
+    } else {
+        $email = $_POST['email'];
+        $name = $_POST['name'];
+        $password = $_POST['password'];
+        $confpassword = $_POST['confpassword'];
+        // $encpass = password_hash($password, PASSWORD_DEFAULT);
+        $city = $_POST['city'];
+        $contact = $_POST['contact'];
+        $address = $_POST['address'];
+        $gender = $_POST['gender'];
+        $role = $_POST['role'];
+
+        // Setting Session Variables
+        $_SESSION['name'] = $name;
+        $_SESSION['email'] = $email;
+        $_SESSION['password'] = $password;
+        $_SESSION['confpassword'] = $confpassword;
+        $_SESSION['city'] = $city;
+        $_SESSION['contact'] = $contact;
+        $_SESSION['address'] = $address;
+        $_SESSION['gender'] = $gender;
+        $_SESSION['role'] = $role;
+
+        // Generate a random 6-digit OTP
+        $otp = rand(100000, 999999);
+        $_SESSION['otp'] = $otp;
+        // Send the OTP to the user's email
+        $subject = "Your Login Code";
+        $message = "<h2>Your OTP for Registration is: $otp</h2>";
+
+        $mail->addAddress("$email");
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = " Hello  there, $message";
+        $mail->AltBody = 'Body in plain text for non-HTML mail clients';
+        $mail->send();
+        echo "<script>toastr.success('OTP Sent Successfully on $email.....!')</script>";
+        echo "<script>location.href='user_add_otp.php'</script>";
     }
 }
 ?>

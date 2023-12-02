@@ -1,6 +1,6 @@
 <?php
-// include "includes/dbconnection.php";
-$conn = mysqli_connect("localhost", "root", "", "project");
+require_once('includes/dbconnection.php');
+// $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +56,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                             <tbody>
                                                 <?php $num = 1;
                                                 $product = "SELECT * FROM tblproduct";
-                                                $product_result = mysqli_query($conn, $product);
+                                                $product_result = mysqli_query($con, $product);
                                                 if (mysqli_num_rows($product_result) > 0) {
                                                     while ($row = mysqli_fetch_assoc($product_result)) {
                                                 ?>
@@ -75,7 +75,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                                                 <?php
                                                                 $bid = $row['bid'];
                                                                 $brand = "SELECT * FROM tblbrand WHERE id = '$bid'";
-                                                                $brand_result = mysqli_query($conn, $brand);
+                                                                $brand_result = mysqli_query($con, $brand);
                                                                 $row_brand = mysqli_fetch_assoc($brand_result);
                                                                 echo $row_brand['name'];
                                                                 ?>
@@ -88,9 +88,13 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                                                             <td>
                                                                 <?php
                                                                 if ($row['status'] == 1) {
-                                                                    echo "Active";
+                                                                ?>
+                                                                    <a href="product_view.php?aid=' <?php echo $row['id'] ?>'" class=" text-success">Active</a>
+                                                                <?php
                                                                 } else {
-                                                                    echo "Inactive";
+                                                                ?>
+                                                                    <a href="product_view.php?iaid='<?php echo $row['id'] ?>'" class=" text-danger">Inactive</a>
+                                                                <?php
                                                                 }
                                                                 ?>
                                                             </td>
@@ -153,7 +157,7 @@ $conn = mysqli_connect("localhost", "root", "", "project");
                 "lengthChange": true,
                 "searching": true,
                 language: {
-                    searchPlaceholder: "Search Brand",
+                    searchPlaceholder: "Search Product",
                 },
                 "ordering": true,
                 "info": true,
@@ -174,53 +178,33 @@ $conn = mysqli_connect("localhost", "root", "", "project");
 </html>
 
 <?php
-if (isset($_POST['addproduct'])) {
-    $product_brand = $_POST['product_brand'];
-    $product_name = $_POST['product_name'];
-    $description = $_POST['description'];
-    // $price = $_POST['price'];
-    // $stock = $_POST['stock'];
-    // $color = $_POST['color'];
-    // $storage = $_POST['storage'];
-    $imageName = $_FILES['image']['name'];
-    $imageTmpName = $_FILES['image']['tmp_name'];
-
-
-    // Store image in a directory
-    $targetDirectory = "uploads/";
-    $image = $targetDirectory . $imageName;
-    $pid = "SELECT id FROM tblproduct WHERE name = '$product_name'";
-    $pid_result = mysqli_query($conn, $pid);
-    if (mysqli_num_rows($pid_result) > 0) {
-        echo "<script>toastr.error('Product Already Exists!')</script>";
+// Ative and Inactive
+if (isset($_GET['aid'])) {
+    $aid = $_GET['aid'];
+    $sql = "UPDATE tblproduct SET status = 0 WHERE id = $aid";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        echo "<script> alert('Product is now Inactive'); </script>";
+        // echo "<script>toastr.success('Product is now Inactive')</script>";
+        echo "<script> window.location.href = 'product_view.php'; </script>";
     } else {
-        if (move_uploaded_file($imageTmpName, $image)) {
-            $insert_product = "INSERT INTO tblproduct (bid, name, description, imageName, status) VALUES ('$product_brand', '$product_name', '$description', '$image', 1)";
-            $insert_product_result = mysqli_query($conn, $insert_product);
-
-            if ($insert_product_result) {
-                // fetching product id
-                // $fetch_pid = "SELECT id FROM tblproduct WHERE name = '$product_name'";
-                // $run_pid = mysqli_query($conn, $fetch_pid);
-
-                // $last_id = mysqli_insert_id($conn);
-                // if ($run_pid) {
-                //     $row_pid = mysqli_fetch_assoc($run_pid);
-                //     $pid = $row_pid['id'];
-                //     foreach ($color as $color_id) {
-                //         $insert_color = "INSERT INTO tblproductcolor (pid, colorid) VALUES ($pid, $color_id)";
-                //         $insert_color_result = mysqli_query($conn, $insert_color);
-                //     }
-
-                echo "<script>toastr.success('Product Added Successfully')</script>";
-                echo '<script>location.href="product_view.php"</script>';
-                // }
-            } else {
-                echo "<script>toastr.error('Something went Wrong!')</script>";
-            }
-        } else {
-            echo "<script>toastr.error('Error in Uploading Image!')</script>";
-        }
+        echo "<script> alert('Error'); </script>";
+        echo "<script> window.location.href = 'product_view.php'; </script>";
     }
 }
+
+if (isset($_GET['iaid'])) {
+    $iaid = $_GET['iaid'];
+    $sql = "UPDATE tblproduct SET status = 1 WHERE id = $iaid";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        echo "<script> alert('Product is now Active'); </script>";
+        // echo "<script>toastr.success('Product is now Active')</script>";
+        echo "<script> window.location.href = 'product_view.php'; </script>";
+    } else {
+        echo "<script> alert('Error'); </script>";
+        echo "<script> window.location.href = 'product_view.php'; </script>";
+    }
+}
+
 ?>

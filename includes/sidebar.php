@@ -17,9 +17,8 @@
             </a>
             <div class="collapse" id="users">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="user_add.php">Add Users </a></li>
                     <li class="nav-item"> <a class="nav-link" href="user_view.php">View All Users </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="user_edit.php">Edit Users</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="user_add.php">Add Users </a></li>
                 </ul>
             </div>
         </li>
@@ -111,6 +110,20 @@
                     <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
                 </ul>
             </div>
+        </li>
+
+        <!-- Other -->
+        <li class="nav-item">
+            <a class="nav-link" href="other_details.php">
+                <i class="icon-columns menu-icon"></i>
+                <span class="menu-title">Other Details</span>
+                <!-- <i class="menu-arrow"></i> -->
+            </a>
+            <!-- <div class="collapse" id="other">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="product_view.php">View Other Details</a></li>
+                </ul>
+            </div> -->
         </li>
         <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">

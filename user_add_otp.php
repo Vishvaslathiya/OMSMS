@@ -1,0 +1,179 @@
+<?php
+require_once('includes/dbconnection.php');
+// $con = mysqli_connect("localhost", "root", "", "project");
+// session_start();
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>OMSMS</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="vendors/feather/feather.css">
+    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+    <!-- error -->
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <div class="container-fluid page-body-wrapper">
+            <?php
+            include_once("includes/Navbar.php");
+            include_once("includes/sidebar.php");
+            ?>
+            <div class="content-wrapper">
+                <div class="col-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">OTP sent to Email Address</h4>
+                            <form class="forms-sample" id="otp_form" method="POST">
+
+                                <!-- User Name -->
+                                <div class="form-group">
+                                    <label for="otp">OTP</label>
+                                    <input type="text" class="form-control" id="otp" name="otp" placeholder="OTP">
+                                </div>
+
+                                <!-- not get OTP -->
+                                <div class="form-group">
+                                    <a href="user_add.php" class="">Not get OTP? Try Again!</a>
+                                </div>
+
+                                <!-- buttons -->
+                                <button type="submit" name="otpbtn" id="otpbtn" class="btn btn-primary mr-2">Verify</button>
+                                <button type="button" name="cancel" id="cancel" class="btn btn-light">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+
+    <script src="vendors/chart.js/Chart.min.js"></script>
+    <script src="vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="js/dataTables.select.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="js/dashboard.js"></script>
+    <script src="js/Chart.roundedBarCharts.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery Validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        toastr.options = {
+            "positionClass": "toast-top-center",
+            "timeOut": 2000, // 2 seconds
+            "extendedTimeOut": 1000, // 1 second extended time on hover
+            "closeButton": true,
+            "progressBar": true,
+            "debug": false,
+            "showDuration": 300,
+            "hideDuration": 1000,
+        };
+        // toastr.success("Success.....!")
+    </script>
+
+    <script>
+        // cancel button
+        document.getElementById("cancel").onclick = function() {
+            location.href = "user_add.php";
+        };
+
+        // Form Validate
+        $('#otp_form').validate({
+            rules: {
+                'otp': {
+                    required: true,
+                    number: true,
+                    minlength: 6,
+                    maxlength: 6
+                }
+            },
+            messages: {
+                'otp': {
+                    required: "Please enter otp",
+                    number: "Please enter valid otp",
+                    minlength: "Please enter valid otp",
+                    maxlength: "Please enter valid otp"
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
+
+<?php
+if (isset($_POST['otpbtn'])) {
+    $uerotp = $_POST['otp'];
+    $otp = $_SESSION['otp'];
+    $email = $_SESSION['email'];
+    $name = $_SESSION['name'];
+    $password = $_SESSION['password'];
+    $confpassword = $_SESSION['confpassword'];
+    $encpass = password_hash($password, PASSWORD_BCRYPT);
+    $city = $_SESSION['city'];
+    $contact = $_SESSION['contact'];
+    $address = $_SESSION['address'];
+    $gender = $_SESSION['gender'];
+    $role = $_SESSION['role'];
+
+
+    if ($uerotp == $otp) {
+
+        $register = "INSERT INTO tbluser (name, email, password, contact, gender, cityid, address, role, status) VALUES ('$name', '$email', '$encpass', '$contact', '$gender', '$city', '$address', '$role', 1)";
+        $result = mysqli_query($con, $register);
+        if ($result) {
+            session_destroy($_SESSION['otp']);
+            echo "<script>alert('User added Successful!')</script>";
+            echo "<script>location.href='user_view.php'</script>";
+        } else {
+            echo "<script>toastr.error('Adding user Failed!  Try Again!')</script>";
+        }
+    } else {
+        echo "<script>toastr.error('OTP not Matched!') </script>";
+    }
+}
+?>

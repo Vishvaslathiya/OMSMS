@@ -2,14 +2,14 @@
 <?php
 
 // Database Connection
-// require 'include/connection.php';
-$conn = mysqli_connect("localhost", "root", "", "project");
+require_once('includes/dbconnection.php');
+// $con = mysqli_connect("localhost", "root", "", "project");
 
 // Product Selection
 if (isset($_POST['bid'])) {
     $brandid = $_POST['bid'];
     $sql = "SELECT * FROM tblproduct WHERE bid = $brandid";
-    $result = $conn->query($sql);
+    $result = $con->query($sql);
 
     if ($result->num_rows > 0) {
         // echo '<select name="pid" id="pid">';
@@ -28,7 +28,7 @@ if (isset($_POST['pid'])) {
     // $productid = $_POST['pid'];
     // $sql = "SELECT * FROM tblproductcolor WHERE pid = $productid";
     $sql = "SELECT * FROM tblcolor";
-    $result = $conn->query($sql);
+    $result = $con->query($sql);
 
     if ($result->num_rows > 0) {
         // echo '<select name="cid" id="cid">';
@@ -36,7 +36,7 @@ if (isset($_POST['pid'])) {
         while ($row = $result->fetch_assoc()) {
             // $colorid = $row['colorid'];
             // $sql1 = "SELECT * FROM tblcolor WHERE id = $colorid";
-            // $result1 = $conn->query($sql1);
+            // $result1 = $con->query($sql1);
             // $row1 = $result1->fetch_assoc();
             echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
         }
@@ -50,7 +50,7 @@ if (isset($_POST['pid'])) {
 if (isset($_POST['cid'])) {
     // $colorid = $_POST['cid'];
     $sql = "SELECT * FROM tblstorage";
-    $result = $conn->query($sql);
+    $result = $con->query($sql);
 
     if ($result->num_rows > 0) {
         // echo '<select name="sid" id="sid">';

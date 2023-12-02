@@ -17,7 +17,7 @@ try {
     $mail->Username = '21bmiit137@gmail.com'; // enter your mail address
     $mail->Password = 'msztcdmmddnuadre'; // enter your email password
     $mail->setFrom('21bmiit137@gmail.com', 'Mobile Shop'); // Set sender of the mail
-    // $mail->Port       = 587;
+    // $mail->Port = 587;
     // $mail->addAddress('rohannarigara22@gmail.com');
     // $mail->isHTML(true); // Set email format to plain text
     // $mail->Subject = 'Hello, World!';
