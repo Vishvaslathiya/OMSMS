@@ -59,8 +59,7 @@ $faritotal = 0;
                                         <?php echo $tdate ?>
                                     </h5>
                                     <hr />
-                                    <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>S.NO</th>
@@ -84,7 +83,7 @@ $faritotal = 0;
     from tblorderaddresses where date(OrderTime) between '$fdate' and '$tdate' group by lmonth,lyear");
                                         while ($row = mysqli_fetch_array($ret)) {
 
-                                            ?>
+                                        ?>
 
                                             <tr>
                                                 <td>
@@ -112,7 +111,7 @@ $faritotal = 0;
                                                     <?php echo $aritotal = $row['Productdel']; ?>
                                                 </td>
                                             </tr>
-                                            <?php
+                                        <?php
                                             $ftotal += $total;
                                             $ttlny += $npytotal;
                                             $fntotal += $ntotal;
@@ -120,7 +119,6 @@ $faritotal = 0;
                                             $fatotl += $atotl;
                                             $fintotal += $intotal;
                                             $faritotal += $aritotal;
-
                                         } ?>
 
                                         <tr>

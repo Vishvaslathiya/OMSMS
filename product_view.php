@@ -1,6 +1,11 @@
 <?php
+<<<<<<< HEAD
 // include "includes/dbconnection.php";
 $conn = mysqli_connect("localhost", "root", "", "omsms");
+=======
+require_once('includes/dbconnection.php');
+// $con = mysqli_connect("localhost", "root", "", "project");
+>>>>>>> b561b8198bc29dec46e5abd77239a3f44df33a4a
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +61,11 @@ $conn = mysqli_connect("localhost", "root", "", "omsms");
                                             <tbody>
                                                 <?php $num = 1;
                                                 $product = "SELECT * FROM tblproduct";
+<<<<<<< HEAD
                                                 $product_result = mysqli_query($conn, $product);
+=======
+                                                $product_result = mysqli_query($con, $product);
+>>>>>>> b561b8198bc29dec46e5abd77239a3f44df33a4a
                                                 if (mysqli_num_rows($product_result) > 0) {
                                                     while ($row = mysqli_fetch_assoc($product_result)) {
                                                 ?>
@@ -75,7 +84,11 @@ $conn = mysqli_connect("localhost", "root", "", "omsms");
                                                                 <?php
                                                                 $bid = $row['bid'];
                                                                 $brand = "SELECT * FROM tblbrand WHERE id = '$bid'";
+<<<<<<< HEAD
                                                                 $brand_result = mysqli_query($conn, $brand);
+=======
+                                                                $brand_result = mysqli_query($con, $brand);
+>>>>>>> b561b8198bc29dec46e5abd77239a3f44df33a4a
                                                                 $row_brand = mysqli_fetch_assoc($brand_result);
                                                                 echo $row_brand['name'];
                                                                 ?>
@@ -88,14 +101,25 @@ $conn = mysqli_connect("localhost", "root", "", "omsms");
                                                             <td>
                                                                 <?php
                                                                 if ($row['status'] == 1) {
+<<<<<<< HEAD
                                                                     echo "Active";
                                                                 } else {
                                                                     echo "Inactive";
+=======
+                                                                ?>
+                                                                    <a href="product_view.php?aid=' <?php echo $row['id'] ?>'" class=" text-success">Active</a>
+                                                                <?php
+                                                                } else {
+                                                                ?>
+                                                                    <a href="product_view.php?iaid='<?php echo $row['id'] ?>'" class=" text-danger">Inactive</a>
+                                                                <?php
+>>>>>>> b561b8198bc29dec46e5abd77239a3f44df33a4a
                                                                 }
                                                                 ?>
                                                             </td>
                                                             <td>
                                                                 <!-- edit -->
+<<<<<<< HEAD
                                                                 <a class="px-1 text-dark" href="product_edit.php?pid=<?php echo $row['id']; ?>">Edit</a>
 
                                                                 <!-- edit detail -->
@@ -103,6 +127,15 @@ $conn = mysqli_connect("localhost", "root", "", "omsms");
 
                                                                 <!-- delete -->
                                                                 <a class="px-1 text-dark" href="product_delete.php?pid=<?php echo $row['id']; ?>">Delete</a>
+=======
+                                                                <a class="px-1" href="product_edit.php?eid=<?php echo $row['id']; ?>">Edit</a>
+
+                                                                <!-- edit detail -->
+                                                                <a class="px-1 text-primary" href="product_edit.php?esid=<?php echo $row['id']; ?>">Edit Details</a>
+
+                                                                <!-- delete -->
+                                                                <a class="px-1 text-danger " href="product_edit.php?did=<?php echo $row['id']; ?>">Delete</a>
+>>>>>>> b561b8198bc29dec46e5abd77239a3f44df33a4a
 
                                                             </td>
                                                         </tr>
@@ -153,7 +186,11 @@ $conn = mysqli_connect("localhost", "root", "", "omsms");
                 "lengthChange": true,
                 "searching": true,
                 language: {
+<<<<<<< HEAD
                     searchPlaceholder: "Search Brand",
+=======
+                    searchPlaceholder: "Search Product",
+>>>>>>> b561b8198bc29dec46e5abd77239a3f44df33a4a
                 },
                 "ordering": true,
                 "info": true,
@@ -174,6 +211,7 @@ $conn = mysqli_connect("localhost", "root", "", "omsms");
 </html>
 
 <?php
+<<<<<<< HEAD
 if (isset($_POST['addproduct'])) {
     $product_brand = $_POST['product_brand'];
     $product_name = $_POST['product_name'];
@@ -223,4 +261,35 @@ if (isset($_POST['addproduct'])) {
         }
     }
 }
+=======
+// Ative and Inactive
+if (isset($_GET['aid'])) {
+    $aid = $_GET['aid'];
+    $sql = "UPDATE tblproduct SET status = 0 WHERE id = $aid";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        echo "<script> alert('Product is now Inactive'); </script>";
+        // echo "<script>toastr.success('Product is now Inactive')</script>";
+        echo "<script> window.location.href = 'product_view.php'; </script>";
+    } else {
+        echo "<script> alert('Error'); </script>";
+        echo "<script> window.location.href = 'product_view.php'; </script>";
+    }
+}
+
+if (isset($_GET['iaid'])) {
+    $iaid = $_GET['iaid'];
+    $sql = "UPDATE tblproduct SET status = 1 WHERE id = $iaid";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        echo "<script> alert('Product is now Active'); </script>";
+        // echo "<script>toastr.success('Product is now Active')</script>";
+        echo "<script> window.location.href = 'product_view.php'; </script>";
+    } else {
+        echo "<script> alert('Error'); </script>";
+        echo "<script> window.location.href = 'product_view.php'; </script>";
+    }
+}
+
+>>>>>>> b561b8198bc29dec46e5abd77239a3f44df33a4a
 ?>
