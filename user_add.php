@@ -47,7 +47,7 @@ include_once("mail_config.php");
                 <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Add Product Form</h4>
+                            <h4 class="card-title">Add User Form</h4>
                             <form class="forms-sample" id="add_user_form" method="POST" enctype="multipart/form-data">
 
                                 <h4>Add User as</h4>
