@@ -350,6 +350,31 @@ require_once('includes/dbconnection.php');
     <!-- pagination -->
     <script>
         $(document).ready(function() {
+            // add brand
+            $('#addbrand').click(function() {
+                window.location.href = "add_brand.php";
+            });
+
+            // add state
+            $('#addstate').click(function() {
+                window.location.href = "add_state.php";
+            });
+
+            // add city
+            $('#addcity').click(function() {
+                window.location.href = "add_city.php";
+            });
+
+            // add storage
+            $('#addstorage').click(function() {
+                window.location.href = "add_storage.php";
+            });
+
+            // add color
+            $('#addcolor').click(function() {
+                window.location.href = "add_color.php";
+            });
+
             // brand datatable
             var brandData = $('#brandData').DataTable({
                 "pagingType": "full_numbers",

@@ -156,8 +156,8 @@ require_once('includes/dbconnection.php');
                                         ?>
                                             <!-- State Name -->
                                             <div class="form-group">
-                                                <label for="state">State Name</label>
-                                                <input type="text" class="form-control" id="state" name="state" value="<?php echo $row['name'] ?>" placeholder="State Name">
+                                                <label for="state_name">State Name</label>
+                                                <input type="text" class="form-control" id="state_name" name="state_name" value="<?php echo $row['name'] ?>" placeholder="State Name">
                                             </div>
                                         <?php } ?>
                                         <!-- buttons -->
@@ -182,7 +182,7 @@ require_once('includes/dbconnection.php');
                                 if (mysqli_num_rows($select_result) > 0) {
                             ?>
                                     <h4 class="card-title">Edit City Form</h4>
-                                    <form class="forms-sample" id="state_form" method="POST" enctype="multipart/form-data">
+                                    <form class="forms-sample" id="city_form" method="POST" enctype="multipart/form-data">
                                         <?php while ($row = mysqli_fetch_assoc($select_result)) { ?>
                                             <!-- State Name -->
                                             <div class="form-group">
@@ -214,8 +214,8 @@ require_once('includes/dbconnection.php');
 
                                             <!-- City Name -->
                                             <div class="form-group">
-                                                <label for="city">City Name</label>
-                                                <input type="text" class="form-control" id="city" name="city" value="<?php echo $row['name'] ?>" placeholder="City Name">
+                                                <label for="city_name">City Name</label>
+                                                <input type="text" class="form-control" id="city_name" name="city_name" value="<?php echo $row['name'] ?>" placeholder="City Name">
                                             </div>
                                         <?php } ?>
                                         <!-- buttons -->
@@ -308,7 +308,6 @@ require_once('includes/dbconnection.php');
         //     }
         // });
 
-        // price selection
         $(document).ready(function() {
 
             // validation for brand form
@@ -321,6 +320,38 @@ require_once('includes/dbconnection.php');
                 },
                 messages: {
                     brand_name: {
+                        required: "Please enter product name",
+                        number: "Please enter valid product name"
+                    },
+                }
+            });
+
+            // validation for storage form
+            $('#storage_form').validate({
+                rules: {
+                    storage: {
+                        required: true,
+                        number: false,
+                    },
+                },
+                messages: {
+                    storage: {
+                        required: "Please enter product name",
+                        number: "Please enter valid product name"
+                    },
+                }
+            });
+
+            // validation for color form
+            $('#color_form').validate({
+                rules: {
+                    color: {
+                        required: true,
+                        number: false,
+                    },
+                },
+                messages: {
+                    color: {
                         required: "Please enter product name",
                         number: "Please enter valid product name"
                     },
@@ -391,6 +422,46 @@ if (isset($_POST['updatebrand'])) {
     }
 }
 
+// update storage
+if (isset($_POST['updatestorage'])) {
+    $storage = $_POST['storage'];
+
+    $check_storage = "SELECT * FROM tblstorage WHERE storage = '$storage'";
+    $check_storage_result = mysqli_query($con, $check_storage);
+    if (mysqli_num_rows($check_storage_result) > 0) {
+        echo "<script>toastr.error('Storage Already Exists!');</script>";
+    } else {
+        // update storage
+        $update = "UPDATE tblstorage SET storage = '$storage' WHERE id = '$id'";
+        $update_result = mysqli_query($con, $update);
+        if ($update_result) {
+            echo "<script>alert('Storage Details Updated Successfully'); location.href = 'other_details.php';</script>";
+        } else {
+            echo "<script>toastr.error('Failed to Update Storage');</script>";
+        }
+    }
+}
+
+// update color
+if (isset($_POST['updatecolor'])) {
+    $color = $_POST['color'];
+
+    $check_color = "SELECT * FROM tblcolor WHERE name = '$color'";
+    $check_color_result = mysqli_query($con, $check_color);
+    if (mysqli_num_rows($check_color_result) > 0) {
+        echo "<script>toastr.error('Color Already Exists!');</script>";
+    } else {
+        // update color
+        $update = "UPDATE tblcolor SET name = '$color' WHERE id = '$id'";
+        $update_result = mysqli_query($con, $update);
+        if ($update_result) {
+            echo "<script>alert('Color Details Updated Successfully'); location.href = 'other_details.php';</script>";
+        } else {
+            echo "<script>toastr.error('Failed to Update Color');</script>";
+        }
+    }
+}
+
 // update state
 if (isset($_POST['updatestate'])) {
     $state_name = $_POST['state_name'];
@@ -419,7 +490,7 @@ if (isset($_POST['updatecity'])) {
     $check_city = "SELECT * FROM tblcity WHERE name = '$city_name'";
     $check_city_result = mysqli_query($con, $check_city);
     if (mysqli_num_rows($check_city_result) > 0) {
-        echo "<script>toastr.error('City Already Exists!');</script>";
+        echo "<script>toastr.error('City Already Exists! If you want to do it, delete and add again!');</script>";
     } else {
         // update city
         $update = "UPDATE tblcity SET name = '$city_name', sid = '$state' WHERE id = '$id'";
@@ -450,6 +521,46 @@ if (isset($_GET['bdid'])) {
             echo "<script>alert('Brand Deleted Successfully'); location.href = 'other_details.php';</script>";
         } else {
             echo "<script>alert('Failed to Delete Brand');</script>";
+        }
+    }
+}
+
+// delete storage
+if (isset($_GET['strgdid'])) {
+    $id = $_GET['strgdid'];
+    $select = "SELECT * FROM tblproductdetail WHERE sid = '$id'";
+    $select_result = mysqli_query($con, $select);
+    if (mysqli_num_rows($select_result) > 0) {
+        // echo "<script> toastr.error('Storage cannot be deleted, Storage Details is in Use');</script>";
+        echo "<script> alert('Storage cannot be deleted, Storage Details is in Use');</script>";
+        echo "<script> window.location.href = 'other_details.php'</script>";
+    } else {
+        $delete = "DELETE FROM tblstorage WHERE id = '$id'";
+        $delete_result = mysqli_query($con, $delete);
+        if ($delete_result) {
+            echo "<script>alert('Storage Deleted Successfully'); location.href = 'other_details.php';</script>";
+        } else {
+            echo "<script>alert('Failed to Delete Storage');</script>";
+        }
+    }
+}
+
+// delete color
+if (isset($_GET['clrdid'])) {
+    $id = $_GET['clrdid'];
+    $select = "SELECT * FROM tblproductdetail WHERE cid = '$id'";
+    $select_result = mysqli_query($con, $select);
+    if (mysqli_num_rows($select_result) > 0) {
+        // echo "<script> toastr.error('Color cannot be deleted, Color Details is in Use');</script>";
+        echo "<script> alert('Color cannot be deleted, Color Details is in Use');</script>";
+        echo "<script> window.location.href = 'other_details.php'</script>";
+    } else {
+        $delete = "DELETE FROM tblcolor WHERE id = '$id'";
+        $delete_result = mysqli_query($con, $delete);
+        if ($delete_result) {
+            echo "<script>alert('Color Deleted Successfully'); location.href = 'other_details.php';</script>";
+        } else {
+            echo "<script>alert('Failed to Delete Color');</script>";
         }
     }
 }
