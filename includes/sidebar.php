@@ -34,8 +34,12 @@
                     <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Add Product</a></li>
                     <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">View Products</a></li>
                     <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Remove Products</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="product_add.php">Add Product</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Add Product Details</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="product_view.php">View Products</a></li>
                 </ul>
             </div>
+            
         </li>
 
         <li class="nav-item">

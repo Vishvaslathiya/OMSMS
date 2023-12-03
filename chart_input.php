@@ -50,10 +50,10 @@ include "includes/dbconnection.php";
                                                 Type</label>
                                             <div class="col-10">
                                                 <!-- <input type="radio" name="requesttype" value="all"> All <br> -->
-                                                <input type="radio" name="requesttype" value="Bar Chart"  checked="true"> Bar Chart <br>
-                                                <input type="radio" name="requesttype" value="Line Chart"> Line Chart <br>
-                                                <input type="radio" name="requesttype" value="Pie Chart"> Pie Chart <br>
-                                                <input type="radio" name="requesttype" value="on-off Chart"> Online/Offline Sales Chart <br>
+                                                <input class="form-check-primary" type="radio" name="requesttype" value="Bar Chart"  checked="true"> Bar Chart <br>
+                                                <input class="form-check-primary" type="radio" name="requesttype" value="Line Chart"> Line Chart <br>
+                                                <input class="form-check-primary" type="radio" name="requesttype" value="Pie Chart"> Pie Chart <br>
+                                                <input class="form-check-primary" type="radio" name="requesttype" value="on-off Chart"> Online/Offline Sales Chart <br>
                                                 <!-- <input type="radio" name="requesttype" value="Product Not Available"> Product Not Available <br> -->
                                                
                                             </div>

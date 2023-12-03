@@ -1,7 +1,9 @@
 <?php
 try 
 {
+
     $rtype = $_POST['requesttype'];
+    // $rtype = "All";
     if ($rtype == "Bar Chart") {
 
 
@@ -103,9 +105,9 @@ try
                     include('includes/sidebar.php');
                     ?>
                     <div class="main-panel">
-                        <div class="content-wrapper">
+                        <div class="content-wrapper"><br><br>
                             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script><br>
                         </div>
                     </div>
                 </div>
@@ -227,9 +229,9 @@ try
                     include('includes/sidebar.php');
                     ?>
                     <div class="main-panel">
-                        <div class="content-wrapper">
+                        <div class="content-wrapper"><br><br>
                             <div id="chartContainer" style="height: 370px; width: 100%; "></div>
-                            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script><br>
                         </div>
                     </div>
                 </div>
@@ -352,9 +354,9 @@ try
                     include('includes/sidebar.php');
                     ?>
                     <div class="main-panel">
-                        <div class="content-wrapper">
+                        <div class="content-wrapper"><br><br>
                             <div id="chartContainer" style="height: 370px; width: 100%; "></div>
-                            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script><br>
                         </div>
                     </div>
                 </div>
@@ -520,9 +522,9 @@ try
                     include('includes/sidebar.php');
                     ?>
                     <div class="main-panel">
-                        <div class="content-wrapper">
+                        <div class="content-wrapper"><br><br>
                             <div id="chartContainer" style="height: 370px; width: 100%; "></div>
-                            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script><br>
                         </div>
                     </div>
                 </div>

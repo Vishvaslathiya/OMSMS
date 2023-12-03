@@ -1,3 +1,9 @@
+<?php
+include("includes/dbconnection.php");
+session_start();
+error_reporting(0);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,13 +29,13 @@
 </head>
 
 <body>
-<div class="container-scroller">
-        <!-- partial:partials/_navbar.html -->
-        <div class="container-fluid page-body-wrapper">
-            <?php
-            include_once("includes/Navbar.php");
-            include_once("includes/sidebar.php");
-            ?>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <div class="container-fluid page-body-wrapper">
+      <?php
+      include_once("includes/Navbar.php");
+      include_once("includes/sidebar.php");
+      ?>
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
@@ -83,17 +89,33 @@
                 <div class="col-md-6 mb-4 stretch-card transparent">
                   <div class="card card-tale">
                     <div class="card-body">
-                      <p class="mb-4">Today’s Bookings</p>
-                      <p class="fs-30 mb-2">4006</p>
-                      <p>10.00% (30 days)</p>
+                      <p class="mb-4">Today’s Orders</p>
+                      <?php
+                      $sql = "SELECT * FROM tblorderaddresses where OrderTime = CURRENT_TIMESTAMP()";
+                      $result = mysqli_query($con, $sql);
+                      $count = mysqli_num_rows($result);
+                      ?>
+                      <p class="fs-30 mb-2" style="font-size:30px;">
+                        <?php echo "$count"; ?>
+                      </p>
+                      <!-- <p>10.00% (30 day  s)</p> -->
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6 mb-4 stretch-card transparent">
                   <div class="card card-dark-blue">
                     <div class="card-body">
-                      <p class="mb-4">Total Bookings</p>
-                      <p class="fs-30 mb-2">61344</p>
+                      <p class="mb-4">Total Orders</p>
+                      <?php
+                      $sql = "SELECT * FROM tblorderaddresses";
+                      $result = mysqli_query($con, $sql);
+                      $count = mysqli_num_rows($result);
+                      ?>
+
+                      <p class="fs-30 mb-2" style="font-size:30px;">
+                        <?php echo "$count"; ?>
+                      </p>
+
                       <p>22.00% (30 days)</p>
                     </div>
                   </div>
@@ -103,8 +125,19 @@
                 <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                   <div class="card card-light-blue">
                     <div class="card-body">
-                      <p class="mb-4">Number of Meetings</p>
-                      <p class="fs-30 mb-2">340438270</p>
+                      <p class="mb-4">Total Of Orders Rs.</p>
+                      
+                      <?php
+                      
+                      $prd = "SELECT SUM(CAST(tblprd.prdPrice AS DECIMAL(10, 2)) * tblorders.PrdQty) AS TotalOrderValue FROM tblorders JOIN tblprd ON tblorders.PrdId = tblprd.ID;";
+                      $result = mysqli_query($con, $prd);
+                      $row = mysqli_fetch_assoc($result);
+                      $sum = $row['TotalOrderValue'];
+                      ?>
+                      <p class="fs-30 mb-2" style="font-size:30px;">
+                        <?php echo "$sum"; ?>
+                      </p>
+
                       <p>2.00% (30 days)</p>
                     </div>
                   </div>
@@ -112,9 +145,17 @@
                 <div class="col-md-6 stretch-card transparent">
                   <div class="card card-light-danger">
                     <div class="card-body">
-                      <p class="mb-4">Number of Clients</p>
-                      <p class="fs-30 mb-2">47033</p>
-                      <p>0.22% (30 days)</p>
+                      <p class="mb-4">Number of Users</p>
+                      <?php
+                      $sql = "SELECT * FROM tblcustomer";
+                      $result = mysqli_query($con, $sql);
+                      $count = mysqli_num_rows($result);
+                      ?>
+
+                      <p class="fs-30 mb-2" style="font-size:30px;">
+                        <?php echo "$count"; ?>
+                      </p>
+
                     </div>
                   </div>
                 </div>
@@ -122,48 +163,6 @@
             </div>
           </div>
 
-          <!-- Complicated 6 pn karai  -->
-          <!-- <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <p class="card-title">Order Details</p>
-                  <p class="font-weight-500">The total number of sessions within the date range. It is the period time a
-                    user is actively engaged with your website, page or app, etc</p>
-                  <div class="d-flex flex-wrap mb-5">
-                    <div class="mr-5 mt-3">
-                      <p class="text-muted">Order value</p>
-                      <h3 class="text-primary fs-30 font-weight-medium">12.3k</h3>
-                    </div>
-                    <div class="mr-5 mt-3">
-                      <p class="text-muted">Orders</p>
-                      <h3 class="text-primary fs-30 font-weight-medium">14k</h3>
-                    </div>
-                    <div class="mr-5 mt-3">
-                      <p class="text-muted">Users</p>
-                      <h3 class="text-primary fs-30 font-weight-medium">71.56%</h3>
-                    </div>
-                    
-                  </div>
-                  <canvas id="order-chart"></canvas>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <p class="card-title">Sales Report</p>
-                    <a href="#" class="text-info">View all</a>
-                  </div>
-                  <p class="font-weight-500">The total number of sessions within the date range. It is the period time a
-                    user is actively engaged with your website, page or app, etc</p>
-                  <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
-                  <canvas id="sales-chart"></canvas>
-                </div>
-              </div>
-            </div>
-          </div> -->
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card position-relative">
@@ -171,12 +170,15 @@
                   <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2"
                     data-ride="carousel">
                     <div class="carousel-inner">
+
+
                       <div class="carousel-item active">
                         <div class="row">
                           <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
                             <div class="ml-xl-4 mt-3">
                               <p class="card-title">Detailed Reports</p>
-                              <h1 class="text-primary">$34040</h1>
+
+                              <h1 class="text-primary"><?php echo "$sum"; ?></h1>
                               <h3 class="font-weight-500 mb-xl-4 text-primary">North America</h3>
                               <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the
                                 period time a user is actively engaged with your website, page or app, etc</p>
@@ -270,6 +272,9 @@
                           </div>
                         </div>
                       </div>
+
+
+                      
                       <div class="carousel-item">
                         <div class="row">
                           <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
@@ -387,76 +392,45 @@
             <div class="col-md-7 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <p class="card-title mb-0">Top Products</p>
+                  <p class="card-title mb-0">Top Products</p> </br>
                   <div class="table-responsive">
                     <table class="table table-striped table-borderless">
                       <thead>
                         <tr>
                           <th>Product</th>
                           <th>Price</th>
-                          <th>Date</th>
-                          <th>Status</th>
+                          <th>Quantity</th>
+                          <th>Last Ordered Date</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Search Engine Marketing</td>
-                          <td class="font-weight-bold">$362</td>
-                          <td>21 Sep 2018</td>
-                          <td class="font-weight-medium">
-                            <div class="badge badge-success">Completed</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Search Engine Optimization</td>
-                          <td class="font-weight-bold">$116</td>
-                          <td>13 Jun 2018</td>
-                          <td class="font-weight-medium">
-                            <div class="badge badge-success">Completed</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Display Advertising</td>
-                          <td class="font-weight-bold">$551</td>
-                          <td>28 Sep 2018</td>
-                          <td class="font-weight-medium">
-                            <div class="badge badge-warning">Pending</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Pay Per Click Advertising</td>
-                          <td class="font-weight-bold">$523</td>
-                          <td>30 Jun 2018</td>
-                          <td class="font-weight-medium">
-                            <div class="badge badge-warning">Pending</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>E-Mail Marketing</td>
-                          <td class="font-weight-bold">$781</td>
-                          <td>01 Nov 2018</td>
-                          <td class="font-weight-medium">
-                            <div class="badge badge-danger">Cancelled</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Referral Marketing</td>
-                          <td class="font-weight-bold">$283</td>
-                          <td>20 Mar 2018</td>
-                          <td class="font-weight-medium">
-                            <div class="badge badge-warning">Pending</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Social media marketing</td>
-                          <td class="font-weight-bold">$897</td>
-                          <td>26 Oct 2018</td>
-                          <td class="font-weight-medium">
-                            <div class="badge badge-success">Completed</div>
-                          </td>
-                        </tr>
+
+                        <?php
+
+                        $result = mysqli_query($con, "SELECT tblprd.prdName, tblprd.prdPrice, MAX(tblorderaddresses.OrderTime) AS LastOrderedDate, SUM(tblorders.PrdQty) AS TotalOrderedQty FROM tblorders JOIN tblprd ON tblorders.PrdId = tblprd.ID JOIN tblorderaddresses ON tblorders.OrderNumber = tblorderaddresses.Ordernumber GROUP BY tblprd.prdName ORDER BY TotalOrderedQty DESC; ");
+
+                        if ($result) {
+                          if (mysqli_num_rows($result) > 0) {
+                            // Output data of each row
+                            while ($row = mysqli_fetch_assoc($result)) {
+                              echo '<tr>';
+                              echo "<td>" . $row["prdName"] . "</td>";
+                              echo "<td class='font-weight-bold'> " . $row["prdPrice"] . "</td>";
+                              echo "<td> " . $row["TotalOrderedQty"] . " </td>";
+                              echo "<td> " . $row["LastOrderedDate"] . " </td>";
+                              echo '</tr>';
+                            }
+                          } else {
+                            echo "<tr><td colspan='4'>No results found</td></tr>";
+                          }
+                        } else {
+                          // Handle query error
+                          echo "<tr><td colspan='4'>Error executing the query: " . mysqli_error($con) . "</td></tr>";
+                        }
+                        ?>
                       </tbody>
                     </table>
+
                   </div>
                 </div>
               </div>
@@ -524,48 +498,7 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <p class="card-title">Advanced Table</p>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="table-responsive">
-                        <table id="example" class="display expandable-table" style="width:100%">
-                          <thead>
-                            <tr>
-                              <th>Quote#</th>
-                              <th>Product</th>
-                              <th>Business type</th>
-                              <th>Policy holder</th>
-                              <th>Premium</th>
-                              <th>Status</th>
-                              <th>Updated at</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr class="odd">
-                              <td class=" select-checkbox">Incs234</td>
-                              <td class="sorting_1">Car insurance</td>
-                              <td>Business type 1</td>
-                              <td>Jesse Thomas</td>
-                              <td>$1200</td>
-                              <td>In progress</td>
-                              <td>25/04/2020</td>
-                              <td class=" details-control"></td>
-                            </tr>
-
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
