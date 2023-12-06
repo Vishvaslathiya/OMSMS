@@ -399,22 +399,22 @@ if (isset($_GET['did'])) {
     if ($select_result->num_rows > 0) {
         $select_row = mysqli_fetch_assoc($select_result);
         $uid = $select_row['id'];
-        $delete = "DELETE FROM tblcustomer WHERE uid = '$id'";
+        // $delete = "DELETE FROM tblcustomer WHERE uid = '$id'";
+        // $delete_result = mysqli_query($con, $delete);
+        // if ($delete_result) {
+        $delete = "DELETE FROM tbluser WHERE id = '$id'";
         $delete_result = mysqli_query($con, $delete);
         if ($delete_result) {
-            $delete = "DELETE FROM tbluser WHERE id = '$id'";
-            $delete_result = mysqli_query($con, $delete);
-            if ($delete_result) {
-                // echo "<script>toastr.success('User Deleted Successfully'); location.href = 'ap_users.php';</script>";
-                echo "<script>alert('User Deleted Successfully'); location.href = 'ap_users.php';</script>";
-            } else {
-                // echo "<script>toastr.error('Failed to Delete User');</script>";
-                echo "<script>alert('Failed to Delete User');</script>";
-            }
+            // echo "<script>toastr.success('User Deleted Successfully'); location.href = 'ap_users.php';</script>";
+            echo "<script>alert('User Deleted Successfully'); location.href = 'user_view.php';</script>";
         } else {
             // echo "<script>toastr.error('Failed to Delete User');</script>";
-            echo "<script>alert('Failed to Delete User');</script>";
+            echo "<script>alert('Failed to Delete User'); location.href = 'user_view.php'</script>";
         }
+        // } else {
+        //     // echo "<script>toastr.error('Failed to Delete User');</script>";
+        //     echo "<script>alert('Failed to Delete User'); location.href = 'user_view.php'</script>";
+        // }
     }
 }
 

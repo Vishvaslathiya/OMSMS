@@ -2,6 +2,12 @@
 require_once('includes/dbconnection.php');
 // $con = mysqli_connect("localhost", "root", "", "project");
 // session_start();
+if (!isset($_SESSION['otp'])) {
+    // header('location: registration.php');
+    echo "<script>location.href='user_add.php'</script>";
+} else {
+    $otp = $_SESSION['otp'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -148,7 +154,7 @@ require_once('includes/dbconnection.php');
 <?php
 if (isset($_POST['otpbtn'])) {
     $uerotp = $_POST['otp'];
-    $otp = $_SESSION['otp'];
+    // $otp = $_SESSION['otp'];
     $email = $_SESSION['email'];
     $name = $_SESSION['name'];
     $password = $_SESSION['password'];

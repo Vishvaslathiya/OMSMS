@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once('includes/dbconnection.php');
+// require_once('includes/dbconnection.php');
 
 $con = mysqli_connect("localhost", "root", "", "OMSMS");
 if (mysqli_connect_errno()) {

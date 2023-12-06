@@ -92,9 +92,6 @@ require_once('includes/dbconnection.php');
                                 </div>
 
                                 <!-- buttons -->
-                                <button type="submit" name="addproduct" id="addproduct" class="btn btn-primary mr-2">Add</button>
-                                <button type="reset" class="btn btn-light">Cancel</button>
-
                                 <button type="submit" name="addproduct" id="addproduct" class="btn btn-primary mr-2">Add Product</button>
                                 <button type="button" name="cancel" id="cancel" class="btn btn-light">Cancel</button>
                             </form>

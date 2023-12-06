@@ -199,9 +199,10 @@ include_once("mail_config.php");
 
     <script>
         // cancel button
-        document.getElementById("cancel").onclick = function() {
+        document.getElementById("close").onclick = function() {
             location.href = "#";
         };
+
         // City Selection
         $("#state").change(function() {
             var stateId = $(this).val();
@@ -322,7 +323,7 @@ if (isset($_POST['sid'])) {
 if (isset($_POST['register'])) {
     $email = $_POST['email'];
     $check_email = "SELECT * FROM tbluser WHERE email = '$email'";
-    $result_email = mysqli_query($conn, $check_email);
+    $result_email = mysqli_query($con, $check_email);
     if (mysqli_num_rows($result_email) > 0) {
         echo "<script>toastr.error('Email already Exist..!')</script>";
         return false;

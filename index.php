@@ -1,6 +1,6 @@
 <?php
 include("includes/dbconnection.php");
-session_start();
+// session_start();
 error_reporting(0);
 ?>
 

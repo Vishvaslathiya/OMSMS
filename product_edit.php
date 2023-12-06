@@ -396,9 +396,9 @@ require_once('includes/dbconnection.php');
                         required: "Please enter stock",
                         number: "Please enter valid stock"
                     },
-                    description: {
-                        required: "Please enter description"
-                    }
+                    // description: {
+                    //     required: "Please enter description"
+                    // }
                 }
             });
         });
@@ -481,9 +481,8 @@ if (isset($_POST['deletecolor'])) {
 
     $select = "SELECT * FROM tblproductdetail WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
     $select_result = mysqli_query($con, $select);
+    
     if (mysqli_num_rows($select_result) > 0) {
-
-
         $delete = "DELETE FROM tblproductdetail WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
         $delete_result = mysqli_query($con, $delete);
         if ($delete_result) {

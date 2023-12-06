@@ -1,8 +1,13 @@
 <?php
 // session_start();
 require_once('includes/dbconnection.php');
-include_once("mail_config.php");
-// $con = mysqli_connect("localhost", "root", "", "project");
+require_once("mail_config.php");
+if (!isset($_SESSION['otp'])) {
+    // header('location: registration.php');
+    echo "<script>location.href='registration.php'</script>";
+} else {
+    $otp = $_SESSION['otp'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +52,7 @@ include_once("mail_config.php");
                                 <i class="ti-close" role="button" id="close"></i>
                             </div>
                             <h4>OTP Verification</h4>
-                            <form class="forms-sample" id="registration_form" method="POST" enctype="multipart/form-data">
+                            <form class="forms-sample" id="otp_form" method="POST">
 
                                 <!-- User Name -->
                                 <div class="form-group">
@@ -141,3 +146,71 @@ include_once("mail_config.php");
 </body>
 
 </html>
+
+<?php
+if (isset($_POST['otpbtn']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+    $uerotp = $_POST['userotp'];
+    // $otp = $_SESSION['otp'];
+    $name = $_SESSION['name'];
+    $email = $_SESSION['email'];
+    $password = $_SESSION['password'];
+    $confpassword = $_SESSION['confpassword'];
+    $encpass = password_hash($password, PASSWORD_BCRYPT);
+    $city = $_SESSION['city'];
+    $address = $_SESSION['address'];
+    $gender = $_SESSION['gender'];
+    $contact = $_SESSION['contact'];
+    $role = "customer";
+
+    // $email = $_POST['email'];
+    // $name = $_POST['name'];
+    // $password = $_POST['password'];
+    // $confpassword = $_POST['confpassword'];
+    // $encpass = password_hash($password, PASSWORD_BCRYPT);
+    // $city = $_POST['city'];
+    // $gender = $_POST['gender'];
+    // $contact = $_POST['contact'];
+    // $address = $_POST['address'];
+    // $role = "customer";
+
+    if ($uerotp == $otp) {
+        // setting session variables
+        // $_SESSION['name'] = $name;
+        // $_SESSION['email'] = $email;
+        // $_SESSION['password'] = $password;
+        // $_SESSION['confpassword'] = $confpassword;
+        // $_SESSION['city'] = $city;
+        // $_SESSION['contact'] = $contact;
+        // $_SESSION['gender'] = $gender;
+        $register = "INSERT INTO tbluser (name, email, password, contact, gender, cityid, address, role, status) VALUES ('$name', '$email', '$encpass', '$contact', '$gender', $city, '$address', '$role', 1)";
+        $result = mysqli_query($con, $register);
+        if ($result) {
+            echo "<script>alert('Registration Successful!')</script>";
+            // fetching user id
+            $uid_query = "SELECT id FROM tbluser WHERE email = '$email'";
+            $uid_result = mysqli_query($con, $uid_query);
+            $uid_row = mysqli_fetch_assoc($uid_result);
+            $id = $uid_row['id'];
+            session_destroy();
+
+            // // inserting into tblcustomer
+            // $customer = "INSERT INTO tblcustomer (uid) VALUES ('$id')";
+            // $customer_result = mysqli_query($con, $customer);
+
+            // checking if cart already exists
+            // $cart_query = "SELECT * FROM tblcart WHERE uid = $id";
+            // $cart_result = mysqli_query($con, $cart_query);
+            // if (!mysqli_num_rows($cart_result) > 0) {
+            //     // inserting into tblcart
+            //     $cart = "INSERT INTO tblcart (uid) VALUES ($id)";
+            //     $cart_result = mysqli_query($con, $cart);
+            // }
+            echo "<script>location.href='login.php'</script>";
+        } else {
+            echo "<script>toastr.error('Registration Failed! Try Again!')</script>";
+        }
+    } else {
+        echo "<script> toastr.error('OTP not Matched!') </script>";
+    }
+}
+?>

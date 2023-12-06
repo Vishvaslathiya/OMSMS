@@ -47,6 +47,6 @@ if (isset($_POST['color_id']) && isset($_POST['storage_id']) && isset($_POST['pr
         }
     } else {
         // echo "No data found, No data found";
-        echo json_encode(array('price' => 'data not found', 'stock' => 'data not found', 'description' => 'data not found'));
+        echo json_encode(array('price' => 0, 'stock' => 0, 'description' => 'data not found'));
     }
 }

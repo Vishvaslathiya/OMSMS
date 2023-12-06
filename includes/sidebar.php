@@ -46,18 +46,9 @@
             </a>
             <div class="collapse" id="icons">
                 <ul class="nav flex-column sub-menu">
-<<<<<<< HEAD
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Add Product</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">View Products</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Remove Products</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="product_add.php">Add Product</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Add Product Details</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="product_view.php">View Products</a></li>
-=======
                     <li class="nav-item"> <a class="nav-link" href="product_view.php">View All Products</a></li>
                     <li class="nav-item"> <a class="nav-link" href="product_add.php">Add Products</a></li>
                     <li class="nav-item"> <a class="nav-link" href="product_detail.php">Add Product Details</a></li>
->>>>>>> b561b8198bc29dec46e5abd77239a3f44df33a4a
                 </ul>
             </div>
             
