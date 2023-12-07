@@ -119,7 +119,7 @@ if (!isset($_SESSION['otp'])) {
     <script>
         // cancel button
         document.getElementById("close").onclick = function() {
-            location.href = "#";
+            location.href = "omsms.php";
         };
 
 
@@ -190,7 +190,7 @@ if (isset($_POST['otpbtn']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             $uid_query = "SELECT id FROM tbluser WHERE email = '$email'";
             $uid_result = mysqli_query($con, $uid_query);
             $uid_row = mysqli_fetch_assoc($uid_result);
-            $id = $uid_row['id'];
+            $id = $uid_row['id'];   
             session_destroy();
 
             // // inserting into tblcustomer

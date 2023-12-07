@@ -77,7 +77,7 @@ include_once("mail_config.php");
                                 <!-- Confirm Password -->
                                 <div class="form-group">
                                     <label for="confpassword">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Conferm Password">
+                                    <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirm Password">
                                 </div>
 
                                 <!-- Gender -->
@@ -144,7 +144,7 @@ include_once("mail_config.php");
                                 <!-- buttons -->
                                 <button type="submit" name="register" id="register" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Sign Up</button>
                                 <div class="text-center mt-4 font-weight-light">
-                                    Already have an account? <a href="login.html" class="text-primary">Login</a>
+                                    Already have an account? <a href="login.php" class="text-primary">Login</a>
                                 </div>
                             </form>
                         </div>
@@ -200,7 +200,7 @@ include_once("mail_config.php");
     <script>
         // cancel button
         document.getElementById("close").onclick = function() {
-            location.href = "#";
+            location.href = "omsms.php";
         };
 
         // City Selection

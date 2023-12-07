@@ -1,7 +1,7 @@
 <?php
 // session_start();
 require_once('includes/dbconnection.php');
-include_once("mail_config.php");
+require_once("mail_config.php");
 // $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>

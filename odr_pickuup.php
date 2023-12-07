@@ -1,3 +1,6 @@
+<?php
+require_once('includes/dbconnection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,38 +64,36 @@
                                         <tbody>
 
                                             <?php
-                                            $con = mysqli_connect("localhost", "root", "", "omsms");
+                                            // $con = mysqli_connect("localhost", "root", "", "omsms");
                                             $ret = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus='Product Pickup'");
                                             $user = mysqli_query($con, "select * from tblcustomer join tblorderaddresses on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.UserId=tblcustomer.ID ");
                                             // select * from tblorderaddresses join tblcustomer on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.Ordernumber=$oid
                                             $cnt = 1;
                                             while ($row = mysqli_fetch_array($ret) and $row1 = mysqli_fetch_array($user)) {
 
-                                                ?>
-                                            <tbody>
-                                                <tr>
+                                            ?>
+                                        <tbody>
+                                            <tr>
 
-                                                    <td>
-                                                        <?php echo $cnt; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['Ordernumber']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row1['name']; ?>
+                                                <td>
+                                                    <?php echo $cnt; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['Ordernumber']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row1['name']; ?>
 
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $row['OrderTime']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <a
-                                                            href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">
-                                                            <input type="submit" name="viewdtls" value="View Details"
-                                                                style="width: 120px; " class="btn btn-info"></a>
-                                                    </td>
-                                                </tr>
-                                                <?php
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['OrderTime']; ?>
+                                                </td>
+                                                <td>
+                                                    <a href="view_order_details.php?orderid=<?php echo $row['Ordernumber']; ?>">
+                                                        <input type="submit" name="viewdtls" value="View Details" style="width: 120px; " class="btn btn-info"></a>
+                                                </td>
+                                            </tr>
+                                        <?php
                                                 $cnt = $cnt + 1;
                                             } ?>
 

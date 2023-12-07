@@ -1,3 +1,6 @@
+<?php
+require_once('includes/dbconnection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,7 +64,7 @@
                                         <tbody>
 
                                             <?php
-                                            $con = mysqli_connect("localhost", "root", "", "omsms");
+                                            // $con = mysqli_connect("localhost", "root", "", "omsms");
                                             $ret = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus='Product Delivered'");
                                             $user = mysqli_query($con, "select * from tblcustomer join tblorderaddresses on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.UserId=tblcustomer.ID ");
                                             // select * from tblorderaddresses join tblcustomer on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.Ordernumber=$oid

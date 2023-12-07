@@ -1,5 +1,6 @@
 <?php
-include("includes/dbconnection.php");
+require_once('includes/dbconnection.php');
+
 $ftotal = 0;
 $ttlny = 0;
 $fntotal = 0;

@@ -44,19 +44,29 @@ require_once('includes/dbconnection.php');
                                 <h3>Mobile Shop</h3>
                                 <i class="ti-close" role="button" id="close"></i>
                             </div>
-                            <h4>OTP Verification</h4>
-                            <form class="forms-sample" id="otp_form" method="POST">
+                            <h4>Already have Account?</h4>
+                            <h6 class="font-weight-light pb-3 ">Signing here to access more functionality</h6>
+                            <form class="forms-sample" id="login_form" method="POST">
 
                                 <!-- User Name -->
                                 <div class="form-group">
-                                    <label for="userotp">OTP</label>
-                                    <input type="text" class="form-control" id="userotp" name="userotp" placeholder="000000">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                </div>
+
+                                <!-- Password -->
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                 </div>
 
                                 <!-- buttons -->
-                                <button type="submit" name="otpbtn" id="otpbtn" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Verify Now</button>
+                                <button type="submit" name="login" id="login" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</button>
                                 <div class="text-center mt-4 font-weight-light">
-                                    Doesn't get OTP? <a href="registration.php" class="text-primary">Try Again!</a>
+                                    Doesn't Remember Password? <a href="forgot_password.php" class="text-primary">Forgot Password</a>
+                                </div>
+                                <div class="text-center mt-4 font-weight-light">
+                                    Doesn't have Account? <a href="registration.php" class="text-primary">Signup</a>
                                 </div>
                             </form>
                         </div>
@@ -112,12 +122,70 @@ require_once('includes/dbconnection.php');
     <script>
         // cancel button
         document.getElementById("close").onclick = function() {
-            location.href = "#";
+            location.href = "omsms.php";
         };
+
+        // Form Validate
+        $('#login_form').validate({
+            rules: {
+                'email': {
+                    required: true,
+                    email: true,
+                },
+                'password': {
+                    required: true,
+                }
+            },
+            messages: {
+                'email': {
+                    required: "Please Enter Email",
+                    email: "Please Enter Valid Email",
+                },
+                'password': {
+                    required: "Please Enter Password"
+                },
+            }
+        })
     </script>
 </body>
 
 </html>
 
 <?php
+// Login
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // password decryption
+    $fetch = "SELECT * FROM tbluser WHERE email = '$email'";
+    $result = mysqli_query($con, $fetch);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        $uid = $row['id'];
+        $encpass = password_verify($password, $row['password']);
+        $role = $row['role'];
+        $status = $row['status'];
+
+        if ($row['email'] == $email && $row['password'] == $encpass && $row['role'] == $role) {
+            if ($status == 0) {
+                echo "<script>toastr.error('You can not Login, Your Account is Blocked!')</script>";
+            } else {
+                if ($role == "admin") {
+                    $_SESSION['admin_email'] = $email;
+                    $_SESSION['aid'] = $uid;
+                    echo "<script> alert('Login Success!'); location.href = 'index.php'</script>";
+                } else {
+                    $_SESSION['user_email'] = $email;
+                    $_SESSION['uid'] = $uid;
+                    echo "<script> location.href = 'omsms.php'</script>";
+                }
+            }
+        } else {
+            echo "<script> toastr.error('Oops! Invalid Credentials!')</script>";
+        }
+    } else {
+        echo "<script>toastr.error('Email not Found! Please create free Account!')</script>";
+    }
+}
 ?>

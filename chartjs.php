@@ -1,6 +1,6 @@
 <?php
 include("includes/dbconnection.php");
-session_start();
+// session_start();
 ?>
 
 <!DOCTYPE html>
@@ -20,11 +20,8 @@ session_start();
   <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
   <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
   <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
@@ -51,7 +48,7 @@ session_start();
             <div class='col-md-9 mb-3'>
               <div class="row">
 
-                <div style="display: flex; align-items: center; text-center">
+                <div style="display: flex; align-items: center;" class="text-center">
                   <!-- Product Dropdown -->
                   <label>Product </label> &nbsp; &nbsp;
                   <select name='Product' class='custom-select d-block w-20' id='Product' required='true'>
@@ -59,7 +56,7 @@ session_start();
                     <?php
                     $catquery = mysqli_query($con, 'SELECT DISTINCT prdName FROM `tblprd` ORDER BY `tblprd`.`prdName` ASC');
                     while ($category = mysqli_fetch_array($catquery)) {
-                      ?>
+                    ?>
                       <option value="<?php echo $category['prdName']; ?>">
                         <?php echo $category['prdName']; ?>
                       </option>
@@ -138,7 +135,6 @@ session_start();
     <script src="js/Chart.roundedBarCharts.js"></script>
     <script src="vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
-</body>
 </body>
 
 </html>

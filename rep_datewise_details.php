@@ -1,6 +1,5 @@
 <?php
-include "includes/dbconnection.php";
-
+require_once('includes/dbconnection.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

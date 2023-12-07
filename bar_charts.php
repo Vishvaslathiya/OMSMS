@@ -1,5 +1,7 @@
 <?php
-$con = mysqli_connect("localhost", "root", "", "omsms");
+// $con = mysqli_connect("localhost", "root", "", "omsms");
+require_once('includes/dbconnection.php');
+
 
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
@@ -57,7 +59,7 @@ mysqli_close($con);
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
     <script>
-        window.onload = function () {
+        window.onload = function() {
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",

@@ -1,5 +1,7 @@
 <!-- aama thoda changes ni jarur 6 -->
-
+<?php
+require_once('includes/dbconnection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,7 +77,7 @@ try {
                                                 <tbody>
 
                                                     <?php
-                                                    $con = mysqli_connect("localhost", "root", "", "omsms");
+                                                    // $con = mysqli_connect("localhost", "root", "", "omsms");
                                                     $ret = mysqli_query($con, "select * from tblorderaddresses where OrderFinalStatus is null or OrderFinalStatus='NULL'");
                                                     $ret1 = mysqli_query($con, "select * from tblorders where IsOrderPlaced is null");
                                                     $user = mysqli_query($con, "select * from tblcustomer join tblorderaddresses on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.UserId=tblcustomer.ID ");

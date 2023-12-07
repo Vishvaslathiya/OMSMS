@@ -1,3 +1,6 @@
+<?php
+require_once('includes/dbconnection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,16 +51,14 @@
                                                     Date</strong></label>
 
                                             <div class="col-10">
-                                                <input class="form-control" type="date" id="fromdate" name="fromdate"
-                                                    required="true">
+                                                <input class="form-control" type="date" id="fromdate" name="fromdate" required="true">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="example-search-input" class="col-2 col-form-label"><strong>To
                                                     Date</strong></label>
                                             <div class="col-10">
-                                                <input class="form-control" type="date" id="todate" name="todate"
-                                                    required="true">
+                                                <input class="form-control" type="date" id="todate" name="todate" required="true">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -80,8 +81,7 @@
                                         <div class="form-group row">
 
                                             <div class="col-10">
-                                                <p style="text-align: center;"> <button type="submit" name="submit"
-                                                        class="btn btn-primary">Submit</button></p>
+                                                <p style="text-align: center;"> <button type="submit" name="submit" class="btn btn-primary">Submit</button></p>
 
                                             </div>
                                         </div>

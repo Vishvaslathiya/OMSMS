@@ -1,6 +1,8 @@
 <?php
-try 
-{
+
+require_once('includes/dbconnection.php');
+
+try {
 
     $rtype = $_POST['requesttype'];
     // $rtype = "All";
@@ -8,11 +10,11 @@ try
 
 
 
-        $con = mysqli_connect("localhost", "root", "", "omsms");
+        // $con = mysqli_connect("localhost", "root", "", "omsms");
 
-        if (!$con) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
+        // if (!$con) {
+        //     die("Connection failed: " . mysqli_connect_error());
+        // }
 
         // Fetch data for the chart
         $dataPoints = array();
@@ -44,7 +46,7 @@ try
         }
 
         mysqli_close($con);
-        ?>
+?>
         <!DOCTYPE HTML>
         <html>
 
@@ -65,7 +67,7 @@ try
             <link rel="shortcut icon" href="images/favicon.png" />
 
             <script>
-                window.onload = function () {
+                window.onload = function() {
                     var chart = new CanvasJS.Chart("chartContainer", {
                         animationEnabled: true,
                         theme: "light2",
@@ -169,7 +171,7 @@ try
         }
 
         mysqli_close($con);
-        ?>
+    ?>
 
 
         <!DOCTYPE HTML>
@@ -191,7 +193,7 @@ try
             <!-- endinject -->
             <link rel="shortcut icon" href="images/favicon.png" />
             <script>
-                window.onload = function () {
+                window.onload = function() {
                     var chart = new CanvasJS.Chart("chartContainer", {
                         animationEnabled: true,
                         theme: "light2",
@@ -256,7 +258,7 @@ try
         </body>
 
         </html>
-        <?php
+    <?php
     } elseif ($rtype == "Pie Chart") {
         $con = mysqli_connect("localhost", "root", "", "omsms");
 
@@ -294,7 +296,7 @@ try
         }
 
         mysqli_close($con);
-        ?>
+    ?>
 
 
         <!DOCTYPE HTML>
@@ -316,7 +318,7 @@ try
             <!-- endinject -->
             <link rel="shortcut icon" href="images/favicon.png" />
             <script>
-                window.onload = function () {
+                window.onload = function() {
                     var chart = new CanvasJS.Chart("chartContainer", {
                         animationEnabled: true,
                         theme: "light2",
@@ -381,7 +383,7 @@ try
         </body>
 
         </html>
-        <?php
+    <?php
     } elseif ($rtype == "on-off Chart") {
         $con = mysqli_connect("localhost", "root", "", "omsms");
 
@@ -439,7 +441,7 @@ try
             array("label" => "2016", "y" => 98.70)
         );
 
-        ?>
+    ?>
 
 
         <!DOCTYPE HTML>
@@ -461,7 +463,7 @@ try
             <!-- endinject -->
             <link rel="shortcut icon" href="images/favicon.png" />
             <script>
-                window.onload = function () {
+                window.onload = function() {
 
                     var chart = new CanvasJS.Chart("chartContainer", {
                         animationEnabled: true,
@@ -497,10 +499,9 @@ try
                     chart.render();
 
                     function toggleDataSeries(e) {
-                        if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
                             e.dataSeries.visible = false;
-                        }
-                        else {
+                        } else {
                             e.dataSeries.visible = true;
                         }
                         chart.render();
@@ -549,11 +550,9 @@ try
         </body>
 
         </html>
-        <?php
+<?php
     }
-}
-catch(Exception $e)
-{
+} catch (Exception $e) {
     echo 'Something Went Wrong';
 }
 ?>

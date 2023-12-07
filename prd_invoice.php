@@ -1,3 +1,6 @@
+<?php
+require_once('includes/dbconnection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +14,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-   
+
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -94,12 +97,12 @@
 
 
                         <div class="d-flex justify-content-end bg-dark text-white p-4">
-                            
+
                             <div class="py-3 px-5 text-right">
                                 <div class="mb-2">Sub - Total amount</div>
                                 <div class="h2 font-weight-light">$32,432</div>
                             </div>
-                           
+
                             <div class="py-3 px-5 text-right">
                                 <div class="mb-2">Grand Total</div>
                                 <div class="h2 font-weight-light">$234,234</div>
@@ -110,9 +113,9 @@
             </div>
         </div>
 
-       <?php
-            include_once("includes/Footer.php");
-       ?>
+        <?php
+        include_once("includes/Footer.php");
+        ?>
 
     </div>
 

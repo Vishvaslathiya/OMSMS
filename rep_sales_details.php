@@ -1,6 +1,5 @@
 <?php
-
-include('includes/dbconnection.php');
+require_once('includes/dbconnection.php');
 $ftotal = 0;
 ?>
 
@@ -56,15 +55,14 @@ $ftotal = 0;
                                     $m2 = date("F", $month2);
                                     $y1 = date("Y", $month1);
                                     $y2 = date("Y", $month2);
-                                    ?>
+                                ?>
                                     <h4 class="header-title m-t-0 m-b-30">Sales Report Month Wise</h4>
                                     <h4 align="center" style="color:blue">Sales Report from
                                         <?php echo $m1 . "-" . $y1; ?> to
                                         <?php echo $m2 . "-" . $y2; ?>
                                     </h4>
                                     <hr />
-                                    <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>S.NO</th>
@@ -86,7 +84,7 @@ $ftotal = 0;
 
                                         while ($row = mysqli_fetch_array($ret)) {
 
-                                            ?>
+                                        ?>
 
                                             <tr>
                                                 <td>
@@ -102,7 +100,7 @@ $ftotal = 0;
                                                 </td>
 
                                             </tr>
-                                            <?php
+                                        <?php
                                             $ftotal += $total;
                                             $cnt++;
                                         } ?>
@@ -124,15 +122,14 @@ $ftotal = 0;
                                     $y1 = date("Y", $year1);
                                     $y2 = date("Y", $year2);
                                     $fstatus = 'Product Delivered';
-                                    ?>
+                                ?>
                                     <h4 class="header-title m-t-0 m-b-30">Sales Report Year Wise</h4>
                                     <h4 align="center" style="color:blue">Sales Report from
                                         <?php echo $y1; ?> to
                                         <?php echo $y2; ?>
                                     </h4>
                                     <hr />
-                                    <table id="datatable" class="table table-bordered dt-responsive nowrap"
-                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
                                                 <th>S.NO</th>
@@ -155,7 +152,7 @@ $ftotal = 0;
 
                                         while ($row = mysqli_fetch_array($ret)) {
 
-                                            ?>
+                                        ?>
 
                                             <tr>
                                                 <td>
@@ -168,13 +165,13 @@ $ftotal = 0;
                                                 </td>
                                                 <td>
                                                     <!-- 2200 -->
-                                                    <?php echo $total = $row['totalitmprice']; 
-                                                     
+                                                    <?php echo $total = $row['totalitmprice'];
+
                                                     ?>
                                                 </td>
 
                                             </tr>
-                                            <?php
+                                        <?php
                                             $ftotal += $total;
                                             $cnt++;
                                         } ?>

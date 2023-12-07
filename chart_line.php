@@ -13,11 +13,12 @@
 ?>
 
 <?php
-$con = mysqli_connect("localhost", "root", "", "omsms");
+require_once('includes/dbconnection.php');
+// $con = mysqli_connect("localhost", "root", "", "omsms");
 
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+// if (!$con) {
+//     die("Connection failed: " . mysqli_connect_error());
+// }
 
 // Fetch data for the chart
 $dataPoints = array();
@@ -70,7 +71,7 @@ mysqli_close($con);
     <link rel="shortcut icon" href="images/favicon.png" />
 
     <script>
-        window.onload = function () {
+        window.onload = function() {
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 theme: "light2",

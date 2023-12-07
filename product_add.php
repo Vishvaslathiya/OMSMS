@@ -1,7 +1,7 @@
 <?php
 
 // include "includes/dbconnection.php";
-$conn = mysqli_connect("localhost", "root", "", "omsms");
+// $con = mysqli_connect("localhost", "root", "", "omsms");
 
 require_once('includes/dbconnection.php');
 
@@ -52,49 +52,47 @@ require_once('includes/dbconnection.php');
                             <h4 class="card-title">Add Product Form</h4>
                             <form class="forms-sample" method="POST" enctype="multipart/form-data">
 
-                            <form class="forms-sample" id="product_form" method="POST" enctype="multipart/form-data">
-                                <!-- Brand Name -->
-                                <div class="form-group">
-                                    <label for="product_brand">Product Brand</label>
-                                    <select class="form-control" id="product_brand" name="product_brand">
-                                        <option value="">Select Brand</option>
-                                        <?php
-                                        $brand = "SELECT * FROM tblbrand";
-                                        $brand_result = mysqli_query($conn, $brand);
-                                        $brand_result = mysqli_query($con, $brand);
-                                        if (mysqli_num_rows($brand_result) > 0) {
-                                            while ($row = mysqli_fetch_assoc($brand_result)) {
-                                                echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
+                                <form class="forms-sample" id="product_form" method="POST" enctype="multipart/form-data">
+                                    <!-- Brand Name -->
+                                    <div class="form-group">
+                                        <label for="product_brand">Product Brand</label>
+                                        <select class="form-control" id="product_brand" name="product_brand">
+                                            <option value="">Select Brand</option>
+                                            <?php
+                                            $brand = "SELECT * FROM tblbrand";
+                                            $brand_result = mysqli_query($con, $brand);
+                                            $brand_result = mysqli_query($con, $brand);
+                                            if (mysqli_num_rows($brand_result) > 0) {
+                                                while ($row = mysqli_fetch_assoc($brand_result)) {
+                                                    echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
+                                                }
                                             }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
+                                            ?>
+                                        </select>
+                                    </div>
 
-                                <!-- Product Name -->
-                                <div class="form-group">
-                                    <label for="product_name">Product Name</label>
-                                    <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Product Name">
-                                </div>
+                                    <!-- Product Name -->
+                                    <div class="form-group">
+                                        <label for="product_name">Product Name</label>
+                                        <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Product Name">
+                                    </div>
 
-                                <!-- description -->
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                                    <!-- description -->
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" id="description" name="description" rows="4" placeholder="Product Description"></textarea>
+                                    </div>
 
-                                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Product Description"></textarea>
-                                </div>
+                                    <!-- Image -->
+                                    <div class="form-group">
+                                        <label for="image">File upload</label>
+                                        <input type="file" name="image" id="image" class="form-control file-upload-info">
+                                    </div>
 
-                                <!-- Image -->
-                                <div class="form-group">
-                                    <label for="image">File upload</label>
-                                    <input type="file" name="image" id="image" class="form-control file-upload-info">
-                                </div>
-
-                                <!-- buttons -->
-                                <button type="submit" name="addproduct" id="addproduct" class="btn btn-primary mr-2">Add Product</button>
-                                <button type="button" name="cancel" id="cancel" class="btn btn-light">Cancel</button>
-                            </form>
+                                    <!-- buttons -->
+                                    <button type="submit" name="addproduct" id="addproduct" class="btn btn-primary mr-2">Add Product</button>
+                                    <button type="button" name="cancel" id="cancel" class="btn btn-light">Cancel</button>
+                                </form>
                         </div>
                     </div>
                 </div>
@@ -127,95 +125,95 @@ require_once('includes/dbconnection.php');
 </html>
 
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- jQuery Validation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- toastr -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- toastr -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script>
-        toastr.options = {
-            "positionClass": "toast-top-center",
-            "timeOut": 2000, // 2 seconds
-            "extendedTimeOut": 1000, // 1 second extended time on hover
-            "closeButton": true,
-            "progressBar": true,
-            "debug": false,
-            "showDuration": 300,
-            "hideDuration": 1000,
-        };
-        // toastr.success("Success.....!")
-    </script>
+<script>
+    toastr.options = {
+        "positionClass": "toast-top-center",
+        "timeOut": 2000, // 2 seconds
+        "extendedTimeOut": 1000, // 1 second extended time on hover
+        "closeButton": true,
+        "progressBar": true,
+        "debug": false,
+        "showDuration": 300,
+        "hideDuration": 1000,
+    };
+    // toastr.success("Success.....!")
+</script>
 
-    <script>
-        // cancel button
-        document.getElementById("cancel").onclick = function() {
-            location.href = "product_view.php";
-        };
+<script>
+    // cancel button
+    document.getElementById("cancel").onclick = function() {
+        location.href = "product_view.php";
+    };
 
-        // Validation
-        $(document).ready(function() {
-            $('#product_form').validate({
-                rules: {
-                    product_brand: {
-                        required: true
-                    },
-                    product_name: {
-                        required: true,
-                        number: false
-                    },
-                    description: {
-                        required: true
-                    },
-                    // price: {
-                    //     required: true
-                    // },
-                    // stock: {
-                    //     required: true
-                    // },
-                    //color: {
-                    //    required: true
-                    //},
-                    storage: {
-                        required: true
-                    },
-                    image: {
-                        required: true
-                    }
+    // Validation
+    $(document).ready(function() {
+        $('#product_form').validate({
+            rules: {
+                product_brand: {
+                    required: true
                 },
-                messages: {
-                    product_brand: {
-                        required: "Please Select a Brand"
-                    },
-                    product_name: {
-                        required: "Please Enter a Product Name",
-                        number: "Please Enter a Valid Product Name"
-                    },
-                    description: {
-                        required: "Please Enter a Description"
-                    },
-                    // price: {
-                    //     required: "Please Enter a Price"
-                    // },
-                    // stock: {
-                    //     required: "Please Enter a Stock"
-                    // },
-                    // color: {
-                    //     required: "Please Select a Color"
-                    // },
-                    storage: {
-                        required: "Please Select a Storage"
-                    },
-                    image: {
-                        required: "Please Select an Image"
-                    }
+                product_name: {
+                    required: true,
+                    number: false
+                },
+                description: {
+                    required: true
+                },
+                // price: {
+                //     required: true
+                // },
+                // stock: {
+                //     required: true
+                // },
+                //color: {
+                //    required: true
+                //},
+                storage: {
+                    required: true
+                },
+                image: {
+                    required: true
                 }
-            });
+            },
+            messages: {
+                product_brand: {
+                    required: "Please Select a Brand"
+                },
+                product_name: {
+                    required: "Please Enter a Product Name",
+                    number: "Please Enter a Valid Product Name"
+                },
+                description: {
+                    required: "Please Enter a Description"
+                },
+                // price: {
+                //     required: "Please Enter a Price"
+                // },
+                // stock: {
+                //     required: "Please Enter a Stock"
+                // },
+                // color: {
+                //     required: "Please Select a Color"
+                // },
+                storage: {
+                    required: "Please Select a Storage"
+                },
+                image: {
+                    required: "Please Select an Image"
+                }
+            }
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>
@@ -237,23 +235,23 @@ if (isset($_POST['addproduct'])) {
     $targetDirectory = "uploads/";
     $image = $targetDirectory . $imageName;
     $pid = "SELECT id FROM tblproduct WHERE name = '$product_name'";
-    $pid_result = mysqli_query($conn, $pid);
+    $pid_result = mysqli_query($con, $pid);
     $pid_result = mysqli_query($con, $pid);
     if (mysqli_num_rows($pid_result) > 0) {
         echo "<script>toastr.error('Product Already Exists!')</script>";
     } else {
         if (move_uploaded_file($imageTmpName, $image)) {
             $insert_product = "INSERT INTO tblproduct (bid, name, description, imageName, status) VALUES ('$product_brand', '$product_name', '$description', '$image', 1)";
-            $insert_product_result = mysqli_query($conn, $insert_product);
+            $insert_product_result = mysqli_query($con, $insert_product);
 
             $insert_product_result = mysqli_query($con, $insert_product);
 
             if ($insert_product_result) {
                 // fetching product id
                 // $fetch_pid = "SELECT id FROM tblproduct WHERE name = '$product_name'";
-                // $run_pid = mysqli_query($conn, $fetch_pid);
+                // $run_pid = mysqli_query($con, $fetch_pid);
 
-                // $last_id = mysqli_insert_id($conn);
+                // $last_id = mysqli_insert_id($con);
 
                 // $run_pid = mysqli_query($con, $fetch_pid);
 
@@ -263,7 +261,7 @@ if (isset($_POST['addproduct'])) {
                 //     $pid = $row_pid['id'];
                 //     foreach ($color as $color_id) {
                 //         $insert_color = "INSERT INTO tblproductcolor (pid, colorid) VALUES ($pid, $color_id)";
-                //         $insert_color_result = mysqli_query($conn, $insert_color);
+                //         $insert_color_result = mysqli_query($con, $insert_color);
 
                 //         $insert_color_result = mysqli_query($con, $insert_color);
                 //     }

@@ -377,9 +377,9 @@ require_once('includes/dbconnection.php');
                         required: true,
                         number: true
                     },
-                    // description: {
-                    //     required: true
-                    // }
+                    description: {
+                        required: true
+                    }
                 },
                 messages: {
                     color: {
@@ -396,9 +396,9 @@ require_once('includes/dbconnection.php');
                         required: "Please enter stock",
                         number: "Please enter valid stock"
                     },
-                    // description: {
-                    //     required: "Please enter description"
-                    // }
+                    description: {
+                        required: "Please enter description"
+                    }
                 }
             });
         });
@@ -448,7 +448,7 @@ if (isset($_POST['updateprod'])) {
 }
 
 
-// update stock
+// edit product details
 if (isset($_POST['updatestock'])) {
     $color = $_POST['color'];
     $storage = $_POST['storage'];
@@ -460,38 +460,37 @@ if (isset($_POST['updatestock'])) {
     $select_result = mysqli_query($con, $select);
     if (mysqli_num_rows($select_result) > 0) {
 
-
         $update = "UPDATE tblproductdetail SET price = '$price', stock = '$stock', description = '$description' WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
         $update_result = mysqli_query($con, $update);
         if ($update_result) {
             // echo "<script>toastr.success('Product Stock Updated Successfully'); location.href = 'product_view.php';</script>";
-            echo "<script>alert('Product Stock Updated Successfully'); location.href = 'product_edit.php?esid=$id';</script>";
+            echo "<script>toastr.success('Product Stock Updated Successfully');</script>";
         } else {
-            echo "<script>alert('Failed to Update Product Stock');</script>";
+            echo "<script>toastr.error('Failed to Update Product Stock');</script>";
         }
     } else {
-        echo "<script>alert('Product Details not Found, Please Add Product Details!'); location.href = 'product_edit.php?esid=$id';</script>";
+        echo "<script>toastr.error('Product Details not Found, Please Add Product Details!');</script>";
     }
 }
 
-// delete color
+// delete produc details
 if (isset($_POST['deletecolor'])) {
     $color = $_POST['color'];
     $storage = $_POST['storage'];
 
     $select = "SELECT * FROM tblproductdetail WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
     $select_result = mysqli_query($con, $select);
-    
+
     if (mysqli_num_rows($select_result) > 0) {
         $delete = "DELETE FROM tblproductdetail WHERE pid = '$id' AND cid = '$color' AND sid = '$storage'";
         $delete_result = mysqli_query($con, $delete);
         if ($delete_result) {
-            echo "<script>alert('Product of Color Deleted Successfully'); location.href = 'product_edit.php?esid=$id';</script>";
+            echo "<script>toastr.success('Product of Color Deleted Successfully');</script>";
         } else {
-            echo "<script>alert('Failed to Delete Color');</script>";
+            echo "<script>toastr.error('Failed to Delete Color');</script>";
         }
     } else {
-        echo "<script>alert('Product Details not Found, Please Add Product Details!'); location.href = 'product_edit.php?esid=$id';</script>";
+        echo "<script>toastr.error('Product Details not Found, Please Add Product Details!');</script>";
     }
 }
 ?>

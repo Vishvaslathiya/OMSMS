@@ -1,7 +1,7 @@
 <?php
 $msg = "";
 $grandtotal = 0;
-include_once("includes/dbconnection.php");
+require_once("includes/dbconnection.php");
 // $oid = ;
 if (isset($_POST['submit'])) {
     $ressta = $_POST['status'];
