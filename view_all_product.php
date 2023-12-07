@@ -2,7 +2,7 @@
 $current_page = 'view_all_product.php';
 // require './include/connection.php';
 // require 'navbar.php';
-require_once 'includes/dbconnection.php';
+require_once('includes/dbconnection.php');
 ?>
 
 <?php
@@ -28,19 +28,6 @@ $result = mysqli_query($con, $sql);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>OMSMS</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="vendors/feather/feather.css">
-    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-    <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
 
     <!-- error -->
@@ -50,13 +37,17 @@ $result = mysqli_query($con, $sql);
         }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- flowbite css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
 </head>
 
-<?php
-include_once("includes/cust_navbar.php");
-?>
+
 
 <body>
+    <?php
+    include_once("cust_navbar.php");
+    ?>
+
     <div class="py-20 flex-col space-y-5 justify-center items-center ">
         <!-- <div class="row">
             <?php // foreach ($result as $key => $product) { 
@@ -146,12 +137,12 @@ include_once("includes/cust_navbar.php");
                 </ul>
             </div>
         </div>
-
     </div>
+    <!-- flowbite js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <?php
+    require_once 'cust_footer.php';
+    ?>
 </body>
 
 </html>
-
-<?php
-require_once 'includes/footer.php';
-?>

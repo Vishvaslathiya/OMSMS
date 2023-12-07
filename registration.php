@@ -2,6 +2,7 @@
 // session_start();
 require_once('includes/dbconnection.php');
 include_once("mail_config.php");
+include_once("preloader.php");
 // $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
