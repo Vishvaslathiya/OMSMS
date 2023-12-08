@@ -1,6 +1,7 @@
 <?php
 // session_start();
 require_once('includes/dbconnection.php');
+require_once("mail_config.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,15 +45,27 @@ require_once('includes/dbconnection.php');
                                 <h3>Mobile Shop</h3>
                                 <i class="ti-close" role="button" id="close"></i>
                             </div>
-                            <h4>Already have Account?</h4>
-                            <h6 class="font-weight-light pb-3 ">Signing here to access more functionality</h6>
-                            <form class="forms-sample" id="login_form" method="POST">
-
+                            <h4>Change Passwod?</h4>
+                            <h6 class="font-weight-light pb-3 ">For Better Security, You can take this Step!</h6>
+                            <form class="forms-sample" id="change_password_form" method="POST">
+                                <?php
+                                $uid = $_SESSION['uid'];
+                                $sql = "SELECT * FROM tbluser WHERE id='$uid'";
+                                $query = mysqli_query($con, $sql);
+                                $result = mysqli_fetch_assoc($query);
+                                ?>
                                 <!-- User Name -->
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $result['email'] ?>" placeholder="Email">
                                 </div>
+
+                                <!-- Old Password -->
+                                <div class="form-group">
+                                    <label for="oldpassword">Old Password</label>
+                                    <input type="password" class="form-control" id="oldpassword" name="oldpassword" placeholder="Old Password">
+                                </div>
+
 
                                 <!-- Password -->
                                 <div class="form-group">
@@ -60,13 +73,16 @@ require_once('includes/dbconnection.php');
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                                 </div>
 
+                                <!-- Confirm Password -->
+                                <div class="form-group">
+                                    <label for="confpassword">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confpassword" name="confpassword" placeholder="Confirm Password">
+                                </div>
+
                                 <!-- buttons -->
-                                <button type="submit" name="login" id="login" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</button>
+                                <button type="submit" name="change_password" id="change_password" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Save Password</button>
                                 <div class="text-center mt-4 font-weight-light">
                                     Doesn't Remember Password? <a href="forgot_password.php" class="text-primary">Forgot Password</a>
-                                </div>
-                                <div class="text-center mt-4 font-weight-light">
-                                    Doesn't have Account? <a href="registration.php" class="text-primary">Signup</a>
                                 </div>
                             </form>
                         </div>
@@ -126,23 +142,37 @@ require_once('includes/dbconnection.php');
         };
 
         // Form Validate
-        $('#login_form').validate({
+        $('#change_password_form').validate({
             rules: {
                 'email': {
                     required: true,
                     email: true,
                 },
+                'oldpassword': {
+                    required: true,
+                },
                 'password': {
                     required: true,
-                }
+                },
+                'confpassword': {
+                    required: true,
+                    equalTo: "#password"
+                },
             },
             messages: {
                 'email': {
                     required: "Please Enter Email",
                     email: "Please Enter Valid Email",
                 },
+                'oldpassword': {
+                    required: "Please Enter Old Password"
+                },
                 'password': {
                     required: "Please Enter Password"
+                },
+                'confpassword': {
+                    required: "Please Enter Confirm Password",
+                    equalTo: "Password and Confirm Password must be same"
                 },
             }
         })
@@ -152,44 +182,42 @@ require_once('includes/dbconnection.php');
 </html>
 
 <?php
-// Login
-if (isset($_POST['login'])) {
+if (isset($_POST['change_password'])) {
     $email = $_POST['email'];
+    $oldpassword = $_POST['oldpassword'];
     $password = $_POST['password'];
+    $confpassword = $_POST['confpassword'];
 
-    // password decryption
-    $fetch = "SELECT * FROM tbluser WHERE email = '$email'";
-    $result = mysqli_query($con, $fetch);
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_array($result);
-        $uid = $row['id'];
-        $encpass = password_verify($password, $row['password']);
-        $role = $row['role'];
-        $status = $row['status'];
+    $emailquery = "select * from tbluser where email='$email'";
+    $query = mysqli_query($con, $emailquery);
 
-        if ($row['email'] == $email && $row['password'] == $encpass && $row['role'] == $role) {
-            if ($status == 0) {
-                echo "<script>toastr.error('You can not Login, Your Account is Blocked!')</script>";
-            } else {
-                if ($role == "admin") {
-                    $_SESSION['admin_email'] = $email;
-                    $_SESSION['aid'] = $uid;
-                    // echo "<script> alert('Login Success!'); location.href = 'index.php'</script>";
-                    echo "<script>toastr.success('Login Success!')</script>";
-                    echo "<script>setTimeout(\"location.href = 'index.php';\",2000);</script>";
+    $emailcount = mysqli_num_rows($query);
+
+    if ($emailcount) {
+        $email_pass = mysqli_fetch_assoc($query);
+
+        $db_pass = $email_pass['password'];
+
+        if (password_verify($oldpassword, $db_pass)) {
+            if ($password == $confpassword) {
+                $encpass = password_hash($password, PASSWORD_BCRYPT);
+                $updatequery = "update tbluser set password='$encpass' where email='$email'";
+                $iquery = mysqli_query($con, $updatequery);
+
+                if ($iquery) {
+                    echo "<script>toastr.success('Password Changed Successfully!')</script>";
+                    echo "<script>setTimeout(\"location.href = 'login.php';\",2000);</script>";
                 } else {
-                    $_SESSION['user_email'] = $email;
-                    $_SESSION['uid'] = $uid;
-                    // echo "<script> location.href = 'omsms.php'</script>";
-                    echo "<script>toastr.success('Login Success!')</script>";
-                    echo "<script>setTimeout(\"location.href = 'omsms.php';\",1000);</script>";
+                    echo "<script>toastr.error('Password Not Changed!')</script>";
                 }
+            } else {
+                echo "<script>toastr.error('Password and Confirm Password must be same!')</script>";
             }
         } else {
-            echo "<script> toastr.error('Oops! Invalid Credentials!')</script>";
+            echo "<script>toastr.error('Old Password is Incorrect!')</script>";
         }
     } else {
-        echo "<script>toastr.error('Email not Found! Please create free Account!')</script>";
+        echo "<script>toastr.error('Email is Incorrect!')</script>";
     }
 }
 ?>

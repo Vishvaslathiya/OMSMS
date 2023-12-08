@@ -31,7 +31,7 @@ include_once("preloader.php");
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
-                            <a href="profile.php" class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Settings</a>
+                            <a href="profile.php?uid=<?php echo $_SESSION['uid'] ?>" class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Settings</a>
                         </li>
                         <li>
                             <a href="logout.php" id="signout" class="block px-4 py-2 text-sm hover:cursor-pointer hover:bg-gray-600 text-gray-200 hover:text-white">Sign out</a>

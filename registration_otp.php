@@ -205,7 +205,9 @@ if (isset($_POST['otpbtn']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             //     $cart = "INSERT INTO tblcart (uid) VALUES ($id)";
             //     $cart_result = mysqli_query($con, $cart);
             // }
-            echo "<script>location.href='login.php'</script>";
+            // echo "<script>location.href='login.php'</script>";
+            echo "<script>toastr.success('Registration Successful!')</script>";
+            echo "<script>setTimeout(\"location.href = 'login.php';\",2000);</script>";
         } else {
             echo "<script>toastr.error('Registration Failed! Try Again!')</script>";
         }

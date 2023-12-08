@@ -19,16 +19,12 @@ if (isset($_POST['cod'])) {
 
 
     $orderid = rand(10000000, 999999999);
-<<<<<<< HEAD
-    $userid = $_SESSION['uid'];
-=======
-    $userid = '15';
->>>>>>> 56fd19d9fae87bffc99eba9ef881415ee0fe85c3
+    $userid = '10';
     $city_state = $city . ',' . $state;
-    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='10', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
     $rodr = mysqli_query($con, $odr);
 
-    $sql = "INSERT INTO `tblorderaddresses`(`UserId`, `Ordernumber`, `Flatnobuldngno`, `StreetName`, `Area`, `Landmark`, `City`, `OrderTime`, `OrderFinalStatus`)
+    $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
         VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
 
 
@@ -41,40 +37,36 @@ if (isset($_POST['cod'])) {
 }
 
 
-if (isset($_POST['online'])) {
+// if (isset($_POST['online'])) {
 
 
-    $flat = $_POST['flatno'];
-    $street = $_POST['streetname'];
-    $area = $_POST['area'];
-    $landmark = $_POST['landmark'];
-    $state = $_POST['state'];
-    $city = $_POST['city'];
-    $zip = $_POST['pincode'];
-    $time = date('Y/m/d H:i:s');
+//     $flat = $_POST['flatno'];
+//     $street = $_POST['streetname'];
+//     $area = $_POST['area'];
+//     $landmark = $_POST['landmark'];
+//     $state = $_POST['state'];
+//     $city = $_POST['city'];
+//     $zip = $_POST['pincode'];
+//     $time = date('Y/m/d H:i:s');
 
 
-    $orderid = rand(10000000, 999999999);
-<<<<<<< HEAD
-    $userid = $_SESSION['uid'];
-=======
-    $userid = '15';
->>>>>>> 56fd19d9fae87bffc99eba9ef881415ee0fe85c3
-    $city_state = $city . ',' . $state;
-    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
-    $rodr = mysqli_query($con, $odr);
+//     $orderid = rand(10000000, 999999999);
+//     $userid = '10';
+//     $city_state = $city . ',' . $state;
+//     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='10', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+//     $rodr = mysqli_query($con, $odr);
 
-    $sql = "INSERT INTO `tblorderaddresses`(`UserId`, `Ordernumber`, `Flatnobuldngno`, `StreetName`, `Area`, `Landmark`, `City`, `OrderTime`, `OrderFinalStatus`)
-        VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
+//     $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
+//         VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
 
 
-    $result = mysqli_query($con, $sql);
-    if ($result) {
-        echo "<script>alert('Order Placed Successfully',$orderid);</script>";
-    } else {
-        echo "<script>alert('Order Failed');</script>";
-    }
-}
+//     $result = mysqli_query($con, $sql);
+//     if ($result) {
+//         echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+//     } else {
+//         echo "<script>alert('Order Failed');</script>";
+//     }
+// }
 
 
 ?>
@@ -100,6 +92,8 @@ if (isset($_POST['online'])) {
     <link rel="stylesheet" href="css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
 
     <!-- error -->
     <style>
@@ -140,7 +134,6 @@ if (isset($_POST['online'])) {
                                 <input name="streetname" type="text" placeholder="eg. abc Residency" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
                             </div>
                         </div>
-
                         <div class="space-x-0 lg:flex lg:space-x-4">
                             <div class="mt-4 mb-4 w-full lg:w-1/2">
                                 <label for="area" class="block mb-3 text-sm font-semibold text-gray-500">Area</label>
@@ -151,7 +144,6 @@ if (isset($_POST['online'])) {
                                 <input name="landmark" type="text" placeholder="eg. near ABC School" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
                             </div>
                         </div>
-
                         <div class="space-x-0 lg:flex lg:space-x-4">
                             <div class="w-full lg:w-1/2">
                                 <label for="city" class="block mb-3 text-sm font-semibold text-gray-500">City</label>
@@ -167,37 +159,35 @@ if (isset($_POST['online'])) {
                                     Postcode</label>
                                 <input name="pincode" type="text" pattern="\d{6}" title="Please enter a 6-digit number" placeholder="Post Code" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600" required="true" maxlength="6">
                             </div>
+
+
                         </div>
 
                         <div class="relative pt-3 xl:pt-6"><label for="note" class="block mb-3 text-sm font-semibold text-gray-500"> Notes
                                 (Optional)</label><textarea name="note" class="flex items-center w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600" rows="4" placeholder="Notes for delivery"></textarea>
                         </div>
-
                         <div class="flex mt-2">
                             <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="cod" value="COD" type="submit">
-<<<<<<< HEAD
-                            <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="online" value="Pay Now" type="submit">
-=======
                             <input id="payBtn" class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="online" value="Pay Now" type="submit">
 
 
->>>>>>> 56fd19d9fae87bffc99eba9ef881415ee0fe85c3
                         </div>
+
                     </div>
                 </form>
             </div>
 
+
+
             <div class="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
                 <div class="pt-12 md:pt-0 2xl:ps-4">
-                    <h2 class="text-xl font-bold">Order Summary</h2>
+                    <h2 class="text-xl font-bold">Order Summary
+                    </h2>
                     <div class="mt-8">
                         <div class="flex flex-col space-y-4">
+
                             <?php
-<<<<<<< HEAD
-                            $userid = "14";
-=======
-                            $userid = '15';
->>>>>>> 56fd19d9fae87bffc99eba9ef881415ee0fe85c3
+                            $userid = '10';
 
                             // Connect to the database
                             if (mysqli_connect_errno()) {
@@ -205,7 +195,7 @@ if (isset($_POST['online'])) {
                             }
 
                             // Query to retrieve data from the database
-                            $query = mysqli_query($con, "SELECT tblorders.ID as frid, tblprd.Image, tblprd.prdName, tblprd.prdDes, tblprd.prdPrice, tblprd.prdQty, tblorders.PrdId, tblorders.PrdQty FROM tblorders JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE tblorders.UserId='15' AND tblorders.IsOrderPlaced IS NULL OR NULL;");
+                            $query = mysqli_query($con, "SELECT tblorders.ID as frid, tblprd.Image, tblprd.prdName, tblprd.prdDes, tblprd.prdPrice, tblprd.prdQty, tblorders.PrdId, tblorders.PrdQty FROM tblorders JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE tblorders.UserId='10' AND tblorders.IsOrderPlaced IS NULL OR NULL;");
                             $num = mysqli_num_rows($query);
 
                             $subtotal = 0;
@@ -223,7 +213,7 @@ if (isset($_POST['online'])) {
                                             <p class="text-sm">Price : $<?php echo number_format($row['prdPrice'], 2); ?></p>
                                             <br>
                                             <hr style="border: 1px solid #333;">
-                                            <?php echo '$' . $row['PrdQty'] * $row['prdPrice']; ?>
+                                            <?php echo '₹' . $row['PrdQty'] * $row['prdPrice']; ?>
 
                                         </div>
                                         <div class="delete-product">
@@ -248,128 +238,48 @@ if (isset($_POST['online'])) {
                                     <h2 class="text-xl font-bold">Payment Amount</h2>
                                 </div>
                                 <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                                    Subtotal<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
+                                    Subtotal<span class="ml-2">₹<?php echo number_format($subtotal, 2); ?></span>
                                 </div>
                                 <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                                    Shipping Tax<span class="ml-2">$0</span>
+                                    Shipping Tax<span class="ml-2">₹0</span>
                                 </div>
                                 <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                                    Total<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
+                                    Total<span class="ml-2">₹<?php echo number_format($subtotal, 2); ?></span>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
-            </div>
-        </div>
-    </div>
-=======
-
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                </ <script src="https://code.jquery.com/jquery-3.6.4.min.js">
+                </script>
                 <script>
                     $(document).ready(function() {
                         $(".delete-product").on("click", function() {
                             // Get the product ID from the data attribute
                             var productId = $(this).closest(".flex").data("product-id");
->>>>>>> 56fd19d9fae87bffc99eba9ef881415ee0fe85c3
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(".delete-product").on("click", function() {
-                // Get the product ID from the data attribute
-                var productId = $(this).closest(".flex").data("product-id");
+                            // Make an AJAX request to delete the product
+                            $.ajax({
+                                type: "POST",
+                                url: "delete_prd_cart.php", // Replace with the actual URL handling the deletion
+                                data: {
+                                    productId: productId
+                                },
+                                success: function(response) {
+                                    // Handle the success response, maybe refresh the page or update the UI
+                                    console.log("Product deleted successfully");
+                                },
+                                error: function(error) {
+                                    console.error("Error deleting product", error);
+                                }
+                            });
+                        });
+                    });
+                </script>
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
-<<<<<<< HEAD
-                // Make an AJAX request to delete the product
-                $.ajax({
-                    type: "POST",
-                    url: "delete_prd_cart.php", // Replace with the actual URL handling the deletion
-                    data: {
-                        productId: productId
-                    },
-                    success: function(response) {
-                        // Handle the success response, maybe refresh the page or update the UI
-                        console.log("Product deleted successfully");
-                    },
-                    error: function(error) {
-                        console.error("Error deleting product", error);
-                    }
-                });
-            });
-        });
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $("#Checkout").validate({
-                rules: {
-                    'flatno': {
-                        required: true,
-                    },
-                    'streetname': {
-                        required: true,
-                    },
-                    'email': {
-                        required: true,
-                        email: true,
-                    },
-                    'area': {
-                        required: true,
-                    },
-                    'landmark': {
-                        required: true,
-                    },
-                    'city': {
-                        required: true,
-                    },
-                    'state': {
-                        required: true,
-                    },
-                    'postcode': {
-                        required: true,
-                        pattern: /\d{6}/,
-                        title: "Please enter a 6-digit number",
-                        maxlength: 6,
-                    },
-                },
-                messages: {
-                    'flatno': {
-                        required: "Please enter your Flat Number",
-                    },
-                    'streetname': {
-                        required: "Please enter your Street Name",
-                    },
-                    'email': {
-                        required: "Please enter your Email",
-                        email: "Please enter a valid Email",
-                    },
-                    'area': {
-                        required: "Please enter your area",
-                    },
-                    'landmark': {
-                        required: "Please enter your landmark",
-                    },
-                    'city': {
-                        required: "Please enter your City",
-                    },
-                    'state': {
-                        required: "Please enter your State",
-                    },
-                    'postcode': {
-                        required: "Please enter your Postcode",
-                        pattern: "Please enter a valid 6-digit number",
-                        title: "Please enter a 6-digit number",
-                        maxlength: "Please enter a valid 6-digit number",
-                    },
-                }
-            });
-        });
-    </script>
-=======
 
                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -422,7 +332,6 @@ if (isset($_POST['online'])) {
                         });
                     });
                 </script>
->>>>>>> 56fd19d9fae87bffc99eba9ef881415ee0fe85c3
 
 
                 <script>
@@ -430,9 +339,9 @@ if (isset($_POST['online'])) {
                         key: 'rzp_test_56KBjCtkBBuhvk', // Replace with your actual test key
                         amount: 50000, // Amount in paise (50 INR)
                         currency: 'INR',
-                        name: 'Vishwas Enterprise',
+                        name: 'Mobile Shop',
                         description: 'Testing',
-                        image: 'prj_img/bgg.jpg', // Optional
+                        image: 'images/', // Optional
                         handler: function(response) {
                             alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
                         },
@@ -452,13 +361,27 @@ if (isset($_POST['online'])) {
                     var rzp = new Razorpay(options);
 
                     document.getElementById('payBtn').onclick = function() {
-                        rzp.open();
+                        var email = document.getElementById('email').val();
+                        var flatno = document.getElementById('flatno').val();
+                        var streetname = document.getElementById('streetname').val();
+                        var area = document.getElementById('area').val();
+                        var landmark = document.getElementById('landmark').val();
+                        var city = document.getElementById('city').val();
+                        var state = document.getElementById('state').val();
+                        var pincode = document.getElementById('pincode').val();
+                        var total = document.getElementById('total').val();
+
+                        if (empty(email) || empty(flatno) || empty(streetname) || empty(area) || empty(landmark) || empty(city) || empty(state) || empty(pincode) || empty(total)) {
+                            alert("Please fill all the fields");
+                        } else {
+                            rzp.open();
+                        }
                     };
                 </script>
             </div>
         </div>
     </div>
-    
+
 
 </body>
 
