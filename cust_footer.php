@@ -6,14 +6,12 @@
             <li>
                 <a href="omsms.php" class="hover:underline me-4 md:me-6">Home</a>
             </li>
+             
             <li>
-                <a href="#" class="hover:underline me-4 md:me-6">Privacy Policy</a>
+                <a href="./cust_aboutus.php" class="hover:underline me-4 md:me-6">About Us</a>
             </li>
             <li>
-                <a href="#" class="hover:underline me-4 md:me-6">About Us</a>
-            </li>
-            <li>
-                <a href="#" class="hover:underline">Contact</a>
+                <a href="./cust_contactus.php" class="hover:underline">Contact</a>
             </li>
         </ul>
     </div>

@@ -181,11 +181,6 @@ if (isset($_POST['online'])) {
                 <div class="pt-12 md:pt-0 2xl:ps-4">
                     <h2 class="text-xl font-bold">Order Summary
                     </h2>
-
-
-
-
-
                     <div class="mt-8">
                         <div class="flex flex-col space-y-4">
 
