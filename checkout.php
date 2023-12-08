@@ -19,7 +19,7 @@ if (isset($_POST['cod'])) {
 
 
     $orderid = rand(10000000, 999999999);
-    $userid = '14';
+    $userid = $_SESSION['uid'];
     $city_state = $city . ',' . $state;
     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
     $rodr = mysqli_query($con, $odr);
@@ -51,7 +51,7 @@ if (isset($_POST['online'])) {
 
 
     $orderid = rand(10000000, 999999999);
-    $userid = '14';
+    $userid = $_SESSION['uid'];
     $city_state = $city . ',' . $state;
     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
     $rodr = mysqli_query($con, $odr);
@@ -132,6 +132,7 @@ if (isset($_POST['online'])) {
                                 <input name="streetname" type="text" placeholder="eg. abc Residency" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
                             </div>
                         </div>
+
                         <div class="space-x-0 lg:flex lg:space-x-4">
                             <div class="mt-4 mb-4 w-full lg:w-1/2">
                                 <label for="area" class="block mb-3 text-sm font-semibold text-gray-500">Area</label>
@@ -142,6 +143,7 @@ if (isset($_POST['online'])) {
                                 <input name="landmark" type="text" placeholder="eg. near ABC School" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
                             </div>
                         </div>
+
                         <div class="space-x-0 lg:flex lg:space-x-4">
                             <div class="w-full lg:w-1/2">
                                 <label for="city" class="block mb-3 text-sm font-semibold text-gray-500">City</label>
@@ -157,40 +159,27 @@ if (isset($_POST['online'])) {
                                     Postcode</label>
                                 <input name="pincode" type="text" pattern="\d{6}" title="Please enter a 6-digit number" placeholder="Post Code" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600" required="true" maxlength="6">
                             </div>
-
-
                         </div>
 
                         <div class="relative pt-3 xl:pt-6"><label for="note" class="block mb-3 text-sm font-semibold text-gray-500"> Notes
                                 (Optional)</label><textarea name="note" class="flex items-center w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600" rows="4" placeholder="Notes for delivery"></textarea>
                         </div>
+
                         <div class="flex mt-2">
                             <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="cod" value="COD" type="submit">
                             <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="online" value="Pay Now" type="submit">
-
-
                         </div>
-
                     </div>
                 </form>
             </div>
 
-
-
             <div class="flex flex-col w-full ml-0 lg:ml-12 lg:w-2/5">
                 <div class="pt-12 md:pt-0 2xl:ps-4">
-                    <h2 class="text-xl font-bold">Order Summary
-                    </h2>
-
-
-
-
-
+                    <h2 class="text-xl font-bold">Order Summary</h2>
                     <div class="mt-8">
                         <div class="flex flex-col space-y-4">
-
                             <?php
-                            $userid = '14';
+                            $userid = "14";
 
                             // Connect to the database
                             if (mysqli_connect_errno()) {
@@ -250,104 +239,107 @@ if (isset($_POST['online'])) {
                                     Total<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-                <script>
-                    $(document).ready(function() {
-                        $(".delete-product").on("click", function() {
-                            // Get the product ID from the data attribute
-                            var productId = $(this).closest(".flex").data("product-id");
+            </div>
+        </div>
+    </div>
 
-                            // Make an AJAX request to delete the product
-                            $.ajax({
-                                type: "POST",
-                                url: "delete_prd_cart.php", // Replace with the actual URL handling the deletion
-                                data: {
-                                    productId: productId
-                                },
-                                success: function(response) {
-                                    // Handle the success response, maybe refresh the page or update the UI
-                                    console.log("Product deleted successfully");
-                                },
-                                error: function(error) {
-                                    console.error("Error deleting product", error);
-                                }
-                            });
-                        });
-                    });
-                </script>
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".delete-product").on("click", function() {
+                // Get the product ID from the data attribute
+                var productId = $(this).closest(".flex").data("product-id");
 
-                <script>
-                    $(document).ready(function() {
-                        $("#Checkout").validate({
-                            rules: {
-                                'flatno': {
-                                    required: true,
-                                },
-                                'streetname': {
-                                    required: true,
-                                },
-                                'email': {
-                                    required: true,
-                                    email: true,
-                                },
-                                'area': {
-                                    required: true,
-                                },
-                                'landmark': {
-                                    required: true,
-                                },
-                                'city': {
-                                    required: true,
-                                },
-                                'state': {
-                                    required: true,
-                                },
-                                'postcode': {
-                                    required: true,
-                                    pattern: /\d{6}/,
-                                    title: "Please enter a 6-digit number",
-                                    maxlength: 6,
-                                },
-                            },
-                            messages: {
-                                'flatno': {
-                                    required: "Please enter your Flat Number",
-                                },
-                                'streetname': {
-                                    required: "Please enter your Street Name",
-                                },
-                                'email': {
-                                    required: "Please enter your Email",
-                                    email: "Please enter a valid Email",
-                                },
-                                'area': {
-                                    required: "Please enter your area",
-                                },
-                                'landmark': {
-                                    required: "Please enter your landmark",
-                                },
-                                'city': {
-                                    required: "Please enter your City",
-                                },
-                                'state': {
-                                    required: "Please enter your State",
-                                },
-                                'postcode': {
-                                    required: "Please enter your Postcode",
-                                    pattern: "Please enter a valid 6-digit number",
-                                    title: "Please enter a 6-digit number",
-                                    maxlength: "Please enter a valid 6-digit number",
-                                },
-                            }
-                        });
-                    });
-                </script>
+                // Make an AJAX request to delete the product
+                $.ajax({
+                    type: "POST",
+                    url: "delete_prd_cart.php", // Replace with the actual URL handling the deletion
+                    data: {
+                        productId: productId
+                    },
+                    success: function(response) {
+                        // Handle the success response, maybe refresh the page or update the UI
+                        console.log("Product deleted successfully");
+                    },
+                    error: function(error) {
+                        console.error("Error deleting product", error);
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#Checkout").validate({
+                rules: {
+                    'flatno': {
+                        required: true,
+                    },
+                    'streetname': {
+                        required: true,
+                    },
+                    'email': {
+                        required: true,
+                        email: true,
+                    },
+                    'area': {
+                        required: true,
+                    },
+                    'landmark': {
+                        required: true,
+                    },
+                    'city': {
+                        required: true,
+                    },
+                    'state': {
+                        required: true,
+                    },
+                    'postcode': {
+                        required: true,
+                        pattern: /\d{6}/,
+                        title: "Please enter a 6-digit number",
+                        maxlength: 6,
+                    },
+                },
+                messages: {
+                    'flatno': {
+                        required: "Please enter your Flat Number",
+                    },
+                    'streetname': {
+                        required: "Please enter your Street Name",
+                    },
+                    'email': {
+                        required: "Please enter your Email",
+                        email: "Please enter a valid Email",
+                    },
+                    'area': {
+                        required: "Please enter your area",
+                    },
+                    'landmark': {
+                        required: "Please enter your landmark",
+                    },
+                    'city': {
+                        required: "Please enter your City",
+                    },
+                    'state': {
+                        required: "Please enter your State",
+                    },
+                    'postcode': {
+                        required: "Please enter your Postcode",
+                        pattern: "Please enter a valid 6-digit number",
+                        title: "Please enter a 6-digit number",
+                        maxlength: "Please enter a valid 6-digit number",
+                    },
+                }
+            });
+        });
+    </script>
 
 </body>
 

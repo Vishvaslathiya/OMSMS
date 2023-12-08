@@ -3,6 +3,7 @@ $current_page = 'view_all_product.php';
 // require './include/connection.php';
 // require 'navbar.php';
 require_once('includes/dbconnection.php');
+require_once('preloader.php')
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +45,7 @@ require_once('includes/dbconnection.php');
 
 <body>
   <div class="bg-white">
-    <div class="pt-6">
+    <div class=" md:py-6">
 
       <?php
       $pid = $_GET['pid'];
@@ -59,7 +60,7 @@ require_once('includes/dbconnection.php');
       $row_details = mysqli_fetch_assoc($prod_details_result);
       ?>
       <!-- Image gallery -->
-      <div class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8 border-2 border-gray-400">
+      <div class="mx-auto max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8 border-2 border-gray-400">
         <div class="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
           <img src="<?php echo $row['imageName'] ?>" alt="Mobile Phone Image." class="h-full w-full object-cover object-center">
         </div>
@@ -68,7 +69,7 @@ require_once('includes/dbconnection.php');
           <!-- Product info -->
           <div class="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6">
             <!-- Options -->
-            <div class="px-5 sm:px-10 md:px-20">
+            <div class="px-3 sm:px-10 md:px-20">
               <form method="post" name="addtocart_form">
                 <div class="space-y-4">
                   <div class="flex justify-between">
