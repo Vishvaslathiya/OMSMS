@@ -1,3 +1,10 @@
+<?php
+require_once("includes/dbconnection.php");
+if(!isset($_SESSION['aid'])){
+  echo "<script>window.location.href='login.php';</script>";
+}
+?>
+
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
     <a class="navbar-brand brand-logo mr-5" href="index.php">Mobile Shop</a>
@@ -70,7 +77,7 @@
       </li>
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-          <img src="../images/user-circle.svg" alt="profile" />
+          <img src="images/user.svg" alt="profile" />
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
           <a class="dropdown-item" href="adminprofile.php">
@@ -78,7 +85,7 @@
             Settings
             <!-- aaya chages karva na 6 -->
           </a>
-          <a class="dropdown-item" href="adminlogin.php" target="_blank">
+          <a class="dropdown-item" href="logout.php">
             <i class="ti-power-off text-primary"></i>
             Logout
           </a>
