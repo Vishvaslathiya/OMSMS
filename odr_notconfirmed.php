@@ -83,7 +83,7 @@ try {
                                                     $user = mysqli_query($con, "select * from tblcustomer join tblorderaddresses on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.UserId=tblcustomer.ID ");
                                                     // select * from tblorderaddresses join tblcustomer on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.Ordernumber=$oid
                                                     $cnt = 1;
-                                                    while ($row = mysqli_fetch_array($ret) or $row3 = mysqli_fetch_array($ret1) and $row1 = mysqli_fetch_array($user)) {
+                                                    while ($row = mysqli_fetch_array($ret) and $row3 = mysqli_fetch_array($ret1) and $row1 = mysqli_fetch_array($user)) {
 
                                                         ?>
                                                     <tbody>

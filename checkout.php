@@ -1,15 +1,108 @@
+<?php
+// session_start();
+require_once('includes/dbconnection.php');
+// include_once("mail_config.php");
+include_once("preloader.php");
+
+
+if (isset($_POST['cod'])) {
+
+
+    $flat = $_POST['flatno'];
+    $street = $_POST['streetname'];
+    $area = $_POST['area'];
+    $landmark = $_POST['landmark'];
+    $state = $_POST['state'];
+    $city = $_POST['city'];
+    $zip = $_POST['pincode'];
+    $time = date('Y/m/d H:i:s');
+
+
+    $orderid = rand(10000000, 999999999);
+    $userid = '14';
+    $city_state = $city . ',' . $state;
+    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+    $rodr = mysqli_query($con, $odr);
+
+    $sql = "INSERT INTO `tblorderaddresses`(`UserId`, `Ordernumber`, `Flatnobuldngno`, `StreetName`, `Area`, `Landmark`, `City`, `OrderTime`, `OrderFinalStatus`)
+        VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
+
+
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+    } else {
+        echo "<script>alert('Order Failed');</script>";
+    }
+}
+
+
+if (isset($_POST['online'])) {
+
+
+    $flat = $_POST['flatno'];
+    $street = $_POST['streetname'];
+    $area = $_POST['area'];
+    $landmark = $_POST['landmark'];
+    $state = $_POST['state'];
+    $city = $_POST['city'];
+    $zip = $_POST['pincode'];
+    $time = date('Y/m/d H:i:s');
+
+
+    $orderid = rand(10000000, 999999999);
+    $userid = '14';
+    $city_state = $city . ',' . $state;
+    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+    $rodr = mysqli_query($con, $odr);
+
+    $sql = "INSERT INTO `tblorderaddresses`(`UserId`, `Ordernumber`, `Flatnobuldngno`, `StreetName`, `Area`, `Landmark`, `City`, `OrderTime`, `OrderFinalStatus`)
+        VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
+
+
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+    } else {
+        echo "<script>alert('Order Failed');</script>";
+    }
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> OMSMS </title>
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>OMSMS</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="vendors/feather/feather.css">
+    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+    <!-- error -->
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
+
     <div class="mt-20">
         <h1 class="flex items-center justify-center font-bold text-blue-600 text-md lg:text-3xl">Checkout
         </h1>
@@ -19,35 +112,40 @@
             <div class="flex flex-col md:w-full">
                 <h2 class="mb-4 font-bold md:text-xl text-heading ">Shipping Address
                 </h2>
-                <form class="justify-center w-full mx-auto" method="post" action>
+                <form class="justify-center w-full mx-auto" method="post" id="Checkout" enctype="multipart/form-data">
                     <div class="">
-                        <div class="space-x-0 lg:flex lg:space-x-4">
-                            <div class="w-full lg:w-1/2">
-                                <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">First
-                                    Name</label>
-                                <input name="firstName" type="text" placeholder="First Name" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
-                            </div>
-                            <div class="w-full lg:w-1/2 ">
-                                <label for="firstName" class="block mb-3 text-sm font-semibold text-gray-500">Last
-                                    Name</label>
-                                <input name="Last Name" type="text" placeholder="Last Name" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
-                            </div>
-                        </div>
+
                         <div class="mt-4">
                             <div class="w-full">
                                 <label for="Email" class="block mb-3 text-sm font-semibold text-gray-500">Email</label>
-                                <input name="Last Name" type="text" placeholder="Email" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
+                                <input name="email" type="email" placeholder="Email" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <div class="w-full">
-                                <label for="Address" class="block mb-3 text-sm font-semibold text-gray-500">Address</label>
-                                <textarea class="w-full px-4 py-3 text-xs border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600" name="Address" cols="20" rows="4" placeholder="Address"></textarea>
+
+                        <div class="space-x-0 lg:flex lg:space-x-4">
+                            <div class="mt-4 w-full lg:w-1/2">
+                                <label for="flatno" class="block mb-3 text-sm font-semibold text-gray-500">Flat or Bulding Number</label>
+                                <input name="flatno" type="text" placeholder="eg. B-202" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
+                            </div>
+                            <div class="mt-4 w-full lg:w-1/2 ">
+                                <label for="streetname" class="block mb-3 text-sm font-semibold text-gray-500">Street Name</label>
+                                <input name="streetname" type="text" placeholder="eg. abc Residency" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
+                            </div>
+                        </div>
+                        <div class="space-x-0 lg:flex lg:space-x-4">
+                            <div class="mt-4 mb-4 w-full lg:w-1/2">
+                                <label for="area" class="block mb-3 text-sm font-semibold text-gray-500">Area</label>
+                                <input name="area" type="text" placeholder="eg. New Delhi" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
+                            </div>
+                            <div class="mt-4 mb-4 w-full lg:w-1/2 ">
+                                <label for="landmark" class="block mb-3 text-sm font-semibold text-gray-500">Landmark</label>
+                                <input name="landmark" type="text" placeholder="eg. near ABC School" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
                             </div>
                         </div>
                         <div class="space-x-0 lg:flex lg:space-x-4">
                             <div class="w-full lg:w-1/2">
                                 <label for="city" class="block mb-3 text-sm font-semibold text-gray-500">City</label>
+
                                 <input name="city" type="text" placeholder="City" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600 " required='true'>
                             </div>
                             <div class="w-full lg:w-1/2">
@@ -57,7 +155,7 @@
                             <div class="w-full lg:w-1/2">
                                 <label for="postcode" class="block mb-3 text-sm font-semibold text-gray-500">
                                     Postcode</label>
-                                <input name="postcode" type="number" pattern="\d{6}" title="Please enter a 6-digit number" placeholder="Post Code" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600" required="true">
+                                <input name="pincode" type="text" pattern="\d{6}" title="Please enter a 6-digit number" placeholder="Post Code" class="w-full px-4 py-3 text-sm border border-gray-300 rounded lg:text-sm focus:outline-none focus:ring-1 focus:ring-blue-600" required="true" maxlength="6">
                             </div>
 
 
@@ -67,11 +165,9 @@
                                 (Optional)</label><textarea name="note" class="flex items-center w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600" rows="4" placeholder="Notes for delivery"></textarea>
                         </div>
                         <div class="flex mt-2">
-                            <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" value="Continue to Payment" type="submit">
-                            <button class="flex-1 mt-4 ml-2 w-60 px-6 py-2 text-blue-200 hover:text-white bg-blue-600 hover:bg-blue-900 relative">
-                                <span class="absolute inset-0 bg-cover bg-center z-0" style="background-image: url('includes/pay-mthd-img.jpg');"></span>
-                                <span class="relative z-10"></span>
-                            </button>
+                            <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="cod" value="COD" type="submit">
+                            <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="online" value="Pay Now" type="submit">
+
 
                         </div>
 
@@ -85,53 +181,174 @@
                 <div class="pt-12 md:pt-0 2xl:ps-4">
                     <h2 class="text-xl font-bold">Order Summary
                     </h2>
+
+
+
+
+
                     <div class="mt-8">
                         <div class="flex flex-col space-y-4">
-                            <div class="flex space-x-4">
-                                <div>
-                                    <img src="https://source.unsplash.com/user/erondu/1600x900" alt="image" class="w-60">
+
+                            <?php
+                            $userid = '14';
+
+                            // Connect to the database
+                            if (mysqli_connect_errno()) {
+                                echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
+                            }
+
+                            // Query to retrieve data from the database
+                            $query = mysqli_query($con, "SELECT tblorders.ID as frid, tblprd.Image, tblprd.prdName, tblprd.prdDes, tblprd.prdPrice, tblprd.prdQty, tblorders.PrdId, tblorders.PrdQty FROM tblorders JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE tblorders.UserId='14' AND tblorders.IsOrderPlaced IS NULL OR NULL;");
+                            $num = mysqli_num_rows($query);
+
+                            $subtotal = 0;
+
+                            if ($num > 0) {
+                                while ($row = mysqli_fetch_array($query)) {
+                            ?>
+                                    <div class="flex space-x-4 mb-3" data-product-id="<?php echo $row['PrdId']; ?>">
+                                        <div>
+                                            <img src="<?php echo "prj_img/" . $row['Image']; ?>" alt="<?php echo $row['prdName']; ?>" class="w-60">
+                                        </div>
+                                        <div>
+                                            <h2 class="text-xl font-bold"><?php echo  $row['prdName']; ?></h2>
+                                            <p class="text-sm">Quantity : <?php echo $row['PrdQty']; ?></p>
+                                            <p class="text-sm">Price : $<?php echo number_format($row['prdPrice'], 2); ?></p>
+                                            <br>
+                                            <hr style="border: 1px solid #333;">
+                                            <?php echo '$' . $row['PrdQty'] * $row['prdPrice']; ?>
+
+                                        </div>
+                                        <div class="delete-product">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                            <?php
+                                    // Calculate subtotal for each item
+                                    $subtotal += $row['prdPrice'] * $row['PrdQty'];
+                                }
+                            } else {
+                                echo "<script>alert('Your Cart is Empty');</script>";
+                            }
+                            ?>
+
+                            <!-- Display the total section -->
+                            <div class="flex flex-col space-y-4">
+                                <div class="flex p-4 mt-4">
+                                    <h2 class="text-xl font-bold">Payment Amount</h2>
                                 </div>
-                                <div>
-                                    <h2 class="text-xl font-bold">Title</h2>
-                                    <p class="text-sm">Lorem ipsum dolor sit amet, tet</p>
-                                    <span class="text-red-600">Price</span> $20
+                                <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                                    Subtotal<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
                                 </div>
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
+                                <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                                    Shipping Tax<span class="ml-2">$0</span>
+                                </div>
+                                <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
+                                    Total<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
                                 </div>
                             </div>
-                            <div class="flex space-x-4">
-                                <div>
-                                    <img src="https://source.unsplash.com/collection/190727/1600x900" alt="image" class="w-60">
-                                </div>
-                                <div>
-                                    <h2 class="text-xl font-bold">Title</h2>
-                                    <p class="text-sm">Lorem ipsum dolor sit amet, tet</p>
-                                    <span class="text-red-600">Price</span> $20
-                                </div>
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
-                    <div class="flex p-4 mt-4">
-                        <h2 class="text-xl font-bold">ITEMS 2</h2>
-                    </div>
-                    <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                        Subtotal<span class="ml-2">$40.00</span></div>
-                    <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                        Shipping Tax<span class="ml-2">$10</span></div>
-                    <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                        Total<span class="ml-2">$50.00</span></div>
                 </div>
-            </div>
-        </div>
-    </div>
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script>
+                    $(document).ready(function() {
+                        $(".delete-product").on("click", function() {
+                            // Get the product ID from the data attribute
+                            var productId = $(this).closest(".flex").data("product-id");
+
+                            // Make an AJAX request to delete the product
+                            $.ajax({
+                                type: "POST",
+                                url: "delete_prd_cart.php", // Replace with the actual URL handling the deletion
+                                data: {
+                                    productId: productId
+                                },
+                                success: function(response) {
+                                    // Handle the success response, maybe refresh the page or update the UI
+                                    console.log("Product deleted successfully");
+                                },
+                                error: function(error) {
+                                    console.error("Error deleting product", error);
+                                }
+                            });
+                        });
+                    });
+                </script>
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        $("#Checkout").validate({
+                            rules: {
+                                'flatno': {
+                                    required: true,
+                                },
+                                'streetname': {
+                                    required: true,
+                                },
+                                'email': {
+                                    required: true,
+                                    email: true,
+                                },
+                                'area': {
+                                    required: true,
+                                },
+                                'landmark': {
+                                    required: true,
+                                },
+                                'city': {
+                                    required: true,
+                                },
+                                'state': {
+                                    required: true,
+                                },
+                                'postcode': {
+                                    required: true,
+                                    pattern: /\d{6}/,
+                                    title: "Please enter a 6-digit number",
+                                    maxlength: 6,
+                                },
+                            },
+                            messages: {
+                                'flatno': {
+                                    required: "Please enter your Flat Number",
+                                },
+                                'streetname': {
+                                    required: "Please enter your Street Name",
+                                },
+                                'email': {
+                                    required: "Please enter your Email",
+                                    email: "Please enter a valid Email",
+                                },
+                                'area': {
+                                    required: "Please enter your area",
+                                },
+                                'landmark': {
+                                    required: "Please enter your landmark",
+                                },
+                                'city': {
+                                    required: "Please enter your City",
+                                },
+                                'state': {
+                                    required: "Please enter your State",
+                                },
+                                'postcode': {
+                                    required: "Please enter your Postcode",
+                                    pattern: "Please enter a valid 6-digit number",
+                                    title: "Please enter a 6-digit number",
+                                    maxlength: "Please enter a valid 6-digit number",
+                                },
+                            }
+                        });
+                    });
+                </script>
+
 </body>
 
 </html>

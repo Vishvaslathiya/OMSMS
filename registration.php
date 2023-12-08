@@ -227,6 +227,7 @@ include_once("preloader.php");
         });
 
         // Form Validation
+        
         $("#registration_form").validate({
             rules: {
                 'role': {
