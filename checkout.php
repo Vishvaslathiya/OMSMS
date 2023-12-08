@@ -19,9 +19,9 @@ if (isset($_POST['cod'])) {
 
 
     $orderid = rand(10000000, 999999999);
-    $userid = '10';
+    $userid = '17';
     $city_state = $city . ',' . $state;
-    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='10', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
     $rodr = mysqli_query($con, $odr);
 
     $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
@@ -51,9 +51,9 @@ if (isset($_POST['cod'])) {
 
 
 //     $orderid = rand(10000000, 999999999);
-//     $userid = '10';
+//     $userid = '17';
 //     $city_state = $city . ',' . $state;
-//     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='10', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+//     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='17', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
 //     $rodr = mysqli_query($con, $odr);
 
 //     $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
@@ -78,19 +78,8 @@ if (isset($_POST['cod'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>OMSMS</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="vendors/feather/feather.css">
-    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
-    <!-- endinject -->
-    <!-- Plugin css for this page -->
-    <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-    <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css">
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
-    <!-- endinject -->
+
+
     <link rel="shortcut icon" href="images/favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -104,7 +93,9 @@ if (isset($_POST['cod'])) {
 </head>
 
 <body>
-
+    <?php
+    include_once("cust_navbar.php");
+    ?>
     <div class="mt-20">
         <h1 class="flex items-center justify-center font-bold text-blue-600 text-md lg:text-3xl">Checkout
         </h1>
@@ -187,7 +178,7 @@ if (isset($_POST['cod'])) {
                         <div class="flex flex-col space-y-4">
 
                             <?php
-                            $userid = '10';
+                            $userid = '17';
 
                             // Connect to the database
                             if (mysqli_connect_errno()) {
@@ -195,7 +186,7 @@ if (isset($_POST['cod'])) {
                             }
 
                             // Query to retrieve data from the database
-                            $query = mysqli_query($con, "SELECT tblorders.ID as frid, tblprd.Image, tblprd.prdName, tblprd.prdDes, tblprd.prdPrice, tblprd.prdQty, tblorders.PrdId, tblorders.PrdQty FROM tblorders JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE tblorders.UserId='10' AND tblorders.IsOrderPlaced IS NULL OR NULL;");
+                            $query = mysqli_query($con, "SELECT tblorders.ID as frid, tblprd.Image, tblprd.prdName, tblprd.prdDes, tblprd.prdPrice, tblprd.prdQty, tblorders.PrdId, tblorders.PrdQty FROM tblorders JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE tblorders.UserId='17' AND tblorders.IsOrderPlaced IS NULL OR NULL;");
                             $num = mysqli_num_rows($query);
 
                             $subtotal = 0;
@@ -213,7 +204,7 @@ if (isset($_POST['cod'])) {
                                             <p class="text-sm">Price : $<?php echo number_format($row['prdPrice'], 2); ?></p>
                                             <br>
                                             <hr style="border: 1px solid #333;">
-                                            <?php echo '₹' . $row['PrdQty'] * $row['prdPrice']; ?>
+                                            <?php echo '$' . $row['PrdQty'] * $row['prdPrice']; ?>
 
                                         </div>
                                         <div class="delete-product">
@@ -238,13 +229,13 @@ if (isset($_POST['cod'])) {
                                     <h2 class="text-xl font-bold">Payment Amount</h2>
                                 </div>
                                 <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                                    Subtotal<span class="ml-2">₹<?php echo number_format($subtotal, 2); ?></span>
+                                    Subtotal<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
                                 </div>
                                 <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                                    Shipping Tax<span class="ml-2">₹0</span>
+                                    Shipping Tax<span class="ml-2">$0</span>
                                 </div>
                                 <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                                    Total<span class="ml-2">₹<?php echo number_format($subtotal, 2); ?></span>
+                                    Total<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
                                 </div>
                             </div>
 
@@ -344,6 +335,11 @@ if (isset($_POST['cod'])) {
                         image: 'images/', // Optional
                         handler: function(response) {
                             alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+
+
+
+
+
                         },
                         prefill: {
                             name: 'John Doe',
@@ -359,21 +355,51 @@ if (isset($_POST['cod'])) {
                     };
 
                     var rzp = new Razorpay(options);
+                    // rzp.open();
 
                     document.getElementById('payBtn').onclick = function() {
-                        var email = document.getElementById('email').val();
-                        var flatno = document.getElementById('flatno').val();
-                        var streetname = document.getElementById('streetname').val();
-                        var area = document.getElementById('area').val();
-                        var landmark = document.getElementById('landmark').val();
-                        var city = document.getElementById('city').val();
-                        var state = document.getElementById('state').val();
-                        var pincode = document.getElementById('pincode').val();
-                        var total = document.getElementById('total').val();
+                        var email = document.getElementById('email').value;
+                        var flatno = document.getElementById('flatno').value;
+                        var streetname = document.getElementById('streetname').value;
+                        var area = document.getElementById('area').value;
+                        var landmark = document.getElementById('landmark').value;
+                        var city = document.getElementById('city').value;
+                        var state = document.getElementById('state').value;
+                        var pincode = document.getElementById('pincode').value;
+                        // var total = document.getElementById('total').value;
 
-                        if (empty(email) || empty(flatno) || empty(streetname) || empty(area) || empty(landmark) || empty(city) || empty(state) || empty(pincode) || empty(total)) {
+                        if (email == "" || flatno == "" || streetname == "" || area == "" || landmark == "" || city == "" || state == "" || pincode == "") {
                             alert("Please fill all the fields");
                         } else {
+
+                            <?php
+                            $flat = $_POST['flatno'];
+                            $street = $_POST['streetname'];
+                            $area = $_POST['area'];
+                            $landmark = $_POST['landmark'];
+                            $state = $_POST['state'];
+                            $city = $_POST['city'];
+                            $zip = $_POST['pincode'];
+                            $time = date('Y/m/d H:i:s');
+
+
+                            $orderid = rand(10000000, 999999999);
+                            $userid = '17';
+                            $city_state = $city . ',' . $state;
+                            $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+                            $rodr = mysqli_query($con, $odr);
+
+                            $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
+    VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
+
+
+                            $result = mysqli_query($con, $sql);
+                            if ($result) {
+                                echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+                            } else {
+                                echo "<script>alert('Order Failed');</script>";
+                            }
+                            ?>
                             rzp.open();
                         }
                     };
@@ -381,7 +407,9 @@ if (isset($_POST['cod'])) {
             </div>
         </div>
     </div>
-
+    <?php
+    include_once("cust_footer.php");
+    ?>
 
 </body>
 
