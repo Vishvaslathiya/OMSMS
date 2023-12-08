@@ -19,7 +19,7 @@ if (isset($_POST['cod'])) {
 
 
     $orderid = rand(10000000, 999999999);
-    $userid = '14';
+    $userid = '15';
     $city_state = $city . ',' . $state;
     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
     $rodr = mysqli_query($con, $odr);
@@ -51,7 +51,7 @@ if (isset($_POST['online'])) {
 
 
     $orderid = rand(10000000, 999999999);
-    $userid = '14';
+    $userid = '15';
     $city_state = $city . ',' . $state;
     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
     $rodr = mysqli_query($con, $odr);
@@ -108,8 +108,8 @@ if (isset($_POST['online'])) {
         </h1>
     </div>
     <div class="container p-12 mx-auto">
-        <div class="flex flex-col w-full px-0 mx-auto md:flex-row">
-            <div class="flex flex-col md:w-full">
+        <div class="flex flex-col px-0 mx-auto md:flex-row">
+            <div class="flex flex-col md: w-[80%] mr-8">
                 <h2 class="mb-4 font-bold md:text-xl text-heading ">Shipping Address
                 </h2>
                 <form class="justify-center w-full mx-auto" method="post" id="Checkout" enctype="multipart/form-data">
@@ -166,7 +166,7 @@ if (isset($_POST['online'])) {
                         </div>
                         <div class="flex mt-2">
                             <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="cod" value="COD" type="submit">
-                            <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="online" value="Pay Now" type="submit">
+                            <input id="payBtn" class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="online" value="Pay Now" type="submit">
 
 
                         </div>
@@ -190,7 +190,7 @@ if (isset($_POST['online'])) {
                         <div class="flex flex-col space-y-4">
 
                             <?php
-                            $userid = '14';
+                            $userid = '15';
 
                             // Connect to the database
                             if (mysqli_connect_errno()) {
@@ -198,7 +198,7 @@ if (isset($_POST['online'])) {
                             }
 
                             // Query to retrieve data from the database
-                            $query = mysqli_query($con, "SELECT tblorders.ID as frid, tblprd.Image, tblprd.prdName, tblprd.prdDes, tblprd.prdPrice, tblprd.prdQty, tblorders.PrdId, tblorders.PrdQty FROM tblorders JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE tblorders.UserId='14' AND tblorders.IsOrderPlaced IS NULL OR NULL;");
+                            $query = mysqli_query($con, "SELECT tblorders.ID as frid, tblprd.Image, tblprd.prdName, tblprd.prdDes, tblprd.prdPrice, tblprd.prdQty, tblorders.PrdId, tblorders.PrdQty FROM tblorders JOIN tblprd ON tblprd.ID = tblorders.PrdId WHERE tblorders.UserId='15' AND tblorders.IsOrderPlaced IS NULL OR NULL;");
                             $num = mysqli_num_rows($query);
 
                             $subtotal = 0;
@@ -254,6 +254,7 @@ if (isset($_POST['online'])) {
                         </div>
                     </div>
                 </div>
+
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                 <script>
                     $(document).ready(function() {
@@ -282,6 +283,18 @@ if (isset($_POST['online'])) {
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
+
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+                <!-- <script>
+                    $(document).ready(function() {
+                        $("#Checkout").validate({
+                            
+                            
+                        });
+                    });
+                </script> -->
+
                 <script>
                     $(document).ready(function() {
                         $("#Checkout").validate({
@@ -296,18 +309,7 @@ if (isset($_POST['online'])) {
                                     required: true,
                                     email: true,
                                 },
-                                'area': {
-                                    required: true,
-                                },
-                                'landmark': {
-                                    required: true,
-                                },
-                                'city': {
-                                    required: true,
-                                },
-                                'state': {
-                                    required: true,
-                                },
+                                // ... more rules ...
                                 'postcode': {
                                     required: true,
                                     pattern: /\d{6}/,
@@ -322,22 +324,7 @@ if (isset($_POST['online'])) {
                                 'streetname': {
                                     required: "Please enter your Street Name",
                                 },
-                                'email': {
-                                    required: "Please enter your Email",
-                                    email: "Please enter a valid Email",
-                                },
-                                'area': {
-                                    required: "Please enter your area",
-                                },
-                                'landmark': {
-                                    required: "Please enter your landmark",
-                                },
-                                'city': {
-                                    required: "Please enter your City",
-                                },
-                                'state': {
-                                    required: "Please enter your State",
-                                },
+                                // ... more messages ...
                                 'postcode': {
                                     required: "Please enter your Postcode",
                                     pattern: "Please enter a valid 6-digit number",
@@ -348,6 +335,42 @@ if (isset($_POST['online'])) {
                         });
                     });
                 </script>
+
+
+                <script>
+                    var options = {
+                        key: 'rzp_test_56KBjCtkBBuhvk', // Replace with your actual test key
+                        amount: 50000, // Amount in paise (50 INR)
+                        currency: 'INR',
+                        name: 'Vishwas Enterprise',
+                        description: 'Testing',
+                        image: 'prj_img/bgg.jpg', // Optional
+                        handler: function(response) {
+                            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+                        },
+                        prefill: {
+                            name: 'John Doe',
+                            email: 'john@example.com',
+                            contact: '9876543210'
+                        },
+                        notes: {
+                            address: 'Hello World'
+                        },
+                        theme: {
+                            color: '#F37254'
+                        }
+                    };
+
+                    var rzp = new Razorpay(options);
+
+                    document.getElementById('payBtn').onclick = function() {
+                        rzp.open();
+                    };
+                </script>
+            </div>
+        </div>
+    </div>
+    
 
 </body>
 
