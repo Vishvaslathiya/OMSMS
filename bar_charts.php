@@ -3,9 +3,9 @@
 require_once('includes/dbconnection.php');
 
 
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+// if (!$con) {
+//     die("Connection failed: " . mysqli_connect_error());
+// }
 
 // Fetch data for the chart
 $dataPoints = array();

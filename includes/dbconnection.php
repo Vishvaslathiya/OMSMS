@@ -2,7 +2,6 @@
 session_start();
 
 // require_once('includes/dbconnection.php');
-// require_once('preloader.php');
 
 $con = mysqli_connect("localhost", "root", "", "OMSMS");
 if (mysqli_connect_errno()) {

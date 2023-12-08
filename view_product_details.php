@@ -2,8 +2,7 @@
 $current_page = 'view_all_product.php';
 // require './include/connection.php';
 // require 'navbar.php';
-require_once 'includes/dbconnection.php';
-require_once 'preloader.php';
+require_once('includes/dbconnection.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -270,9 +269,6 @@ require_once 'preloader.php';
       });
     });
   </script>
-
-  <!-- flowbite js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 </body>
 
 </html>
