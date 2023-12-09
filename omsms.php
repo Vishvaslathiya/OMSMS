@@ -24,18 +24,8 @@ require_once('includes/dbconnection.php');
     <?php
     include_once("cust_navbar.php");
     ?>
-    <div class="container-scroller">
-        <?php
-        if (isset($_SESSION['uid'])) {
-        ?>
-            <button type="button" class="btn btn-primary" id="logout">Signout</button>
-        <?php
-        } else {
-        ?>
-            <button type="button" class="btn btn-primary" id="login">Signin</button>
-        <?php
-        }
-        ?>
+
+    <div class="py-20 flex-col space-y-5 justify-center items-center ">
     </div>
 
     <div class="py-20 flex-col space-y-5 justify-center items-center ">

@@ -1,5 +1,7 @@
 <?php
-include("includes/dbconnection.php");
+require_once("includes/dbconnection.php");
+require_once("preloader.php");
+
 // session_start();
 error_reporting(0);
 ?>

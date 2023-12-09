@@ -251,6 +251,171 @@ if (isset($_POST['cod'])) {
                     </div>
 
                 </div>
+<<<<<<< HEAD
+=======
+                </ <script src="https://code.jquery.com/jquery-3.6.4.min.js">
+                </script>
+                <script>
+                    $(document).ready(function() {
+                        $(".delete-product").on("click", function() {
+                            // Get the product ID from the data attribute
+                            var productId = $(this).closest(".flex").data("product-id");
+
+                            // Make an AJAX request to delete the product
+                            $.ajax({
+                                type: "POST",
+                                url: "delete_prd_cart.php", // Replace with the actual URL handling the deletion
+                                data: {
+                                    productId: productId
+                                },
+                                success: function(response) {
+                                    // Handle the success response, maybe refresh the page or update the UI
+                                    console.log("Product deleted successfully");
+                                },
+                                error: function(error) {
+                                    console.error("Error deleting product", error);
+                                }
+                            });
+                        });
+                    });
+                </script>
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+                <!-- <script>
+                    $(document).ready(function() {
+                        $("#Checkout").validate({
+                            
+                            
+                        });
+                    });
+                </script> -->
+
+                <script>
+                    $(document).ready(function() {
+                        $("#Checkout").validate({
+                            rules: {
+                                'flatno': {
+                                    required: true,
+                                },
+                                'streetname': {
+                                    required: true,
+                                },
+                                'email': {
+                                    required: true,
+                                    email: true,
+                                },
+                                // ... more rules ...
+                                'postcode': {
+                                    required: true,
+                                    pattern: /\d{6}/,
+                                    title: "Please enter a 6-digit number",
+                                    maxlength: 6,
+                                },
+                            },
+                            messages: {
+                                'flatno': {
+                                    required: "Please enter your Flat Number",
+                                },
+                                'streetname': {
+                                    required: "Please enter your Street Name",
+                                },
+                                // ... more messages ...
+                                'postcode': {
+                                    required: "Please enter your Postcode",
+                                    pattern: "Please enter a valid 6-digit number",
+                                    title: "Please enter a 6-digit number",
+                                    maxlength: "Please enter a valid 6-digit number",
+                                },
+                            }
+                        });
+                    });
+                </script>
+
+
+                <script>
+                    var options = {
+                        key: 'rzp_test_56KBjCtkBBuhvk', // Replace with your actual test key
+                        amount: 50000, // Amount in paise (50 INR)
+                        currency: 'INR',
+                        name: 'Mobile Shop',
+                        description: 'Testing',
+                        image: 'images/', // Optional
+                        handler: function(response) {
+                            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+
+
+
+
+
+                        },
+                        prefill: {
+                            name: 'John Doe',
+                            email: 'john@example.com',
+                            contact: '9876543210'
+                        },
+                        notes: {
+                            address: 'Hello World'
+                        },
+                        theme: {
+                            color: '#F37254'
+                        }
+                    };
+
+                    var rzp = new Razorpay(options);
+                    // rzp.open();
+
+                    document.getElementById('payBtn').onclick = function() {
+                        var email = document.getElementById('email').value;
+                        var flatno = document.getElementById('flatno').value;
+                        var streetname = document.getElementById('streetname').value;
+                        var area = document.getElementById('area').value;
+                        var landmark = document.getElementById('landmark').value;
+                        var city = document.getElementById('city').value;
+                        var state = document.getElementById('state').value;
+                        var pincode = document.getElementById('pincode').value;
+                        // var total = document.getElementById('total').value;
+
+                        if (email == "" || flatno == "" || streetname == "" || area == "" || landmark == "" || city == "" || state == "" || pincode == "") {
+                            alert("Please fill all the fields");
+                        } else {
+
+                            <?php
+                            $flat = $_POST['flatno'];
+                            $street = $_POST['streetname'];
+                            $area = $_POST['area'];
+                            $landmark = $_POST['landmark'];
+                            $state = $_POST['state'];
+                            $city = $_POST['city'];
+                            $zip = $_POST['pincode'];
+                            $time = date('Y/m/d H:i:s');
+
+
+                            $orderid = rand(10000000, 999999999);
+                            $userid = '17';
+                            $city_state = $city . ',' . $state;
+                            $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+                            $rodr = mysqli_query($con, $odr);
+
+                            $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
+    VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
+
+
+                            $result = mysqli_query($con, $sql);
+                            if ($result) {
+                                echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+                            } else {
+                                echo "<script>alert('Order Failed');</script>";
+                            }
+                            ?>
+                            rzp.open();
+                        }
+                    };
+                </script>
+>>>>>>> c1674e8e4f3cb84f207a7d58801f1ec118a10147
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js">

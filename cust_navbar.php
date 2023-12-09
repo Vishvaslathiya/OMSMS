@@ -24,16 +24,16 @@ include_once("preloader.php");
                 <div class="z-50 hidden my-4 text-base list-none divide-y  rounded-lg shadow bg-gray-700 divide-gray-600" id="user-dropdown">
                     <div class="px-4 py-3">
                         <?php
-                            $select  = "SELECT * FROM tbluser WHERE id = '$_SESSION[uid]'";
-                            $run = mysqli_query($con, $select);
-                            $row = mysqli_fetch_array($run);
+                        $select  = "SELECT * FROM tbluser WHERE id = '$_SESSION[uid]'";
+                        $run = mysqli_query($con, $select);
+                        $row = mysqli_fetch_array($run);
                         ?>
                         <span class="block text-sm text-white"> <?php echo $row['name'] ?></span>
                         <span class="block text-sm truncate text-gray-400"> <?php echo $_SESSION['user_email'] ?> </span>
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
-                            <a href="profile.php" class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Settings</a>
+                            <a href="profile.php?uid=<?php echo $_SESSION['uid'] ?>" class="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Settings</a>
                         </li>
                         <li>
                             <a href="logout.php" id="signout" class="block px-4 py-2 text-sm hover:cursor-pointer hover:bg-gray-600 text-gray-200 hover:text-white">Sign out</a>
@@ -77,7 +77,7 @@ include_once("preloader.php");
                 </li>
                 <li>
                     <a href="checkout.php" class="<?php echo ($current_page === "cart.php" ? 'text-blue-500' : 'text-white') ?> block py-2 px-3 rounded md:p-0  md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cart</a>
-                </li> 
+                </li>
                 <li>
                     <a href="cust_orders.php" class="<?php echo ($current_page === "orders.php" ? 'text-blue-500' : 'text-white') ?> block py-2 px-3 rounded md:p-0  md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Orders</a>
                 </li>

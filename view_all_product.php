@@ -66,7 +66,7 @@ $result = mysqli_query($con, $sql);
                 <?php
                 if (mysqli_num_rows($result) > 0) {
                 ?>
-                    <section id="Projects" class="w-fit mx-auto grid grid-cols-3 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+                    <section id="Projects" class="w-fit mx-auto grid lg:grid-cols-4 sm:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
                         <?php while ($row = mysqli_fetch_assoc($result)) {
                             $pid = $row['id'];
 

@@ -1,5 +1,5 @@
 <?php
-// require_once('./preloader.php');
+require_once('preloader.php');
 ?>
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
 

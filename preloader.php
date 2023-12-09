@@ -27,10 +27,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- tailwind cdn -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <!-- flowbite css -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" /> -->
 
     <style>
         /* .spinner-wrapper {
@@ -95,7 +95,7 @@
     </script>
 
     <!-- flowbite js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script> -->
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <?php
 require_once('includes/dbconnection.php');
+require_once('preloader.php');
 // $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
