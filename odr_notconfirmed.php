@@ -65,9 +65,7 @@ try {
                                                     <th>
                                                         Action
                                                     </th>
-                                                    <th>
-                                                        Payment
-                                                    </th>
+                                                    
                                                 </tr>
                                             </thead>
                                             <?php

@@ -11,10 +11,10 @@ if (isset($_POST['addtocart'])) {
   $sql = mysqli_query($con, "select * from tblproductdetail where pid='$PrdId' ");
   $row = mysqli_fetch_array($sql);
   $prdPrice = $row['price'];
-  $uid = '5';
+  $uid = $_SESSION['uid'];
 
 
-  $query = mysqli_query($con, "insert into tblorders( `UserId`, `PrdId`, `PrdPrice`, `PrdQty`, `IsOrderPlaced`, `OrderNumber`, `payment_mode`) values('$uid','$PrdId',' $prdPrice','$PrdQty','null','null','null') ");
+  $query = mysqli_query($con, "insert into tblorders( `UserId`, `PrdId`, `PrdPrice`, `PrdQty`) values('$uid','$PrdId',' $prdPrice','$PrdQty' ) ");
   if ($query) {
     echo "<script>alert('Product has been added in to Cart ');</script>";
   } else {

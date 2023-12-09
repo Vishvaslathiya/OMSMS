@@ -76,10 +76,10 @@ include_once("preloader.php");
                     <a href="view_all_product.php" class="<?php echo ($current_page === "view_all_product.php" ? 'text-blue-500' : 'text-white') ?> block py-2 px-3 rounded md:p-0  md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Products</a>
                 </li>
                 <li>
-                    <a href="checkout.php" class="<?php echo ($current_page === "cart.php" ? 'text-blue-500' : 'text-white') ?> block py-2 px-3 rounded md:p-0  md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cart</a>
+                    <a href="checkout.php" class="<?php echo ($current_page === "checkout.php" ? 'text-blue-500' : 'text-white') ?> block py-2 px-3 rounded md:p-0  md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Cart</a>
                 </li>
                 <li>
-                    <a href="cust_orders.php" class="<?php echo ($current_page === "orders.php" ? 'text-blue-500' : 'text-white') ?> block py-2 px-3 rounded md:p-0  md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Orders</a>
+                    <a href="cust_orders.php" class="<?php echo ($current_page === "cust_orders.php" ? 'text-blue-500' : 'text-white') ?> block py-2 px-3 rounded md:p-0  md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Orders</a>
                 </li>
                 <li>
                     <a href="cust_aboutus.php" class="<?php echo ($current_page === "cust_aboutus.php" ? 'text-blue-500' : 'text-white') ?> block py-2 px-3 rounded md:p-0 md:hover:text-blue-500 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">About Us</a>

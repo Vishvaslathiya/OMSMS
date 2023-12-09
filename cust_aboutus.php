@@ -17,6 +17,7 @@
   </head>
   <body>
     <?php
+    $current_page = 'cust_aboutus.php';
       include './cust_navbar.php';
     ?>
     <!-- ====== Team Section Start -->

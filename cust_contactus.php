@@ -1,7 +1,7 @@
 <?php
 // include "includes/dbconnection.php";
 // $conn = mysqli_connect("localhost", "root", "", "omsms");
-$current_page = 'omsms.php';
+$current_page = 'cust_contactus.php';
 require_once('includes/dbconnection.php');
 // $con = mysqli_connect("localhost", "root", "", "project");
 ?>

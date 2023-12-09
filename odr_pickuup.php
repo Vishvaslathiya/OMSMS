@@ -69,7 +69,8 @@ require_once('includes/dbconnection.php');
                                             $user = mysqli_query($con, "select * from tblcustomer join tblorderaddresses on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.UserId=tblcustomer.ID ");
                                             // select * from tblorderaddresses join tblcustomer on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.Ordernumber=$oid
                                             $cnt = 1;
-                                            while ($row = mysqli_fetch_array($ret) and $row1 = mysqli_fetch_array($user)) {
+                                            if (mysqli_num_rows($ret) && mysqli_num_rows($user) > 0) {
+                                                while ($row = mysqli_fetch_array($ret) and $row1 = mysqli_fetch_array($user)) {
 
                                             ?>
                                         <tbody>
@@ -94,9 +95,17 @@ require_once('includes/dbconnection.php');
                                                 </td>
                                             </tr>
                                         <?php
-                                                $cnt = $cnt + 1;
-                                            } ?>
-
+                                                    $cnt = $cnt + 1;
+                                                }
+                                            } else { ?>
+                                            <tr>
+                                                <td colspan="8">
+                                                    <h4 style="color:red">No Record Found</h4>
+                                                </td>
+                                            </tr>
+                                    <?php
+                                            }
+                                    ?>
                                         </tbody>
                                     </table>
                                 </div>

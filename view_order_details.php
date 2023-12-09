@@ -71,10 +71,10 @@ if (isset($_POST['submit'])) {
                                         $oid = $_GET['orderid'];
 
                                         // $oid = 66447365;
-                                        $con = mysqli_connect("localhost", "root", "", "OMSMS");
-                                        if (mysqli_connect_errno()) {
-                                            echo "Failed to connect to MySQL:" . mysqli_connect_error();
-                                        }
+                                        // $con = mysqli_connect("localhost", "root", "", "OMSMS");
+                                        // if (mysqli_connect_errno()) {
+                                        //     echo "Failed to connect to MySQL:" . mysqli_connect_error();
+                                        // }
                                         $ret = "";
                                         $ret = mysqli_query($con, "select * from tblorderaddresses join tblcustomer on tblcustomer.ID=tblorderaddresses.UserId where tblorderaddresses.Ordernumber=$oid");
                                         if (!$ret) {

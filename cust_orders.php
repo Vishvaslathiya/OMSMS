@@ -1,7 +1,7 @@
 <?php
 // include "includes/dbconnection.php";
 // $conn = mysqli_connect("localhost", "root", "", "omsms");
-$current_page = 'omsms.php';
+$current_page = 'cust_orders.php';
 require_once('includes/dbconnection.php');
 // if (!isset($_SESSION['uid'])) {
 //     // header('location: registration.php');
@@ -56,8 +56,8 @@ require_once('includes/dbconnection.php');
                 </thead>
                 <?php
                 $con = mysqli_connect("localhost", "root", "", "omsms");
-                $uid = 5;
-                // $uid = $_SESSION['uid'];
+                
+                $uid = $_SESSION['uid'];
                 $query = mysqli_query($con, "select * from  tblorderaddresses  where UserId='$uid'");
                 $count = 1;
                 $num = mysqli_num_rows($query);

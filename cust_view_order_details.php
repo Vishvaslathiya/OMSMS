@@ -1,7 +1,7 @@
 <?php
 // include "includes/dbconnection.php";
 // $conn = mysqli_connect("localhost", "root", "", "omsms");
-$current_page = 'omsms.php';
+$current_page = 'cust_orders.php';
 require_once('includes/dbconnection.php');
 // $con = mysqli_connect("localhost", "root", "", "project");
 $total = 0;
@@ -31,14 +31,14 @@ $total = 0;
             <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
 
             <div class="flex justify-start item-start space-y-2 flex-col">
-                <h1 class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-white">Order #<?php echo $_GET['onumber'] ?></h1>
+                <h1 class="text-3xl dark:text-dark lg:text-4xl font-semibold leading-7 lg:leading-9 text-dark">Order #<?php echo $_GET['onumber'] ?></h1>
                 <?php
                 $onumber = $_GET['onumber'];
                 $result = mysqli_query($con, "select tblorderaddresses.OrderTime from tblorderaddresses where OrderNumber = '$onumber' ");
                 $r = mysqli_fetch_array($result)
 
                 ?>
-                <p class="text-base dark:text-white font-medium leading-6 text-white"><?php echo $r['OrderTime'] ?></p>
+                <p class="text-2xl dark:text-dark font-medium leading-6 text-dark"><?php echo $r['OrderTime'] ?></p>
 
             </div>
             <div class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
@@ -50,18 +50,17 @@ $total = 0;
                         <?php
                         $pr =  mysqli_query($con, "select tblorders.PrdPrice from tblorders  WHERE tblorders.OrderNumber = '$onumber'");
                         $respr = mysqli_fetch_assoc($pr);
-                        $price_table = $respr['PrdPrice'];
-                        $sql = "SELECT  tblbrand.name,tblcolor.name,tblproduct.imageName,tblproductdetail.price,tblstorage.storage,tblorders.PrdQty, tblproduct.*
-                                FROM tblproduct
-                                JOIN tblorders ON tblproduct.id = tblorders.PrdId
-                                JOIN tblcolor on tblproduct.id = tblcolor.id 
-                                JOIN tblproductdetail on tblproduct.id = tblproductdetail.pid
-                                JOIN tblbrand on tblproduct.bid = tblbrand.id 
-                                JOIN tblstorage on tblproduct.id = tblstorage.id
-                                WHERE tblorders.OrderNumber = '$onumber' and tblorders.PrdPrice = '$price_table'";
+                        // $price_table = $respr['PrdPrice'];
+
+
+                        $qur = "SELECT tblorders.*, tblproductdetail.*, tblorderaddresses.*
+                                FROM tblorders
+                                JOIN tblproductdetail ON tblproductdetail.pid = tblorders.PrdId
+                                JOIN tblorderaddresses ON tblorderaddresses.Ordernumber = tblorders.OrderNumber
+                                WHERE tblorders.OrderNumber = '$onumber'";
 
                         $count = 1;
-                        $query = mysqli_query($con, $sql);
+                        $query = mysqli_query($con, $qur);
                         $num = mysqli_num_rows($query);
                         if ($num > 0) {
                             while ($row = mysqli_fetch_array($query)) {
@@ -69,8 +68,13 @@ $total = 0;
                                 <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
 
                                     <div class="pb-4 md:pb-8 w-full md:w-40">
-                                        <img class="w-[20%] hidden md:block" src="uploads/<?php echo $row['imageName'] ?>" alt="<?php echo $row['name'] ?>" />
-                                        <img class="w-[20%] md:hidden" src="https://i.ibb.co/L039qbN/Rectangle-10.png" alt="<?php echo $row['name'] ?>" />
+                                        <?php
+                                        $prod = "SELECT * FROM tblproductdetail WHERE pid = '$row[PrdId]'";
+                                        $prodquery = mysqli_query($con, $prod);
+                                        $prodrow = mysqli_fetch_array($prodquery);
+                                        ?>
+                                        <img class="w-[20%] hidden md:block" src="uploads/<?php echo $prodrow['imageName'] ?>" alt="<?php echo $prodrow['name'] ?>" />
+                                        <img class="w-[20%] md:hidden" src="https://i.ibb.co/L039qbN/Rectangle-10.png" alt="<?php echo $prodrow['description'] ?>" />
                                     </div>
 
                                     <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
@@ -83,10 +87,10 @@ $total = 0;
                                             </div>
                                         </div>
                                         <div class="flex justify-between space-x-8 items-start w-full">
-                                            <p class="text-base dark:text-dark xl:text-lg leading-6"><?php echo number_format($row['price'], 2) ?></p>
+                                            <p class="text-base dark:text-dark xl:text-lg leading-6"><?php echo number_format($row['PrdPrice'], 2) ?></p>
                                             <p class="text-base dark:text-dark xl:text-lg leading-6 text-gray-800"><?php echo $row['PrdQty'] ?></p>
-                                            <p class="text-base dark:text-dark xl:text-lg font-semibold leading-6 text-gray-800"><?php echo number_format($row['price'] * $row['PrdQty'], 2) ?></p>
-                                            <?php $total += $row['price'] * $row['PrdQty'];    ?>
+                                            <p class="text-base dark:text-dark xl:text-lg font-semibold leading-6 text-gray-800"><?php echo number_format($row['PrdPrice'] * $row['PrdQty'], 2) ?></p>
+                                            <?php $total += $row['PrdPrice'] * $row['PrdQty'];    ?>
 
                                         </div>
                                     </div>
@@ -110,18 +114,18 @@ $total = 0;
 
                         <div class="flex justify-between items-center w-full">
                             <p class="text-base dark:text-white leading-4 text-gray-800">Shipping</p>
-                            <p class="text-base dark:text-gray-300 leading-4 text-gray-600">200.00</p>
+                            <p class="text-xl dark:text-gray-300 leading-4  text-lime-500	">Free</p>
                         </div>
                     </div>
                     <div class="flex justify-between items-center w-full">
                         <p class="text-base dark:text-white font-semibold leading-4 text-gray-800">Total</p>
-                        <p class="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600"><?php echo number_format($total + 200, 2) ?></p>
+                        <p class="text-base dark:text-gray-300 font-semibold leading-4 text-gray-600"><?php echo number_format($total, 2) ?></p>
                     </div>
                 </div>
 
                     </div>
                 </div>
-                
+
 
 
             </div>

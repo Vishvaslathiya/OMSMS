@@ -1,6 +1,7 @@
 <?php
 // session_start();
 require_once('includes/dbconnection.php');
+$current_page = 'checkout.php';
 // include_once("mail_config.php");
 if (!isset($_SESSION['uid'])) {
 
@@ -209,7 +210,7 @@ if (isset($_POST['cod'])) {
                     ?>
                             <div class="flex space-x-4 mb-3" data-product-id="<?php echo $row['frid']; ?>">
                                 <div>
-                                    <img src="<?php echo "uploads/" . $row['Image']; ?>" alt="<?php echo $row['prdName']; ?>" class="w-60">
+                                    <img src="<?php echo $row['Image']; ?>" alt="<?php echo $row['prdName']; ?>" class="w-60">
                                 </div>
                                 <div>
                                     <h2 class="text-xl font-bold"><?php echo $row['prdName']; ?></h2>
