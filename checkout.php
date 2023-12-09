@@ -2,73 +2,83 @@
 // session_start();
 require_once('includes/dbconnection.php');
 // include_once("mail_config.php");
+if (!isset($_SESSION['uid'])) {
+
+    // header('location: registration.php');
+    echo "<script>alert('Login to view Your Cart'); location.href='omsms.php'</script>";
+}
+// $con = mysqli_connect("localhost", "root", "", "omsms");
 include_once("preloader.php");
 
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['cod'])) {
 
-    $pay = $_POST['payment'];
-
-
-    if ($pay === 'cod') {
-        $flat = $_POST['flatno'];
-        $street = $_POST['streetname'];
-        $area = $_POST['area'];
-        $landmark = $_POST['landmark'];
-        $state = $_POST['state'];
-        $city = $_POST['city'];
-        $zip = $_POST['pincode'];
-        $time = date('Y/m/d H:i:s');
+    $flat = $_POST['flatno'];
+    $street = $_POST['streetname'];
+    $area = $_POST['area'];
+    $landmark = $_POST['landmark'];
+    $state = $_POST['state'];
+    $city = $_POST['city'];
+    $zip = $_POST['pincode'];
+    $time = date('Y/m/d H:i:s');
 
 
-        $orderid = rand(10000000, 999999999);
-        $userid = '5';
-        $city_state = $city . ',' . $state;
-        $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
-        $rodr = mysqli_query($con, $odr);
+    $orderid = rand(10000000, 999999999);
+    $userid = $_SESSION['uid'];
+    $city_state = $city . ',' . $state;
+    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+    $rodr = mysqli_query($con, $odr);
 
-        $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
+    $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
         VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city_state', '$time', null)";
 
 
-        $result = mysqli_query($con, $sql);
-        if ($result) {
-            echo "<script>alert('Order Placed Successfully',$orderid);</script>";
-        } else {
-            echo "<script>alert('Order Failed');</script>";
-        }
-        # code...
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        echo "<script>alert('Order Placed Successfully',$orderid);</script>";
     } else {
-
-
-        $flat = $_POST['flatno'];
-        $street = $_POST['streetname'];
-        $area = $_POST['area'];
-        $landmark = $_POST['landmark'];
-        $state = $_POST['state'];
-        $city = $_POST['city'];
-        $zip = $_POST['pincode'];
-        $time = date('Y/m/d H:i:s');
-
-
-        $orderid = rand(10000000, 999999999);
-        $userid = '5';
-        $city_state = $city . ',' . $state;
-        $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='17', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
-        $rodr = mysqli_query($con, $odr);
-
-        $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
-        VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
-
-
-        $result = mysqli_query($con, $sql);
-        if ($result) {
-            echo "<script>alert('Order Placed Successfully',$orderid);</script>";
-        } else {
-            echo "<script>alert('Order Failed');</script>";
-        }
+        echo "<script>alert('Order Failed');</script>";
     }
+    # code...
+
 }
+
+
+
+// if (isset($_POST['online'])) {
+
+//     $flat = $_POST['flatno'];
+//     $street = $_POST['streetname'];
+//     $area = $_POST['area'];
+//     $landmark = $_POST['landmark'];
+//     $state = $_POST['state'];
+//     $city = $_POST['city'];
+//     $zip = $_POST['pincode'];
+//     $time = date('Y/m/d H:i:s');
+
+
+//     $orderid = rand(10000000, 999999999);
+//     $userid = $_SESSION['uid'];
+//     $city_state = $city . ',' . $state;
+//     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+//     $rodr = mysqli_query($con, $odr);
+
+//     $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
+//         VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city_state', '$time', null)";
+
+
+//     $result = mysqli_query($con, $sql);
+//     if ($result) {
+//         echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+//     } else {
+//         echo "<script>alert('Order Failed');</script>";
+//     }
+//     # code...
+
+// }
+
+
+
 
 
 ?>
@@ -107,7 +117,7 @@ if (isset($_POST['submit'])) {
             <div class="flex flex-col md: w-[80%] mr-8">
                 <h2 class="mb-4 font-bold md:text-xl text-heading ">Shipping Address
                 </h2>
-                <form class="justify-center w-full mx-auto" method="post" id="Checkout" ">
+                <form class="justify-center w-full mx-auto" method="post"  id="Checkout" ">
                     <div class="">
 
                         <div class=" mt-4">
@@ -160,17 +170,9 @@ if (isset($_POST['submit'])) {
                     (Optional)</label><textarea name="note" class="flex items-center w-full px-4 py-3 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-600" rows="4" placeholder="Notes for delivery"></textarea>
             </div>
 
-
-            <div class="text-center space-x-0 mt-4  lg:flex lg:space-x-4">
-                <label for="cod">COD</label>
-                <input name="payment" value="cod" type="radio" checked='true'>
-                <label for="online">Online</label>
-                <input name="payment" value="online" type="radio">
-
-            </div>
-
             <div class="flex mt-2 mb-4">
-                <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="submit" value="Pay" type="submit">
+                <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="cod" value="COD" type="submit">
+                <!-- <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-red-600 hover:bg-blue-900" name="online" id="pay_now" value="Pay Now" onclick="pay_now()" type="submit"> -->
             </div>
 
 
@@ -188,15 +190,15 @@ if (isset($_POST['submit'])) {
                 <div class="flex flex-col space-y-4">
 
                     <?php
-                    $userid = '5';
+                    $userid = $_SESSION['uid'];
 
                     // Connect to the database
                     if (mysqli_connect_errno()) {
                         echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
                     }
 
-
-                    $query = mysqli_query($con, "SELECT o.ID as frid, p.imageName as Image, p.name as prdName, pd.price as prdPrice, o.PrdQty as PrdQty  FROM tblorders o JOIN tblproduct p ON o.PrdId = p.id JOIN tblproductdetail pd ON p.id = pd.pid WHERE o.UserId = '5' AND (o.IsOrderPlaced IS NULL OR o.IsOrderPlaced = 0)");
+                    $uid = $_SESSION['uid'];
+                    $query = mysqli_query($con, "SELECT o.ID as frid, p.imageName as Image, p.name as prdName, pd.price as prdPrice, o.PrdQty as PrdQty  FROM tblorders o JOIN tblproduct p ON o.PrdId = p.id JOIN tblproductdetail pd ON p.id = pd.pid WHERE o.UserId = $uid AND (o.IsOrderPlaced IS NULL OR o.IsOrderPlaced = 0)");
 
                     $num = mysqli_num_rows($query);
 
@@ -240,15 +242,16 @@ if (isset($_POST['submit'])) {
                             <h2 class="text-xl font-bold">Payment Amount</h2>
                         </div>
                         <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                            Subtotal<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
+                            Subtotal<span class="ml-2"><?php echo number_format($subtotal, 2); ?></span>
                         </div>
                         <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                            Shipping Tax<span class="ml-2">$0</span>
+                            Shipping Tax<span class="ml-2">0</span>
                         </div>
                         <div class="flex items-center w-full py-4 text-sm font-semibold border-b border-gray-300 lg:py-5 lg:px-3 text-heading last:border-b-0 last:text-base last:pb-0">
-                            Total<span class="ml-2">$<?php echo number_format($subtotal, 2); ?></span>
+                            Total<span class="ml-2"><?php echo number_format($subtotal, 2); ?></span>
                         </div>
                     </div>
+                    
 
                 </div>
                 <script src="https://code.jquery.com/jquery-3.6.4.min.js">
@@ -332,35 +335,40 @@ if (isset($_POST['submit'])) {
                         });
                     });
                 </script>
-                <?php
-                echo '<script>';
-                echo 'var options = {';
-                echo '    key: \'rzp_test_56KBjCtkBBuhvk\',';
-                echo '    amount: 50000,';
-                echo '    currency: \'INR\',';
-                echo '    name: \'Mobile Shop\',';
-                echo '    description: \'Testing\',';
-                echo '    image: \'images/\',';
-                echo '    handler: function(response) {';
-                echo '        alert(\'Payment successful! Payment ID: \' + response.razorpay_payment_id);';
-                echo '    },';
-                echo '    prefill: {';
-                echo '        name: \'John Doe\',';
-                echo '        email: \'john@example.com\',';
-                echo '        contact: \'9876543210\'';
-                echo '    },';
-                echo '    notes: {';
-                echo '        address: \'Hello World\'';
-                echo '    },';
-                echo '    theme: {';
-                echo '        color: \'#F37254\'';
-                echo '    }';
-                echo '};';
 
-                echo 'var rzp = new Razorpay(options);';
-                echo 'rzp.open();';
-                echo '</script>';
-                ?>
+                <script>
+                    window.pay_now = function() {
+                        var options = {
+                            key: 'rzp_test_56KBjCtkBBuhvk', // Replace with your actual test key
+                            amount: <?php echo number_format($subtotal*100, 2); ?>, // Example amount in paise (50 INR)
+                            currency: 'INR',
+                            name: 'Vishwas Enterprise',
+                            description: 'Testing',
+                            image: 'prj_img/bgg.jpg', // Optional
+                            handler: function(response) {
+                                alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+                            },
+                            prefill: {
+                                name: 'John Doe',
+                                email: 'john@example.com',
+                                contact: '9876543210'
+                            },
+                            notes: {
+                                address: 'Hello World'
+                            },
+                            theme: {
+                                color: '#F37254'
+                            }
+                        };
+
+                        var rzp = new Razorpay(options);
+
+                        document.getElementById('pay_now').onclick = function() {
+                            rzp.open();
+                        };
+                    }
+                </script>
+
 
 
 
@@ -498,7 +506,7 @@ if (isset($_POST['submit'])) {
 
 
                                 $orderid = rand(10000000, 999999999);
-                                $userid = '5';
+                                $userid = $_SESSION['uid'];
                                 $city_state = $city . ',' . $state;
                                 $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
                                 $rodr = mysqli_query($con, $odr);
