@@ -3,7 +3,31 @@ $current_page = 'view_all_product.php';
 // require './include/connection.php';
 // require 'navbar.php';
 require_once('includes/dbconnection.php');
+
+
+if (isset($_POST['addtocart'])) {
+  $PrdId = $_POST['pid'];
+  $PrdQty = $_POST['quantity'];
+  $sql = mysqli_query($con, "select * from tblproductdetail where pid='$PrdId' ");
+  $row = mysqli_fetch_array($sql);
+  $prdPrice = $row['price'];
+  $uid = '5';
+
+
+  $query = mysqli_query($con, "insert into tblorders( `UserId`, `PrdId`, `PrdPrice`, `PrdQty`, `IsOrderPlaced`, `OrderNumber`, `payment_mode`) values('$uid','$PrdId',' $prdPrice','$PrdQty','null','null','null') ");
+  if ($query) {
+    echo "<script>alert('Product has been added in to Cart ');</script>";
+  } else {
+    echo "<script>alert('Something went wrong.');</script>";
+  }
+}
+
+
+
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -168,7 +192,7 @@ require_once('includes/dbconnection.php');
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                         </svg>
                       </button>
-                      <input type="text" name="quantity" id="quantity" data-input-counter data-input-counter-min="1" data-input-counter-max="10" class="flex-shrink-0 text-gray-900 border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="1" min="1" max="10" disabled>
+                      <input type="text" name="quantity" id="quantity" data-input-counter data-input-counter-min="1" data-input-counter-max="10" class="flex-shrink-0 text-gray-900 border-0 bg-transparent text-sm font-normal focus:outline-none focus:ring-0 max-w-[2.5rem] text-center" placeholder="" value="1" min="1" max="10">
                       <button type="button" id="increment-button" data-input-counter-increment="quantity" class="flex-shrink-0 bg-gray-100 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 focus:ring-2 focus:outline-none">
                         <svg class="w-2.5 h-2.5 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
@@ -180,7 +204,7 @@ require_once('includes/dbconnection.php');
 
                   <div class="py-2">
                     <!-- add to cart -->
-                    <button type="submit" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add to bag</button>
+                    <input type="submit" name="addtocart" value="Add to bag" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                   </div>
                 </div>
               </form>
