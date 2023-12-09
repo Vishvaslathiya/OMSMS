@@ -3,6 +3,10 @@
 // $conn = mysqli_connect("localhost", "root", "", "omsms");
 $current_page = 'omsms.php';
 require_once('includes/dbconnection.php');
+// if (!isset($_SESSION['uid'])) {
+//     // header('location: registration.php');
+//     echo "<script>alert('Login to view Your Orders'); location.href='omsms.php'</script>";
+// }
 // $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
@@ -50,16 +54,17 @@ require_once('includes/dbconnection.php');
 
                     </tr>
                 </thead>
-                <tbody>
-                    <?php
-                    $con = mysqli_connect("localhost", "root", "", "omsms");
-                    $uid = 5;
-                    $query = mysqli_query($con, "select * from  tblorderaddresses  where UserId='5'");
-                    $count = 1;
-                    $num = mysqli_num_rows($query);
-                    if ($num > 0) {
-                        while ($row = mysqli_fetch_array($query)) { ?>
+                <?php
+                $con = mysqli_connect("localhost", "root", "", "omsms");
+                $uid = 5;
+                // $uid = $_SESSION['uid'];
+                $query = mysqli_query($con, "select * from  tblorderaddresses  where UserId='$uid'");
+                $count = 1;
+                $num = mysqli_num_rows($query);
+                if ($num > 0) {
+                    while ($row = mysqli_fetch_array($query)) { ?>
 
+                        <tbody>
 
 
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -80,18 +85,18 @@ require_once('includes/dbconnection.php');
 
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a href="cust_view_order_details.php?onumber=<?php echo $row['Ordernumber']; ?>"  title="Order Detail" itemprop="url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Details</a>
+                                    <a href="cust_view_order_details.php?onumber=<?php echo $row['Ordernumber']; ?>" title="Order Detail" itemprop="url" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Details</a>
                                 </td>
 
                             </tr>
 
 
+                        </tbody>
 
-                        <?php
-                            $count = $count + 1;
-                        } ?>
+                    <?php
+                        $count = $count + 1;
+                    } ?>
 
-                </tbody>
             </table>
         </div>
     </div>

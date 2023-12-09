@@ -12,6 +12,7 @@
       href="assets/images/favicon.svg"
       type="image/x-icon"
     />
+    
     <link rel="stylesheet" href="./tailwind.css" />
   </head>
   <body>
@@ -45,7 +46,7 @@
             <div class="mx-auto mb-10 w-full max-w-[370px]">
               <div class="relative overflow-hidden rounded-lg">
                 <img
-                  src="prj_img/Vishvas1.jpg"
+                  src="uploads/vishvas.jpg"
                   alt="image"
                   class="w-full"
                 />
@@ -237,11 +238,11 @@
           </div>
            
            
-          <div class="w-full px-4 md:w-1/2 xl:w-1/4">
+          <div class="w-full  px-4 md:w-1/2 xl:w-1/4">
             <div class="mx-auto mb-10 w-full max-w-[370px]">
               <div class="relative overflow-hidden rounded-lg">
                 <img
-                  src="prj_img/Rohan.jpg"
+                  src="uploads/r.jpg"
                   alt="image"
                   class="w-full"
                 />

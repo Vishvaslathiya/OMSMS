@@ -21,9 +21,6 @@ if (isset($_POST['addtocart'])) {
     echo "<script>alert('Something went wrong.');</script>";
   }
 }
-
-
-
 require_once('preloader.php')
 ?>
 
