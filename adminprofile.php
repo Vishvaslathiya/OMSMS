@@ -138,7 +138,7 @@ require_once("mail_config.php");
     <script>
         // cancel button
         document.getElementById("close").onclick = function() {
-            location.href = "omsms.php";
+            location.href = "index.php";
         };
 
         // Form Validate

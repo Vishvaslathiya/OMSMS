@@ -3,7 +3,6 @@ $current_page = 'view_all_product.php';
 // require './include/connection.php';
 // require 'navbar.php';
 require_once('includes/dbconnection.php');
-<<<<<<< HEAD
 
 
 if (isset($_POST['addtocart'])) {
@@ -25,9 +24,7 @@ if (isset($_POST['addtocart'])) {
 
 
 
-=======
 require_once('preloader.php')
->>>>>>> c1674e8e4f3cb84f207a7d58801f1ec118a10147
 ?>
 
 
@@ -218,7 +215,8 @@ require_once('preloader.php')
       </div>
     </div>
   </div>
-
+  <!-- flowbite js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- jQuery Validation -->

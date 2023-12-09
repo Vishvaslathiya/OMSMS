@@ -25,10 +25,7 @@ require_once('includes/dbconnection.php');
     include_once("cust_navbar.php");
     ?>
 
-    <div class="py-20 flex-col space-y-5 justify-center items-center ">
-    </div>
-
-    <div class="py-20 flex-col space-y-5 justify-center items-center ">
+    <div class="py-16 flex-col space-y-5 justify-center items-center ">
         <section>
             <div class="bg-black text-white py-20">
                 <div class="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
@@ -67,51 +64,51 @@ require_once('includes/dbconnection.php');
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi,
                             debitis?
                         </p>
-                        <a href= 'view_all_product.php?page=3'> <button class="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
-                             Shop Now →
-                        </button> </a>
+                        <a href='view_all_product.php?page=3'> <button class="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
+                                Shop Now →
+                            </button> </a>
                     </div>
                 </div>
                 <div class="relative aspect-[16/9]  w-auto rounded-md md:aspect-auto md:h-[400px]">
-                    <img src="prj_img/iphone-13.jpg" alt="AirMax Pro" class="z-0 h-full w-full rounded-md object-cover" />
+                    <img src="uploads/12-Pro-Max.png" alt="AirMax Pro" class="z-0 h-full w-full rounded-md object-cover" />
                     <div class="absolute inset-0 rounded-md bg-gradient-to-t from-gray-900 to-transparent"></div>
                     <div class="absolute bottom-4 left-4 text-left">
-                        <h1 class="text-lg font-semibold text-white">iphone-13</h1>
+                        <h1 class="text-lg font-semibold text-white">iphone 12 Pro Max</h1>
                         <p class="mt-2 text-sm text-gray-300">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi,
                             debitis?
                         </p>
-                        <a href= 'view_all_product.php?page=7'> <button class="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
-                             Shop Now →
-                        </button> </a>
+                        <a href='view_all_product.php?page=7'> <button class="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
+                                Shop Now →
+                            </button> </a>
                     </div>
                 </div>
                 <div class="relative aspect-[16/9]  w-auto rounded-md md:aspect-auto md:h-[400px]">
-                    <img src="prj_img/iphone-13.jpg" alt="AirMax Pro" class="z-0 h-full w-full rounded-md object-cover" />
+                    <img src="uploads/iPhone_14_Pro.jpg" alt="AirMax Pro" class="z-0 h-full w-full rounded-md object-cover" />
                     <div class="absolute inset-0 rounded-md bg-gradient-to-t from-gray-900 to-transparent"></div>
                     <div class="absolute bottom-4 left-4 text-left">
-                        <h1 class="text-lg font-semibold text-white">iphone-13</h1>
+                        <h1 class="text-lg font-semibold text-white">iphone 14 Pro</h1>
                         <p class="mt-2 text-sm text-gray-300">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi,
                             debitis?
                         </p>
-                        <a href= 'view_all_product.php?page=8'> <button class="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
-                             Shop Now →
-                        </button> </a>
+                        <a href='view_all_product.php?page=8'> <button class="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
+                                Shop Now →
+                            </button> </a>
                     </div>
                 </div>
                 <div class="relative aspect-[16/9]  w-auto rounded-md md:aspect-auto md:h-[400px]">
-                    <img src="prj_img/iphone-13.jpg" alt="AirMax Pro" class="z-0 h-full w-full rounded-md object-cover" />
+                    <img src="uploads/iPhone_15_pro.jpg" alt="AirMax Pro" class="z-0 h-full w-full rounded-md object-cover" />
                     <div class="absolute inset-0 rounded-md bg-gradient-to-t from-gray-900 to-transparent"></div>
                     <div class="absolute bottom-4 left-4 text-left">
-                        <h1 class="text-lg font-semibold text-white">iphone-13</h1>
+                        <h1 class="text-lg font-semibold text-white">iphone 15 Pro</h1>
                         <p class="mt-2 text-sm text-gray-300">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi,
                             debitis?
                         </p>
-                        <a href= 'view_all_product.php?page=10'> <button class="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
-                             Shop Now →
-                        </button> </a>
+                        <a href='view_all_product.php?page=10'> <button class="mt-2 inline-flex cursor-pointer items-center text-sm font-semibold text-white">
+                                Shop Now →
+                            </button> </a>
                     </div>
                 </div>
             </div>
