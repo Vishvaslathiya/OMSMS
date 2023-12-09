@@ -226,76 +226,86 @@ include_once("preloader.php");
             }
         });
 
-        // Form Validation
-        
-        $("#registration_form").validate({
-            rules: {
-                'role': {
-                    required: true,
+        $(document).ready(function() {
+            // Form Validation
+            $("#registration_form").validate({
+                rules: {
+                    'name': {
+                        required: true,
+                        text: true,
+                    },
+                    'email': {
+                        required: true,
+                        email: true,
+                    },
+                    'password': {
+                        required: true,
+                    },
+                    'confpassword': {
+                        required: true,
+                        equalTo: "#password",
+                    },
+                    'contact': {
+                        required: true,
+                        number: true,
+                        minlength: 10,
+                        maxlength: 10,
+                    },
+                    'gender': {
+                        required: true,
+                    },
+                    // 'gender': {
+                    //     require_from_group: [1,'.gender']
+                    // },
+                    'state': {
+                        required: true,
+                    },
+                    'city': {
+                        required: true,
+                    },
+                    'address': {
+                        required: true,
+                    },
                 },
-                'name': {
-                    required: true,
-                },
-                'email': {
-                    required: true,
-                    email: true,
-                },
-                'password': {
-                    required: true,
-                },
-                'confpassword': {
-                    required: true,
-                    equalTo: "#password",
-                },
-                'contact': {
-                    required: true,
-                    number: true,
-                    minlength: 10,
-                    maxlength: 10,
-                },
-                'gender': {
-                    required: true,
-                },
-                'state': {
-                    required: true,
-                },
-                'city': {
-                    required: true,
-                },
-            },
-            messeges: {
-                'role': {
-                    required: "Please Select Role",
-                },
-                'name': {
-                    required: "Please Enter Name",
-                },
-                'email': {
-                    required: "Please Enter Email",
-                },
-                'password': {
-                    required: "Please Enter Password",
-                },
-                'confpassword': {
-                    required: "Please Enter Confirm Password",
-                    equalTo: "Password not match",
-                },
-                'contact': {
-                    required: "Please Enter Contact Number",
-                    number: "Please Enter Valid Contact Number",
-                    minlength: "Please Enter 10 Digit Contact Number",
-                    maxlength: "Please Enter 10 Digit Contact Number",
-                },
-                'gender': {
-                    required: "Please Select Geneder",
-                },
-                'state': {
-                    required: "Please Select State",
-                },
-                'city': {
-                    required: "Please Select City",
-                },
-            }
+                messages: {
+                    'name': {
+                        required: "Please Enter Name",
+                        text: "Please Enter Valid Name, Text Only",
+                    },
+                    'email': {
+                        required: "Please Enter Email",
+                        email: "Please Enter Valid Email",
+                    },
+                    'password': {
+                        required: "Please Enter Password",
+                    },
+                    'confpassword': {
+                        required: "Please Enter Confirm Password",
+                        equalTo: "Password not match",
+                    },
+                    'contact': {
+                        required: "Please Enter Contact Number",
+                        number: "Please Enter Valid Contact Number",
+                        minlength: "Please Enter 10 Digit Contact Number",
+                        maxlength: "Please Enter 10 Digit Contact Number",
+                    },
+                    'gender': {
+                        required: "Please Select Geneder",
+                    },
+                    // 'gender':{
+                    //     require_from_group: "Please Select Gender",
+                    // },
+                    'state': {
+                        required: "Please Select State",
+                    },
+                    'city': {
+                        required: "Please Select City",
+                    },
+                    'address': {
+                        required: "Please Enter Address",
+                    },
+                }
+            })
         })
     </script>
 </body>

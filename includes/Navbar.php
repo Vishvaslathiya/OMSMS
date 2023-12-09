@@ -80,10 +80,9 @@ if(!isset($_SESSION['aid'])){
           <img src="images/user.svg" alt="profile" />
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-          <a class="dropdown-item" href="adminprofile.php">
+          <a class="dropdown-item" href="adminprofile.php?uid=<?php echo $_SESSION['aid'] ?>">
             <i class="ti-settings text-primary"></i>
-            Settings
-            <!-- aaya chages karva na 6 -->
+            Change Password
           </a>
           <a class="dropdown-item" href="logout.php">
             <i class="ti-power-off text-primary"></i>

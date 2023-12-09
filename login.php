@@ -1,6 +1,7 @@
 <?php
 // session_start();
 require_once('includes/dbconnection.php');
+require_once('preloader.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -175,13 +176,13 @@ if (isset($_POST['login'])) {
                     $_SESSION['admin_email'] = $email;
                     $_SESSION['aid'] = $uid;
                     // echo "<script> alert('Login Success!'); location.href = 'index.php'</script>";
-                    echo "<script>toastr.success('Login Success!')</script>";
-                    echo "<script>setTimeout(\"location.href = 'index.php';\",2000);</script>";
+                    echo "<script>toastr.success('Login Success! Please wait a Second!')</script>";
+                    echo "<script>setTimeout(\"location.href = 'index.php';\",1000);</script>";
                 } else {
                     $_SESSION['user_email'] = $email;
                     $_SESSION['uid'] = $uid;
                     // echo "<script> location.href = 'omsms.php'</script>";
-                    echo "<script>toastr.success('Login Success!')</script>";
+                    echo "<script>toastr.success('Login Success! Please wait a Second!')</script>";
                     echo "<script>setTimeout(\"location.href = 'omsms.php';\",1000);</script>";
                 }
             }
