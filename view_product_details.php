@@ -3,7 +3,7 @@ $current_page = 'view_all_product.php';
 // require './include/connection.php';
 // require 'navbar.php';
 require_once('includes/dbconnection.php');
-<<<<<<< HEAD
+ 
 
 
 if (isset($_POST['addtocart'])) {
@@ -24,10 +24,8 @@ if (isset($_POST['addtocart'])) {
 }
 
 
-
-=======
 require_once('preloader.php')
->>>>>>> c1674e8e4f3cb84f207a7d58801f1ec118a10147
+
 ?>
 
 

@@ -3,6 +3,10 @@
 // $conn = mysqli_connect("localhost", "root", "", "omsms");
 $current_page = 'omsms.php';
 require_once('includes/dbconnection.php');
+// if (!isset($_SESSION['uid'])) {
+//     // header('location: registration.php');
+//     echo "<script>alert('Login to view Your Orders'); location.href='omsms.php'</script>";
+// }
 // $con = mysqli_connect("localhost", "root", "", "project");
 ?>
 <!DOCTYPE html>
@@ -54,7 +58,8 @@ require_once('includes/dbconnection.php');
                     <?php
                     $con = mysqli_connect("localhost", "root", "", "omsms");
                     $uid = 5;
-                    $query = mysqli_query($con, "select * from  tblorderaddresses  where UserId='5'");
+                    // $uid = $_SESSION['uid'];
+                    $query = mysqli_query($con, "select * from  tblorderaddresses  where UserId='$uid'");
                     $count = 1;
                     $num = mysqli_num_rows($query);
                     if ($num > 0) {

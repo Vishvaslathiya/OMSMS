@@ -30,7 +30,7 @@ require_once('includes/dbconnection.php');
             <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
 
             <div class="flex justify-start item-start space-y-2 flex-col">
-                <h1 class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order #<?php echo $_GET['onumber'] ?></h1>
+                <h1 class="text-3xl dark:text-dark lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order #<?php echo $_GET['onumber'] ?></h1>
                 <?php 
                 $onumber = $_GET['onumber'];
                 $result = mysqli_query($con,"select tblorderaddresses.OrderTime from tblorderaddresses where OrderNumber = '$onumber' ");

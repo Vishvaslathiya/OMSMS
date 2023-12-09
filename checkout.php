@@ -5,68 +5,70 @@ require_once('includes/dbconnection.php');
 include_once("preloader.php");
 
 
-if (isset($_POST['cod'])) {
+if (isset($_POST['submit'])) {
+
+    $pay = $_POST['payment'];
 
 
-    $flat = $_POST['flatno'];
-    $street = $_POST['streetname'];
-    $area = $_POST['area'];
-    $landmark = $_POST['landmark'];
-    $state = $_POST['state'];
-    $city = $_POST['city'];
-    $zip = $_POST['pincode'];
-    $time = date('Y/m/d H:i:s');
+    if ($pay === 'cod') {
+        $flat = $_POST['flatno'];
+        $street = $_POST['streetname'];
+        $area = $_POST['area'];
+        $landmark = $_POST['landmark'];
+        $state = $_POST['state'];
+        $city = $_POST['city'];
+        $zip = $_POST['pincode'];
+        $time = date('Y/m/d H:i:s');
 
 
-    $orderid = rand(10000000, 999999999);
-    $userid = '5';
-    $city_state = $city . ',' . $state;
-    $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
-    $rodr = mysqli_query($con, $odr);
+        $orderid = rand(10000000, 999999999);
+        $userid = '5';
+        $city_state = $city . ',' . $state;
+        $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='COD' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+        $rodr = mysqli_query($con, $odr);
 
-    $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
+        $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
+        VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city_state', '$time', null)";
+
+
+        $result = mysqli_query($con, $sql);
+        if ($result) {
+            echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+        } else {
+            echo "<script>alert('Order Failed');</script>";
+        }
+        # code...
+    } else {
+
+
+        $flat = $_POST['flatno'];
+        $street = $_POST['streetname'];
+        $area = $_POST['area'];
+        $landmark = $_POST['landmark'];
+        $state = $_POST['state'];
+        $city = $_POST['city'];
+        $zip = $_POST['pincode'];
+        $time = date('Y/m/d H:i:s');
+
+
+        $orderid = rand(10000000, 999999999);
+        $userid = '5';
+        $city_state = $city . ',' . $state;
+        $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='17', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+        $rodr = mysqli_query($con, $odr);
+
+        $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
         VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
 
 
-    $result = mysqli_query($con, $sql);
-    if ($result) {
-        echo "<script>alert('Order Placed Successfully',$orderid);</script>";
-    } else {
-        echo "<script>alert('Order Failed');</script>";
+        $result = mysqli_query($con, $sql);
+        if ($result) {
+            echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+        } else {
+            echo "<script>alert('Order Failed');</script>";
+        }
     }
 }
-
-
-// if (isset($_POST['online'])) {
-
-
-//     $flat = $_POST['flatno'];
-//     $street = $_POST['streetname'];
-//     $area = $_POST['area'];
-//     $landmark = $_POST['landmark'];
-//     $state = $_POST['state'];
-//     $city = $_POST['city'];
-//     $zip = $_POST['pincode'];
-//     $time = date('Y/m/d H:i:s');
-
-
-//     $orderid = rand(10000000, 999999999);
-//     $userid = '5';
-//     $city_state = $city . ',' . $state;
-//     $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='17', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
-//     $rodr = mysqli_query($con, $odr);
-
-//     $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
-//         VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
-
-
-//     $result = mysqli_query($con, $sql);
-//     if ($result) {
-//         echo "<script>alert('Order Placed Successfully',$orderid);</script>";
-//     } else {
-//         echo "<script>alert('Order Failed');</script>";
-//     }
-// }
 
 
 ?>
@@ -159,18 +161,16 @@ if (isset($_POST['cod'])) {
             </div>
 
 
-            <div class="space-x-0 mt-4 lg:flex lg:space-x-4">
-            <label for="cod" >COD</label>
-                    <input name="cod" type="radio" placeholder="" checked='true'>
-                    <label for="online" >Online</label>
-                    <input name="online" type="radio" placeholder="eg. near ABC School" >
+            <div class="text-center space-x-0 mt-4  lg:flex lg:space-x-4">
+                <label for="cod">COD</label>
+                <input name="payment" value="cod" type="radio" checked='true'>
+                <label for="online">Online</label>
+                <input name="payment" value="online" type="radio">
 
             </div>
 
             <div class="flex mt-2 mb-4">
-
-                <input id="payBtn" class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="online" value="Pay Now" onclick="paynow()" type="submit">
-
+                <input class="flex-1 mt-4 ml-2 w-60 px-6 py-2 rounded-[20px] text-white bg-blue-600 hover:bg-blue-900" name="submit" value="Pay" type="submit">
             </div>
 
 
@@ -251,9 +251,7 @@ if (isset($_POST['cod'])) {
                     </div>
 
                 </div>
-<<<<<<< HEAD
-=======
-                </ <script src="https://code.jquery.com/jquery-3.6.4.min.js">
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js">
                 </script>
                 <script>
                     $(document).ready(function() {
@@ -334,88 +332,38 @@ if (isset($_POST['cod'])) {
                         });
                     });
                 </script>
+                <?php
+                echo '<script>';
+                echo 'var options = {';
+                echo '    key: \'rzp_test_56KBjCtkBBuhvk\',';
+                echo '    amount: 50000,';
+                echo '    currency: \'INR\',';
+                echo '    name: \'Mobile Shop\',';
+                echo '    description: \'Testing\',';
+                echo '    image: \'images/\',';
+                echo '    handler: function(response) {';
+                echo '        alert(\'Payment successful! Payment ID: \' + response.razorpay_payment_id);';
+                echo '    },';
+                echo '    prefill: {';
+                echo '        name: \'John Doe\',';
+                echo '        email: \'john@example.com\',';
+                echo '        contact: \'9876543210\'';
+                echo '    },';
+                echo '    notes: {';
+                echo '        address: \'Hello World\'';
+                echo '    },';
+                echo '    theme: {';
+                echo '        color: \'#F37254\'';
+                echo '    }';
+                echo '};';
+
+                echo 'var rzp = new Razorpay(options);';
+                echo 'rzp.open();';
+                echo '</script>';
+                ?>
 
 
-                <script>
-                    var options = {
-                        key: 'rzp_test_56KBjCtkBBuhvk', // Replace with your actual test key
-                        amount: 50000, // Amount in paise (50 INR)
-                        currency: 'INR',
-                        name: 'Mobile Shop',
-                        description: 'Testing',
-                        image: 'images/', // Optional
-                        handler: function(response) {
-                            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
 
-
-
-
-
-                        },
-                        prefill: {
-                            name: 'John Doe',
-                            email: 'john@example.com',
-                            contact: '9876543210'
-                        },
-                        notes: {
-                            address: 'Hello World'
-                        },
-                        theme: {
-                            color: '#F37254'
-                        }
-                    };
-
-                    var rzp = new Razorpay(options);
-                    // rzp.open();
-
-                    document.getElementById('payBtn').onclick = function() {
-                        var email = document.getElementById('email').value;
-                        var flatno = document.getElementById('flatno').value;
-                        var streetname = document.getElementById('streetname').value;
-                        var area = document.getElementById('area').value;
-                        var landmark = document.getElementById('landmark').value;
-                        var city = document.getElementById('city').value;
-                        var state = document.getElementById('state').value;
-                        var pincode = document.getElementById('pincode').value;
-                        // var total = document.getElementById('total').value;
-
-                        if (email == "" || flatno == "" || streetname == "" || area == "" || landmark == "" || city == "" || state == "" || pincode == "") {
-                            alert("Please fill all the fields");
-                        } else {
-
-                            <?php
-                            $flat = $_POST['flatno'];
-                            $street = $_POST['streetname'];
-                            $area = $_POST['area'];
-                            $landmark = $_POST['landmark'];
-                            $state = $_POST['state'];
-                            $city = $_POST['city'];
-                            $zip = $_POST['pincode'];
-                            $time = date('Y/m/d H:i:s');
-
-
-                            $orderid = rand(10000000, 999999999);
-                            $userid = '17';
-                            $city_state = $city . ',' . $state;
-                            $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
-                            $rodr = mysqli_query($con, $odr);
-
-                            $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
-    VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
-
-
-                            $result = mysqli_query($con, $sql);
-                            if ($result) {
-                                echo "<script>alert('Order Placed Successfully',$orderid);</script>";
-                            } else {
-                                echo "<script>alert('Order Failed');</script>";
-                            }
-                            ?>
-                            rzp.open();
-                        }
-                    };
-                </script>
->>>>>>> c1674e8e4f3cb84f207a7d58801f1ec118a10147
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js">
@@ -494,82 +442,78 @@ if (isset($_POST['cod'])) {
 
         <script>
             window.paynow = function() {
-                var options = {
-                    key: 'rzp_test_56KBjCtkBBuhvk', // Replace with your actual test key
-                    amount: 50000, // Amount in paise (50 INR)
-                    currency: 'INR',
-                    name: 'Mobile Shop',
-                    description: 'Testing',
-                    image: 'images/', // Optional
-                    handler: function(response) {
-                        alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+                    var options = {
+                        key: 'rzp_test_56KBjCtkBBuhvk', // Replace with your actual test key
+                        amount: 50000, // Amount in paise (50 INR)
+                        currency: 'INR',
+                        name: 'Mobile Shop',
+                        description: 'Testing',
+                        image: 'images/', // Optional
+                        handler: function(response) {
+                            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
 
 
 
-                    },
-                    prefill: {
-                        name: 'John Doe',
-                        email: 'john@example.com',
-                        contact: '9876543210'
-                    },
-                    notes: {
-                        address: 'Hello World'
-                    },
-                    theme: {
-                        color: '#F37254'
-                    }
-                };
+                        },
+                        prefill: {
+                            name: 'John Doe',
+                            email: 'john@example.com',
+                            contact: '9876543210'
+                        },
+                        notes: {
+                            address: 'Hello World'
+                        },
+                        theme: {
+                            color: '#F37254'
+                        }
+                    };
 
-                var rzp = new Razorpay(options);
-                rzp.open();
+                    var rzp = new Razorpay(options);
+                    rzp.open();
 
-                document.getElementById('payBtn').onclick = function() {
-                    var email = document.getElementById('email').value;
-                    var flatno = document.getElementById('flatno').value;
-                    var streetname = document.getElementById('streetname').value;
-                    var area = document.getElementById('area').value;
-                    var landmark = document.getElementById('landmark').value;
-                    var city = document.getElementById('city').value;
-                    var state = document.getElementById('state').value;
-                    var pincode = document.getElementById('pincode').value;
-                    // var total = document.getElementById('total').value;
+                    document.getElementById('payBtn').onclick = function() {
+                            var email = document.getElementById('email').value;
+                            var flatno = document.getElementById('flatno').value;
+                            var streetname = document.getElementById('streetname').value;
+                            var area = document.getElementById('area').value;
+                            var landmark = document.getElementById('landmark').value;
+                            var city = document.getElementById('city').value;
+                            var state = document.getElementById('state').value;
+                            var pincode = document.getElementById('pincode').value;
+                            // var total = document.getElementById('total').value;
 
-                    if (email == "" || flatno == "" || streetname == "" || area == "" || landmark == "" || city == "" || state == "" || pincode == "") {
-                        alert("Please fill all the fields");
-                    } else {
+                            if (email == "" || flatno == "" || streetname == "" || area == "" || landmark == "" || city == "" || state == "" || pincode == "") {
+                                alert("Please fill all the fields");
+                            } else {
 
-                        <?php
-                        $flat = $_POST['flatno'];
-                        $street = $_POST['streetname'];
-                        $area = $_POST['area'];
-                        $landmark = $_POST['landmark'];
-                        $state = $_POST['state'];
-                        $city = $_POST['city'];
-                        $zip = $_POST['pincode'];
-                        $time = date('Y/m/d H:i:s');
+                                <?php
+                                $flat = $_POST['flatno'];
+                                $street = $_POST['streetname'];
+                                $area = $_POST['area'];
+                                $landmark = $_POST['landmark'];
+                                $state = $_POST['state'];
+                                $city = $_POST['city'];
+                                $zip = $_POST['pincode'];
+                                $time = date('Y/m/d H:i:s');
 
 
-                        $orderid = rand(10000000, 999999999);
-                        $userid = '5';
-                        $city_state = $city . ',' . $state;
-                        $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
-                        $rodr = mysqli_query($con, $odr);
+                                $orderid = rand(10000000, 999999999);
+                                $userid = '5';
+                                $city_state = $city . ',' . $state;
+                                $odr = "update tblorders set OrderNumber='$orderid',IsOrderPlaced='1', payment_mode='Online' where UserId='$userid' and IsOrderPlaced is null or NULL;";
+                                $rodr = mysqli_query($con, $odr);
 
-                        $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
+                                $sql = "INSERT INTO tblorderaddresses(UserId, Ordernumber, Flatnobuldngno, StreetName, Area, Landmark, City, OrderTime, OrderFinalStatus)
                          VALUES ('$userid', '$orderid', '$flat', '$street', '$area', '$landmark', '$city', '$time', null)";
 
 
-                        $result = mysqli_query($con, $sql);
-                        if ($result) {
-                            echo "<script>alert('Order Placed Successfully',$orderid);</script>";
-                        } else {
-                            echo "<script>alert('Order Failed');</script>";
-                        }
-                        ?>
-                        // rzp.open();
-                    }
-                };
-            }
+                                $result = mysqli_query($con, $sql);
+                                if ($result) {
+                                    echo "<script>alert('Order Placed Successfully',$orderid);</script>";
+                                } else {
+                                    echo "<script>alert('Order Failed');</script>";
+                                }
+                                ?>
         </script>
     </div>
     </div>
